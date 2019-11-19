@@ -1,11 +1,10 @@
 ##########
-#     ? !#
-#?########
+#     $ !#
+#s########
 # ###O####
 #        #
-#?###O##O#
+# ###O##O#
 ##########
 DESCRIPTION
-ScoreDoor, 3
-StraightLineEnemy, up
-Player, 0
+$:3
+s:up

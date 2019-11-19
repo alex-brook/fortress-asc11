@@ -1,3 +1,0 @@
-class EnemyStraightLine extends Enemy{
-
-}

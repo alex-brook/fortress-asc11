@@ -1,3 +1,3 @@
-public class Door extends Tile{
+public abstract class Door extends Tile{
 
 }

@@ -1,0 +1,3 @@
+class WallFollowEnemy extends Enemy{
+
+}
