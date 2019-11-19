@@ -1,4 +1,4 @@
-enum Item{
+public enum Item{
     FIRE_BOOTS,
     FLIPPERS,
     TOKEN,

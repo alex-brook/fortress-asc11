@@ -1,3 +1,3 @@
-class Door extends Tile{
+public class Door extends Tile{
 
 }

@@ -1,3 +1,3 @@
-class Tile{
+public class Tile{
 
 }

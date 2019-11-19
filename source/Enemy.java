@@ -1,3 +1,3 @@
-class Enemy{
+public class Enemy{
 
 }
