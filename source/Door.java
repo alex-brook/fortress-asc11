@@ -1,0 +1,3 @@
+class Door extends Tile{
+
+}

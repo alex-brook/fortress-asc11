@@ -1,0 +1,3 @@
+class Teleporter extends Tile{
+
+}

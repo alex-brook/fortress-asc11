@@ -1,0 +1,3 @@
+class Hazard extends Tile{
+
+}

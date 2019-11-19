@@ -1,0 +1,3 @@
+class ScoreDoor extends Door{
+
+}

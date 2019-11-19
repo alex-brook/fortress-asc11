@@ -1,0 +1,3 @@
+class EnemyDumbTarget extends Enemy{
+
+}

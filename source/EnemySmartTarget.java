@@ -1,0 +1,3 @@
+class EnemySmartTarget extends Enemy{
+
+}
