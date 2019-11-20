@@ -1,15 +1,20 @@
-class Ground extends Tile{
+class Ground extends Tile {
     private Item hasItem;
 
-    Ground() {
+    Ground(final char mapChar) {
+        super(mapChar);
         this.hasItem = null;
     }
-    Ground(final Item item) {
+    Ground(final char mapChar, final Item item) {
+        super(mapChar);
         this.hasItem = item;
     }
 
-    public Item getItem() {
-        return hasItem;
+    public Item pickupItem() {
+        Item item = hasItem;
+        hasItem = null;
+        setMapChar(TileFactory.MapChars.GROUND);
+        return item;
     }
 
     public void setItem(final Item item) {

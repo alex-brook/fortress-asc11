@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public final class EnemyFactory {
     private static final class MapChars {
         public static final char WALL_FOLLOW_ENEMY = 'W';
@@ -21,13 +23,14 @@ public final class EnemyFactory {
                           final String[] additionalInfo) {
         switch (c) {
             case MapChars.DUMB_TARGET_ENEMY:
-                return new DumbTargetEnemy(x, y);
+                return new DumbTargetEnemy(x, y, MapChars.DUMB_TARGET_ENEMY);
             case MapChars.SMART_TARGET_ENEMY:
-                return new SmartTargetEnemy(x, y);
+                return new SmartTargetEnemy(x, y, MapChars.SMART_TARGET_ENEMY);
             case MapChars.STRAIGHT_LINE_ENEMY:
-                return new StraightLineEnemy(x, y, additionalInfo[0]);
+                return new StraightLineEnemy(x, y, MapChars.STRAIGHT_LINE_ENEMY,
+                        additionalInfo[0]);
             case MapChars.WALL_FOLLOW_ENEMY:
-                return new WallFollowEnemy(x, y);
+                return new WallFollowEnemy(x, y, MapChars.WALL_FOLLOW_ENEMY);
             default:
                 return null;
         }

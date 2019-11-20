@@ -90,4 +90,32 @@ class GameState {
     public long currentTime() {
         return startTime - System.currentTimeMillis();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int y = 0; y < grid[0].length; y++) {
+            for (int x = 0; x < grid.length; x++) {
+                Player playerAtLocation =
+                        (player.getXPos() == x && player.getYPos() == y)
+                        ? player : null;
+                Enemy enemyAtLocation = null;
+                for (Enemy e: enemies) {
+                    if (e.getXPos() == x && e.getYPos() == y) {
+                        enemyAtLocation = e;
+                    }
+                }
+
+                if (playerAtLocation != null) {
+                    sb.append(player.toString());
+                } else if (enemyAtLocation != null) {
+                    sb.append(enemyAtLocation.toString());
+                } else {
+                    sb.append(grid[x][y].toString());
+                }
+            }
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
 }

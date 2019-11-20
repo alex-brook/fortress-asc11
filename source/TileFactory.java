@@ -31,34 +31,34 @@ public final class TileFactory {
     public Tile getTile(final char c, final String[] additionalInfo) {
         switch (c) {
             case MapChars.GROUND:
-                return new Ground();
+                return new Ground(c);
             case MapChars.WALL:
-                return new Wall();
+                return new Wall(c);
             case MapChars.FIRE:
-                return new Hazard(Item.FIRE_BOOTS);
+                return new Hazard(c, Item.FIRE_BOOTS);
             case MapChars.WATER:
-                return new Hazard(Item.FLIPPERS);
+                return new Hazard(c, Item.FLIPPERS);
             case MapChars.GOAL:
-                return new Goal();
+                return new Goal(c);
             case MapChars.KEY_DOOR:
-                return new KeyDoor(keyFromChar(additionalInfo[0].charAt(0)));
+                return new KeyDoor(c, keyFromChar(additionalInfo[0].charAt(0)));
             case MapChars.SCORE_DOOR:
-                return new ScoreDoor(Integer.parseInt(additionalInfo[0]));
+                return new ScoreDoor(c, Integer.parseInt(additionalInfo[0]));
             case MapChars.TELEPORTER:
-                return new Teleporter(Integer.parseInt(additionalInfo[0]),
+                return new Teleporter(c, Integer.parseInt(additionalInfo[0]),
                         Integer.parseInt(additionalInfo[1]));
             case MapChars.TOKEN:
-                return new Ground(Item.TOKEN);
+                return new Ground(c, Item.TOKEN);
             case MapChars.FIRE_BOOTS:
-                return new Ground(Item.FIRE_BOOTS);
+                return new Ground(c, Item.FIRE_BOOTS);
             case MapChars.FLIPPERS:
-                return new Ground(Item.FLIPPERS);
+                return new Ground(c, Item.FLIPPERS);
             case MapChars.RED_KEY:
-                return new Ground(Item.RED_KEY);
+                return new Ground(c, Item.RED_KEY);
             case MapChars.GREEN_KEY:
-                return new Ground(Item.GREEN_KEY);
+                return new Ground(c, Item.GREEN_KEY);
             case MapChars.BLUE_KEY:
-                return new Ground(Item.BLUE_KEY);
+                return new Ground(c, Item.BLUE_KEY);
             default:
                 return null;
         }

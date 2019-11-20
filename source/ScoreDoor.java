@@ -1,7 +1,8 @@
 class ScoreDoor extends Door{
     private int tokensNeeded;
 
-    ScoreDoor(final int tokens) {
+    ScoreDoor(final char mapChar, final int tokens) {
+        super(mapChar);
         tokensNeeded = tokens;
     }
 }
