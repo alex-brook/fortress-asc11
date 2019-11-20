@@ -6,4 +6,10 @@ class StraightLineEnemy extends Enemy {
         super(x, y, mapChar);
         direction = dir;
     }
+
+    @Override
+    public String getAdditionalInfo() {
+        return String.format("%s", direction);
+    }
+
 }

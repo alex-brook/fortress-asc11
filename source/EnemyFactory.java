@@ -8,15 +8,14 @@ public final class EnemyFactory {
         public static final char STRAIGHT_LINE_ENEMY = 's';
     }
 
-    private static final String INFO_DELIMITER = ",";
-
     public Enemy getEnemy(final char c, final int x, final int y) {
         return getEnemy(c, x, y, new String[0]);
     }
 
     public Enemy getEnemy(final char c, final int x, final int y,
                           final String additionalInfo) {
-        return getEnemy(c, x, y, additionalInfo.split(INFO_DELIMITER));
+        return getEnemy(c, x, y,
+                additionalInfo.split(GameState.INFO_DELIMITER));
     }
 
     public Enemy getEnemy(final char c, final int x, final int y,

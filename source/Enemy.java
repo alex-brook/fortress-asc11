@@ -21,7 +21,7 @@ public abstract class Enemy {
         return mapChar;
     }
 
-    public final String[] getAdditionalInfo() {
+    public String getAdditionalInfo() {
         return null;
     }
 

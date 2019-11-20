@@ -5,4 +5,9 @@ class ScoreDoor extends Door{
         super(mapChar);
         tokensNeeded = tokens;
     }
+
+    @Override
+    public String getAdditionalInfo() {
+        return String.format("%d", tokensNeeded);
+    }
 }

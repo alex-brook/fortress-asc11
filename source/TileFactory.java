@@ -18,14 +18,13 @@ public final class TileFactory {
         public static final char BLUE_KEY = 'b';
         public static final char GREEN_KEY = 'g';
     }
-    private static final String INFO_DELIMITER = ",";
 
     public Tile getTile(final char c) {
         return getTile(c, new String[0]);
     }
 
     public Tile getTile(final char c, final String additionalInfo) {
-        return getTile(c, additionalInfo.split(INFO_DELIMITER));
+        return getTile(c, additionalInfo.split(GameState.INFO_DELIMITER));
     }
 
     public Tile getTile(final char c, final String[] additionalInfo) {

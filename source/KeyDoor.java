@@ -5,4 +5,9 @@ class KeyDoor extends Door {
         super(mapChar);
         requiredItem = item;
     }
+
+    @Override
+    public String getAdditionalInfo() {
+        return String.format("%c", requiredItem.getMapChar());
+    }
 }

@@ -7,4 +7,10 @@ class Teleporter extends Tile {
         linkedX = x;
         linkedY = y;
     }
+
+    @Override
+    public String getAdditionalInfo() {
+        return String.format("%d%s%d",
+                linkedX, GameState.INFO_DELIMITER, linkedY);
+    }
 }

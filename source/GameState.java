@@ -3,8 +3,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 class GameState {
-    private static final String ADDITIONAL_INFO_DELIMITER = "DESCRIPTION";
-    private static final String ID_DELIMITER = ":";
+    public static final String ADDITIONAL_INFO_DELIMITER = "DESCRIPTION";
+    public static final String ID_DELIMITER = ":";
+    public static final String INFO_DELIMITER = ",";
 
     private Tile[][] grid;
     private Player player;
@@ -64,7 +65,7 @@ class GameState {
                 } else {
                     // it it is neither, the only thing it can be is the player
                     grid[x][y] = tf.getTile(TileFactory.MapChars.GROUND);
-                    player = new Player(x, y);
+                    player = new Player(x, y, info[1].split(INFO_DELIMITER));
                     // this could cause bugs as every unknown character is
                     // assumed to be the player.
                 }
@@ -93,7 +94,8 @@ class GameState {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sbInfo = new StringBuilder();
+        StringBuilder sbMap = new StringBuilder();
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
                 Player playerAtLocation =
@@ -105,17 +107,31 @@ class GameState {
                         enemyAtLocation = e;
                     }
                 }
-
+                String info;
+                char mapCell;
                 if (playerAtLocation != null) {
-                    sb.append(player.toString());
+                    mapCell = player.getMapChar();
+                    info = player.getAdditionalInfo();
                 } else if (enemyAtLocation != null) {
-                    sb.append(enemyAtLocation.toString());
+                    mapCell = enemyAtLocation.getMapChar();
+                    info = enemyAtLocation.getAdditionalInfo();
                 } else {
-                    sb.append(grid[x][y].toString());
+                    mapCell = grid[x][y].getMapChar();
+                    info = grid[x][y].getAdditionalInfo();
+                }
+                sbMap.append(mapCell);
+                if (info != null) {
+                    sbInfo.append(mapCell);
+                    sbInfo.append(ID_DELIMITER);
+                    sbInfo.append(info);
+                    sbInfo.append(System.lineSeparator());
                 }
             }
-            sb.append(System.lineSeparator());
+            sbMap.append(System.lineSeparator());
         }
-        return sb.toString();
+        sbMap.append(ADDITIONAL_INFO_DELIMITER);
+        sbMap.append(System.lineSeparator());
+        sbMap.append(sbInfo.toString());
+        return sbMap.toString();
     }
 }
