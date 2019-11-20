@@ -7,13 +7,4 @@ class Hazard extends Tile{
     Hazard(final Item item) {
         requiredItem = item;
     }
-
-    public char getMapChar() {
-        if (requiredItem == Item.FIRE_BOOTS) {
-            return MapChars.FIRE;
-        } else if (requiredItem == Item.FLIPPERS) {
-            return MapChars.WATER;
-        }
-        return '\0';
-    }
 }

@@ -1,5 +1,23 @@
 
 public final class TileFactory {
+    public static final class MapChars {
+        //Tiles
+        public static final char WALL = '#';
+        public static final char GROUND = ' ';
+        public static final char WATER = '~';
+        public static final char FIRE = '&';
+        public static final char GOAL = '!';
+        public static final char KEY_DOOR = '@';
+        public static final char SCORE_DOOR = '$';
+        public static final char TELEPORTER = 'T';
+        //Items
+        public static final char TOKEN = 'O';
+        public static final char FIRE_BOOTS = '"';
+        public static final char FLIPPERS = 'Y';
+        public static final char RED_KEY = 'r';
+        public static final char BLUE_KEY = 'b';
+        public static final char GREEN_KEY = 'g';
+    }
     private static final String INFO_DELIMITER = ",";
 
     public Tile getTile(final char c) {
@@ -12,52 +30,51 @@ public final class TileFactory {
 
     public Tile getTile(final char c, final String[] additionalInfo) {
         switch (c) {
-            case Tile.MapChars.GROUND:
+            case MapChars.GROUND:
                 return new Ground();
-            case Tile.MapChars.WALL:
+            case MapChars.WALL:
                 return new Wall();
-            case Tile.MapChars.FIRE:
+            case MapChars.FIRE:
                 // pass in fire boots as item
                 return new Hazard();
-            case Tile.MapChars.WATER:
+            case MapChars.WATER:
                 // pass in flippers as item
                 return new Hazard();
-            case Tile.MapChars.GOAL:
+            case MapChars.GOAL:
                 return new Goal();
-            case Tile.MapChars.KEY_DOOR:
-                return new KeyDoor(keyFromColor(additionalInfo[0]));
-            case Tile.MapChars.SCORE_DOOR:
+            case MapChars.KEY_DOOR:
+                return new KeyDoor(keyFromChar(additionalInfo[0].charAt(0)));
+            case MapChars.SCORE_DOOR:
                 return new ScoreDoor(Integer.parseInt(additionalInfo[0]));
-            case Tile.MapChars.TELEPORTER:
+            case MapChars.TELEPORTER:
                 // pass in linked teleporter
                 return new Teleporter();
-            case Tile.MapChars.TOKEN:
+            case MapChars.TOKEN:
                 return new Ground(Item.TOKEN);
-            case Tile.MapChars.FIRE_BOOTS:
+            case MapChars.FIRE_BOOTS:
                 return new Ground(Item.FIRE_BOOTS);
-            case Tile.MapChars.FLIPPERS:
+            case MapChars.FLIPPERS:
                 return new Ground(Item.FLIPPERS);
-            case Tile.MapChars.RED_KEY:
+            case MapChars.RED_KEY:
                 return new Ground(Item.RED_KEY);
-            case Tile.MapChars.GREEN_KEY:
+            case MapChars.GREEN_KEY:
                 return new Ground(Item.GREEN_KEY);
-            case Tile.MapChars.BLUE_KEY:
+            case MapChars.BLUE_KEY:
                 return new Ground(Item.BLUE_KEY);
             default:
                 return null;
         }
     }
-
-    private Item keyFromColor(final String color) {
-        switch (color) {
-            case "Red":
+    private Item keyFromChar(final char c) {
+        switch (c) {
+            case MapChars.RED_KEY:
                 return Item.RED_KEY;
-            case "Green":
+            case MapChars.GREEN_KEY:
                 return Item.GREEN_KEY;
-            case "Blue":
+            case MapChars.BLUE_KEY:
                 return Item.BLUE_KEY;
             default:
-                throw new IllegalArgumentException("Invalid key color.");
+                return null;
         }
     }
 }

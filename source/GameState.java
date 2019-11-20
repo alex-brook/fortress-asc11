@@ -23,11 +23,12 @@ class GameState {
     }
 
     private void load(final String map) {
+        // maps are assumed to have the correct additional information for each
+        // cell in the correct order - when read left to right, up to down.
         enemies = new LinkedList<>();
         TileFactory tf = new TileFactory();
         EnemyFactory ef = new EnemyFactory();
-        // maps are assumed to have the correct information for each cell
-        // in the correct order when read left to right, up to down
+        // just some string manipulation to get the bits of the file we need.
         String[] mapParts = map.split(ADDITIONAL_INFO_DELIMITER
                 + System.lineSeparator());
         String[] additionalInfo = mapParts[1].split(System.lineSeparator());
@@ -38,19 +39,37 @@ class GameState {
         // for each cell in the map file
         for (int y = 0; y < rows.length; y++) {
             for (int x = 0; x < rows[0].length(); x++) {
+                // we look at the current cell at (x,y)
                 char current = rows[y].charAt(x);
+                // if it matches the next entry in the additional information
+                // section, we call it complex.
                 boolean complex = current == info[0].charAt(0);
-                //cells fall into 5 groups,
-                if (Tile.isTile(current) && complex) {
-                    grid[x][y] = tf.getTile(current, info[1]);
-                } else if (Tile.isTile(current)) {
-                    grid[x][y] = tf.getTile(current);
-                } else if (Enemy.isEnemy(current) && complex) {
-                    enemies.add(ef.getEnemy(current, info[1]));
-                } else if (Enemy.isEnemy(current)) {
-                    enemies.add(ef.getEnemy(current));
+                Tile asTile;
+                Enemy asEnemy;
+                // we try and instantiate both and enemy and a tile from this
+                // cell
+                if (complex) {
+                    asTile = tf.getTile(current, info[1]);
+                    asEnemy = ef.getEnemy(current, info[1]);
+                } else {
+                    asTile = tf.getTile(current);
+                    asEnemy = ef.getEnemy(current);
                 }
-
+                if (asTile != null) {
+                    // if the TileFactory returned anything but null, it must
+                    // be a tile.
+                    grid[x][y] = asTile;
+                } else if (asEnemy != null) {
+                    // if the EnemyFactory returned anything but null, it must
+                    // be an enemy. BUT - we know that enemies must be standing
+                    // on ground.
+                    grid[x][y] = tf.getTile(TileFactory.MapChars.GROUND);
+                    enemies.add(asEnemy);
+                } else {
+                    throw new NullPointerException("Trying to load null.");
+                }
+                // if we used the current additional information entry,
+                // move onto the next one.
                 if (complex && infoCounter < additionalInfo.length - 1) {
                     infoCounter++;
                     info = additionalInfo[infoCounter].split(ID_DELIMITER);
