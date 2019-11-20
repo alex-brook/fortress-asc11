@@ -35,11 +35,9 @@ public final class TileFactory {
             case MapChars.WALL:
                 return new Wall();
             case MapChars.FIRE:
-                // pass in fire boots as item
-                return new Hazard();
+                return new Hazard(Item.FIRE_BOOTS);
             case MapChars.WATER:
-                // pass in flippers as item
-                return new Hazard();
+                return new Hazard(Item.FLIPPERS);
             case MapChars.GOAL:
                 return new Goal();
             case MapChars.KEY_DOOR:
@@ -47,8 +45,8 @@ public final class TileFactory {
             case MapChars.SCORE_DOOR:
                 return new ScoreDoor(Integer.parseInt(additionalInfo[0]));
             case MapChars.TELEPORTER:
-                // pass in linked teleporter
-                return new Teleporter();
+                return new Teleporter(Integer.parseInt(additionalInfo[0]),
+                        Integer.parseInt(additionalInfo[1]));
             case MapChars.TOKEN:
                 return new Ground(Item.TOKEN);
             case MapChars.FIRE_BOOTS:

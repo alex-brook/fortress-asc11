@@ -1,10 +1,6 @@
 import javafx.scene.input.KeyCode;
-import javafx.util.Pair;
-
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 class GameState {
     private static final String ADDITIONAL_INFO_DELIMITER = "DESCRIPTION";
@@ -50,10 +46,10 @@ class GameState {
                 // cell
                 if (complex) {
                     asTile = tf.getTile(current, info[1]);
-                    asEnemy = ef.getEnemy(current, info[1]);
+                    asEnemy = ef.getEnemy(current, x, y, info[1]);
                 } else {
                     asTile = tf.getTile(current);
-                    asEnemy = ef.getEnemy(current);
+                    asEnemy = ef.getEnemy(current, x, y);
                 }
                 if (asTile != null) {
                     // if the TileFactory returned anything but null, it must
@@ -66,7 +62,11 @@ class GameState {
                     grid[x][y] = tf.getTile(TileFactory.MapChars.GROUND);
                     enemies.add(asEnemy);
                 } else {
-                    throw new NullPointerException("Trying to load null.");
+                    // it it is neither, the only thing it can be is the player
+                    grid[x][y] = tf.getTile(TileFactory.MapChars.GROUND);
+                    player = new Player(x, y);
+                    // this could cause bugs as every unknown character is
+                    // assumed to be the player.
                 }
                 // if we used the current additional information entry,
                 // move onto the next one.
