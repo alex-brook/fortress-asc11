@@ -5,6 +5,14 @@ public abstract class Tile {
         mapChar = mapc;
     }
 
+    public boolean isPassable(final Player p) {
+        return true;
+    }
+
+    public void playerContact(final Player p) {
+        return;
+    }
+
     public final char getMapChar() {
         return mapChar;
     }

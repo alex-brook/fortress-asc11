@@ -20,4 +20,14 @@ class Ground extends Tile {
     public void setItem(final Item item) {
         this.hasItem = item;
     }
+
+    @Override
+    public void playerContact(final Player p) {
+        if (hasItem != null && hasItem == Item.TOKEN) {
+            pickupItem();
+            p.giveToken();
+        } else if (hasItem != null) {
+            p.giveItem(pickupItem());
+        }
+    }
 }

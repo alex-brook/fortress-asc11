@@ -33,7 +33,7 @@ public class GameWindow extends Application {
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFont(new Font("Liberation Mono", 24));
+        gc.setFont(new Font("Courier New", 24));
 
         gc.setFill(Color.GREEN);
         gc.fillText(gs.toString(), MARGIN, MARGIN);

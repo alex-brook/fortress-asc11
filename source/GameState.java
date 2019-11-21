@@ -77,26 +77,49 @@ class GameState {
         }
     }
     public void update(final KeyCode kc) {
+        System.out.println("Did an update!");
         updatePlayer(kc);
     }
 
     private void updatePlayer(final KeyCode kc) {
+        int playerX = player.getXPos();
+        int playerY = player.getYPos();
         switch (kc) {
             case A:
-                player.moveLeft();
+                int leftX = playerX > 0 ? playerX - 1 : playerX;
+                if (grid[leftX][playerY].isPassable(player)) {
+                    player.moveLeft();
+                }
+                getTileAtPlayer(player).playerContact(player);
                 break;
             case D:
-                player.moveRight();
+                int rightX = playerX < grid.length ? playerX + 1 : playerX;
+                if (grid[rightX][playerY].isPassable(player)) {
+                    player.moveRight();
+                }
+                getTileAtPlayer(player).playerContact(player);
                 break;
             case W:
-                player.moveUp();
+                int upY = playerY > 0 ? playerY - 1 : playerY;
+                if (grid[playerX][upY].isPassable(player)) {
+                    player.moveUp();
+                }
+                getTileAtPlayer(player).playerContact(player);
                 break;
             case S:
-                player.moveDown();
+                int downY = playerY < grid[0].length ? playerY + 1 : playerY;
+                if (grid[playerX][downY].isPassable(player)) {
+                    player.moveDown();
+                }
+                getTileAtPlayer(player).playerContact(player);
                 break;
             default:
-                throw new IllegalArgumentException("Invalid key!");
+                System.err.println("[GameState] Invalid key " + kc.getName());
         }
+    }
+
+    private Tile getTileAtPlayer(final Player p) {
+        return grid[p.getXPos()][p.getYPos()];
     }
 
     private void updateEnemies() {

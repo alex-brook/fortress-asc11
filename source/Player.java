@@ -1,9 +1,13 @@
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 class Player {
     public static final char PLAYER = 'P';
     private int xPos;
     private int yPos;
 
-    private Item[] inventory;
+    private List<Item> inventory;
     private int tokenCount;
 
     Player(final int x, final int y, final String[] addInfo) {
@@ -14,7 +18,7 @@ class Player {
         xPos = x;
         yPos = y;
         tokenCount = tokens;
-        inventory = inv;
+        inventory = new LinkedList<>(Arrays.asList(inv));
     }
 
     private static Item[] inventoryFromInfo(final String[] info) {
@@ -24,6 +28,15 @@ class Player {
         }
         return inv;
     }
+
+    public void giveItem(final Item item) {
+        inventory.add(item);
+    }
+
+    public void giveToken() {
+        tokenCount++;
+    }
+
     public void moveLeft() {
         xPos -= 1;
     }
