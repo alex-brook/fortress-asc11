@@ -15,8 +15,6 @@ class GameState {
 
     GameState(final String map) {
         load(map);
-        System.out.println("Loaded game");
-        startTime = System.currentTimeMillis();
     }
 
     private void load(final String map) {
@@ -79,9 +77,26 @@ class GameState {
         }
     }
     public void update(final KeyCode kc) {
+        updatePlayer(kc);
     }
 
     private void updatePlayer(final KeyCode kc) {
+        switch (kc) {
+            case A:
+                player.moveLeft();
+                break;
+            case D:
+                player.moveRight();
+                break;
+            case W:
+                player.moveUp();
+                break;
+            case S:
+                player.moveDown();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid key!");
+        }
     }
 
     private void updateEnemies() {

@@ -1,18 +1,77 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-class GameWindow {
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new FileReader(new File("test/map2.txt")));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-            sb.append(System.lineSeparator());
-        }
-        GameState gs = new GameState(sb.toString());
+import javax.xml.bind.Marshaller;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class GameWindow extends Application {
+    private static final int WIDTH = 640;
+    private static final int HEIGHT = 480;
+    private static final int MARGIN = 20;
+
+    private GameState gs;
+
+    @Override
+    public void start(Stage primaryStage) {
+        Font.getFamilies().forEach(System.out::println);
+
+
+        Group root = new Group();
+        Scene s = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+        final Canvas canvas = new Canvas(WIDTH - MARGIN, HEIGHT - MARGIN);
+        canvas.setFocusTraversable(true);
+        canvas.requestFocus();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFont(new Font("Liberation Mono", 24));
+
+        gc.setFill(Color.GREEN);
+        gc.fillText(gs.toString(), MARGIN, MARGIN);
+
+        canvas.setOnKeyPressed(event -> {
+            gs.update(event.getCode());
+            gc.setFill(Color.BLACK);
+            gc.fillRect(0,0, WIDTH - MARGIN, HEIGHT - MARGIN);
+            gc.setFill(Color.GREEN);
+            gc.fillText(gs.toString(), MARGIN, MARGIN);
+        });
+
+        root.getChildren().add(canvas);
+        primaryStage.setTitle("Starship ASC11");
+        primaryStage.setScene(s);
+        primaryStage.show();
+    }
+
+    public GameWindow() {
+        gs = new GameState(stringFromFile("test/map2.txt"));
         System.out.println(gs);
+    }
+
+    private String stringFromFile(final String fileName) {
+        try {
+            File file = new File(fileName);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+            return new String(data, "UTF-8");
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }

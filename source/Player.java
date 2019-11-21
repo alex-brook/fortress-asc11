@@ -24,12 +24,27 @@ class Player {
         }
         return inv;
     }
+    public void moveLeft() {
+        xPos -= 1;
+    }
 
-    public final int getXPos() {
+    public void moveRight() {
+        xPos += 1;
+    }
+
+    public int getXPos() {
         return xPos;
     }
 
-    public final int getYPos() {
+    public void moveUp() {
+        yPos -= 1;
+    }
+
+    public void moveDown() {
+        yPos += 1;
+    }
+
+    public int getYPos() {
         return yPos;
     }
 
