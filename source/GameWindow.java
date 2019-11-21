@@ -3,16 +3,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GameWindow extends Application {
@@ -24,9 +20,6 @@ public class GameWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Font.getFamilies().forEach(System.out::println);
-
-
         Group root = new Group();
         Scene s = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
         final Canvas canvas = new Canvas(WIDTH - MARGIN, HEIGHT - MARGIN);
@@ -39,11 +32,19 @@ public class GameWindow extends Application {
         gc.fillText(gs.toString(), MARGIN, MARGIN);
 
         canvas.setOnKeyPressed(event -> {
-            gs.update(event.getCode());
             gc.setFill(Color.BLACK);
-            gc.fillRect(0,0, WIDTH - MARGIN, HEIGHT - MARGIN);
-            gc.setFill(Color.GREEN);
-            gc.fillText(gs.toString(), MARGIN, MARGIN);
+            gc.fillRect(0, 0, WIDTH - MARGIN, HEIGHT - MARGIN);
+            if (gs.getCurrentState() == GameState.State.RUNNING) {
+                gs.update(event.getCode());
+                gc.setFill(Color.GREEN);
+                gc.fillText(gs.toString(), MARGIN, MARGIN);
+            } else if (gs.getCurrentState() == GameState.State.WIN) {
+                gc.setFill(Color.WHITE);
+                gc.fillText("YOU WON!", MARGIN, MARGIN);
+            } else if (gs.getCurrentState() == GameState.State.LOSE) {
+                gc.setFill(Color.RED);
+                gc.fillText("YOU LOST...", MARGIN, MARGIN);
+            }
         });
 
         root.getChildren().add(canvas);

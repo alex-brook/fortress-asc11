@@ -1,5 +1,5 @@
 public abstract class Tile {
-    protected char mapChar;
+    private char mapChar;
 
     public Tile(final char mapc) {
         mapChar = mapc;

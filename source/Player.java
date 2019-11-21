@@ -10,6 +10,9 @@ class Player {
     private List<Item> inventory;
     private int tokenCount;
 
+    private boolean won;
+    private boolean dead;
+
     Player(final int x, final int y, final String[] addInfo) {
         this(x, y, Integer.parseInt(addInfo[0]), inventoryFromInfo(addInfo));
     }
@@ -33,8 +36,29 @@ class Player {
         inventory.add(item);
     }
 
+    public void takeItem(final Item item) {
+        inventory.remove(item);
+    }
+
+    public boolean hasItem(final Item item) {
+        return inventory.contains(item);
+    }
+
     public void giveToken() {
         tokenCount++;
+    }
+
+    public void takeTokens(final int count) {
+        tokenCount -= count;
+    }
+
+    public int getTokenCount() {
+        return tokenCount;
+    }
+
+    public void teleportTo(final int newX, final int newY) {
+        xPos = newX;
+        yPos = newY;
     }
 
     public void moveLeft() {
@@ -61,9 +85,26 @@ class Player {
         return yPos;
     }
 
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void kill() {
+        dead = true;
+    }
+
+    public boolean hasWon() {
+        return won;
+    }
+
+    public void win() {
+        won = true;
+    }
+
     public final char getMapChar() {
         return PLAYER;
     }
+
     public final String getAdditionalInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append(tokenCount);

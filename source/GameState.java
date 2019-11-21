@@ -7,6 +7,13 @@ class GameState {
     public static final String ID_DELIMITER = ":";
     public static final String INFO_DELIMITER = ",";
 
+    public enum State {
+        WIN,
+        LOSE,
+        RUNNING;
+    }
+
+    private State currentState;
     private Tile[][] grid;
     private Player player;
     private List<Enemy> enemies;
@@ -15,6 +22,7 @@ class GameState {
 
     GameState(final String map) {
         load(map);
+        currentState = State.RUNNING;
     }
 
     private void load(final String map) {
@@ -77,8 +85,13 @@ class GameState {
         }
     }
     public void update(final KeyCode kc) {
-        System.out.println("Did an update!");
         updatePlayer(kc);
+        updateEnemies();
+        if (player.isDead()) {
+            currentState = State.LOSE;
+        } else if (player.hasWon()) {
+            currentState = State.WIN;
+        }
     }
 
     private void updatePlayer(final KeyCode kc) {
@@ -124,6 +137,10 @@ class GameState {
 
     private void updateEnemies() {
 
+    }
+
+    public State getCurrentState() {
+        return currentState;
     }
 
     public long currentTime() {

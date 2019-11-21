@@ -7,7 +7,26 @@ class KeyDoor extends Door {
     }
 
     @Override
+    public boolean isPassable(final Player p) {
+        if (isLocked()) {
+            return p.hasItem(requiredItem);
+        }
+        return true;
+    }
+
+    @Override
+    public void playerContact(final Player p) {
+        if (isLocked()) {
+            p.takeItem(requiredItem);
+            unlock();
+        }
+    }
+
+    @Override
     public String getAdditionalInfo() {
-        return String.format("%c", requiredItem.getMapChar());
+        if (isLocked()) {
+            return String.format("%c", requiredItem.getMapChar());
+        }
+        return null;
     }
 }

@@ -9,6 +9,11 @@ class Teleporter extends Tile {
     }
 
     @Override
+    public void playerContact(final Player p) {
+        p.teleportTo(linkedX, linkedY);
+    }
+
+    @Override
     public String getAdditionalInfo() {
         return String.format("%d%s%d",
                 linkedX, GameState.INFO_DELIMITER, linkedY);
