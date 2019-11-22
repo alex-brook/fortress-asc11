@@ -5,4 +5,11 @@ class Hazard extends Tile {
         super(mapChar);
         requiredItem = item;
     }
+
+    @Override
+    public void playerContact(final Player p) {
+        if (!p.hasItem(requiredItem)) {
+            p.kill();
+        }
+    }
 }

@@ -54,8 +54,8 @@ public class GameWindow extends Application {
     }
 
     public GameWindow() {
-        gs = new GameState(stringFromFile("test/map2.txt"));
-        System.out.println(gs);
+        gs = new GameState(stringFromFile("test/map.txt"));
+        //System.out.println(gs);
     }
 
     private String stringFromFile(final String fileName) {

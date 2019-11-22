@@ -1,9 +1,12 @@
 import javafx.scene.input.KeyCode;
+
 import java.util.LinkedList;
 import java.util.List;
 
 class GameState {
-    public static final String ADDITIONAL_INFO_DELIMITER = "DESCRIPTION";
+    public static final String TILE_DESC_DELIMITER = "TILES";
+    public static final String ENEMY_DESC_DELIMITER = "ENEMIES";
+    public static final String PLAYER_DESC_DELIMITER = "PLAYER";
     public static final String ID_DELIMITER = ":";
     public static final String INFO_DELIMITER = ",";
 
@@ -26,64 +29,94 @@ class GameState {
     }
 
     private void load(final String map) {
-        // maps are assumed to have the correct additional information for each
-        // cell in the correct order - when read left to right, up to down.
-        enemies = new LinkedList<>();
+        String[] parts = getMapComponents(map);
+        loadTiles(parts[0], parts[1]);
+        loadEnemies(parts[2]);
+        loadPlayer(parts[3]);
+    }
+
+    private void loadTiles(final String tileMap, final String tileDesc) {
         TileFactory tf = new TileFactory();
-        EnemyFactory ef = new EnemyFactory();
-        // just some string manipulation to get the bits of the file we need.
-        String[] mapParts = map.split(ADDITIONAL_INFO_DELIMITER
-                + System.lineSeparator());
-        String[] additionalInfo = mapParts[1].split(System.lineSeparator());
-        String[] rows = mapParts[0].split(System.lineSeparator());
+        String[] rows = tileMap.split(System.lineSeparator());
         grid = new Tile[rows[0].length()][rows.length];
-        int infoCounter =  0;
-        String[] info = additionalInfo[infoCounter].split(ID_DELIMITER);
-        // for each cell in the map file
+        String[] tiles =
+                tileDesc.split(System.lineSeparator());
+        int descCounter = 0;
+        String[] currentDesc = tiles[descCounter].split(ID_DELIMITER);
         for (int y = 0; y < rows.length; y++) {
             for (int x = 0; x < rows[0].length(); x++) {
-                // we look at the current cell at (x,y)
-                char current = rows[y].charAt(x);
-                // if it matches the next entry in the additional information
-                // section, we call it complex.
-                boolean complex = current == info[0].charAt(0);
-                Tile asTile;
-                Enemy asEnemy;
-                // we try and instantiate both and enemy and a tile from this
-                // cell
-                if (complex) {
-                    asTile = tf.getTile(current, info[1]);
-                    asEnemy = ef.getEnemy(current, x, y, info[1]);
+                char cur = rows[y].charAt(x);
+                boolean hasDesc = cur == currentDesc[0].charAt(0);
+
+                if (hasDesc) {
+                    grid[x][y] = tf.getTile(cur, currentDesc[1]);
                 } else {
-                    asTile = tf.getTile(current);
-                    asEnemy = ef.getEnemy(current, x, y);
+                    grid[x][y] = tf.getTile(cur);
                 }
-                if (asTile != null) {
-                    // if the TileFactory returned anything but null, it must
-                    // be a tile.
-                    grid[x][y] = asTile;
-                } else if (asEnemy != null) {
-                    // if the EnemyFactory returned anything but null, it must
-                    // be an enemy. BUT - we know that enemies must be standing
-                    // on ground.
-                    grid[x][y] = tf.getTile(TileFactory.MapChars.GROUND);
-                    enemies.add(asEnemy);
-                } else {
-                    // it it is neither, the only thing it can be is the player
-                    grid[x][y] = tf.getTile(TileFactory.MapChars.GROUND);
-                    player = new Player(x, y, info[1].split(INFO_DELIMITER));
-                    // this could cause bugs as every unknown character is
-                    // assumed to be the player.
-                }
-                // if we used the current additional information entry,
-                // move onto the next one.
-                if (complex && infoCounter < additionalInfo.length - 1) {
-                    infoCounter++;
-                    info = additionalInfo[infoCounter].split(ID_DELIMITER);
+
+                boolean updateDesc = hasDesc
+                        && descCounter < tiles.length - 1;
+                if (updateDesc) {
+                    descCounter++;
+                    currentDesc = tiles[descCounter].split(ID_DELIMITER);
                 }
             }
         }
     }
+
+    private void loadEnemies(final String enemyDesc) {
+        final int numMandatoryInfo = 3;
+        enemies = new LinkedList<>();
+        EnemyFactory ef = new EnemyFactory();
+        String[] enemyDescriptions = enemyDesc.split(System.lineSeparator());
+        for (String desc : enemyDescriptions) {
+            String splitRegex = String.format("%s|%s", ID_DELIMITER,
+                    INFO_DELIMITER);
+            String[] vals = desc.split(splitRegex);
+            char cur = vals[0].charAt(0);
+            int x = Integer.parseInt(vals[1]);
+            int y = Integer.parseInt(vals[2]);
+
+            int numAdditionalInfo = vals.length - numMandatoryInfo;
+            if (numAdditionalInfo > 0) {
+                String[] addInfo = new String[numAdditionalInfo];
+                System.arraycopy(vals, numMandatoryInfo,
+                        addInfo, 0, numAdditionalInfo);
+                enemies.add(ef.getEnemy(cur, x, y, addInfo));
+            } else {
+                enemies.add(ef.getEnemy(cur, x, y));
+            }
+        }
+    }
+
+    private void loadPlayer(final String desc) {
+        final int numMandatoryInfo = 3;
+        String splitRegex = String.format("%s|%s", ID_DELIMITER,
+                INFO_DELIMITER);
+        String[] vals = desc.split(splitRegex);
+        int x = Integer.parseInt(vals[1]);
+        int y = Integer.parseInt(vals[2]);
+
+        int numAdditionalInfo = vals.length - numMandatoryInfo;
+        String[] addInfo = new String[numAdditionalInfo];
+        System.arraycopy(vals, numMandatoryInfo,
+                    addInfo, 0, numAdditionalInfo);
+        player = new Player(x, y, addInfo);
+    }
+
+    private String[] getMapComponents(final String map) {
+        String splitRegex = String.format("%s%s|%s%s|%s%s",
+                TILE_DESC_DELIMITER, System.lineSeparator(),
+                ENEMY_DESC_DELIMITER, System.lineSeparator(),
+                PLAYER_DESC_DELIMITER, System.lineSeparator()
+        );
+        String[] parts = map.split(splitRegex);
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        return parts;
+    }
+
     public void update(final KeyCode kc) {
         updatePlayer(kc);
         updateEnemies();
@@ -184,7 +217,7 @@ class GameState {
             }
             sbMap.append(System.lineSeparator());
         }
-        sbMap.append(ADDITIONAL_INFO_DELIMITER);
+        sbMap.append(TILE_DESC_DELIMITER);
         sbMap.append(System.lineSeparator());
         sbMap.append(sbInfo.toString());
         return sbMap.toString();
