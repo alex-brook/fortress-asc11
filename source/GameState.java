@@ -26,6 +26,7 @@ class GameState {
     GameState(final String map) {
         load(map);
         currentState = State.RUNNING;
+        System.out.print(save());
     }
 
     private void load(final String map) {
@@ -168,6 +169,15 @@ class GameState {
         return grid[p.getXPos()][p.getYPos()];
     }
 
+    private Enemy getEnemyAtLocation(final int x, final int y) {
+        for (Enemy e : enemies) {
+            if (e.getXPos() == x && e.getYPos() == y) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     private void updateEnemies() {
 
     }
@@ -180,46 +190,78 @@ class GameState {
         return startTime - System.currentTimeMillis();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sbInfo = new StringBuilder();
+    public String save() {
         StringBuilder sbMap = new StringBuilder();
+        StringBuilder sbTiles = new StringBuilder();
+        StringBuilder sbEnemies = new StringBuilder();
+        StringBuilder sbPlayer = new StringBuilder();
+        // get every map tile
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
-                Player playerAtLocation =
-                        (player.getXPos() == x && player.getYPos() == y)
-                        ? player : null;
-                Enemy enemyAtLocation = null;
-                for (Enemy e: enemies) {
-                    if (e.getXPos() == x && e.getYPos() == y) {
-                        enemyAtLocation = e;
-                    }
-                }
-                String info;
-                char mapCell;
-                if (playerAtLocation != null) {
-                    mapCell = player.getMapChar();
-                    info = player.getAdditionalInfo();
-                } else if (enemyAtLocation != null) {
-                    mapCell = enemyAtLocation.getMapChar();
-                    info = enemyAtLocation.getAdditionalInfo();
-                } else {
-                    mapCell = grid[x][y].getMapChar();
-                    info = grid[x][y].getAdditionalInfo();
-                }
-                sbMap.append(mapCell);
+                char current = grid[x][y].getMapChar();
+                sbMap.append(current);
+                // if this tile needs a description
+                String info = grid[x][y].getAdditionalInfo();
                 if (info != null) {
-                    sbInfo.append(mapCell);
-                    sbInfo.append(ID_DELIMITER);
-                    sbInfo.append(info);
-                    sbInfo.append(System.lineSeparator());
+                    sbTiles.append(current);
+                    sbTiles.append(ID_DELIMITER);
+                    sbTiles.append(info);
+                    sbTiles.append(System.lineSeparator());
                 }
             }
             sbMap.append(System.lineSeparator());
         }
-        sbMap.append(TILE_DESC_DELIMITER);
-        sbMap.append(System.lineSeparator());
-        sbMap.append(sbInfo.toString());
-        return sbMap.toString();
+        // get every enemy
+        for (Enemy e : enemies) {
+            sbEnemies.append(e.getMapChar());
+            sbEnemies.append(ID_DELIMITER);
+            sbEnemies.append(e.getXPos());
+            sbEnemies.append(INFO_DELIMITER);
+            sbEnemies.append(e.getYPos());
+            String info = e.getAdditionalInfo();
+            if (info != null) {
+                sbEnemies.append(INFO_DELIMITER);
+                sbEnemies.append(info);
+            }
+            sbEnemies.append(System.lineSeparator());
+        }
+        sbPlayer.append(player.getMapChar());
+        sbPlayer.append(ID_DELIMITER);
+        sbPlayer.append(player.getXPos());
+        sbPlayer.append(INFO_DELIMITER);
+        sbPlayer.append(player.getYPos());
+        sbPlayer.append(INFO_DELIMITER);
+        sbPlayer.append(player.getAdditionalInfo());
+        sbPlayer.append(System.lineSeparator());
+
+        return sbMap.toString() + TILE_DESC_DELIMITER + System.lineSeparator()
+                + sbTiles.toString() + ENEMY_DESC_DELIMITER + System.lineSeparator()
+                + sbEnemies.toString() + PLAYER_DESC_DELIMITER + System.lineSeparator()
+                + sbPlayer.toString();
+    }
+
+    @Override
+    public String toString() {
+        // pretty output until we get a tileset
+        StringBuilder out = new StringBuilder();
+        for (int y = 0; y < grid[0].length; y++) {
+            for (int x = 0; x < grid.length; x++) {
+
+                boolean playerHere = (player.getXPos() == x
+                        && player.getYPos() == y);
+                boolean enemyHere = getEnemyAtLocation(x, y) != null;
+
+                if (playerHere) {
+                    out.append(player.getMapChar());
+                } else if (enemyHere) {
+                    out.append(getEnemyAtLocation(x, y).getMapChar());
+                } else {
+                    out.append(grid[x][y].getMapChar());
+                }
+            }
+            out.append(System.lineSeparator());
+        }
+        out.append(player.getAdditionalInfo());
+        return out.toString();
     }
 }

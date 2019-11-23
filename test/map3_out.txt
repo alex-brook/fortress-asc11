@@ -1,16 +1,19 @@
 #######################
 # #!#g#   T        T  #
 # #@#$#               #
-#W#        ~   &      #
+# #        ~   &      #
 #  b                  #
-#        s            #
-#OOOO    @           P#
+#                     #
+#OOOO    @            #
 #######################
-DESCRIPTION
+TILES
 T:19,1
 T:10,1
 @:g
 $:4
-s:right
 @:b
-P:0,Y,b
+ENEMIES
+W:1,3
+s:5,5,right
+PLAYER
+P:21,6,0,Y,b
