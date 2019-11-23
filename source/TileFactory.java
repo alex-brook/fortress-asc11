@@ -59,7 +59,7 @@ public final class TileFactory {
             case MapChars.BLUE_KEY:
                 return new Ground(c, Item.BLUE_KEY);
             default:
-                return null;
+                return new Ground(c);
         }
     }
     private Item keyFromChar(final char c) {
