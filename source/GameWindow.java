@@ -24,7 +24,7 @@ public class GameWindow extends Application {
         Scene s = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
         final Canvas canvas = new Canvas(WIDTH - MARGIN, HEIGHT - MARGIN);
         canvas.setFocusTraversable(true);
-        canvas.requestFocus();
+        cantvas.requestFocus();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFont(new Font("Courier New", 24));
 
