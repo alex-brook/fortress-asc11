@@ -41,6 +41,7 @@ public class GameWindow extends Application {
             } else if (gs.getCurrentState() == GameState.State.WIN) {
                 gc.setFill(Color.WHITE);
                 gc.fillText("YOU WON!", MARGIN, MARGIN);
+                System.out.println(gs.save());
             } else if (gs.getCurrentState() == GameState.State.LOSE) {
                 gc.setFill(Color.RED);
                 gc.fillText("YOU LOST...", MARGIN, MARGIN);
@@ -54,8 +55,7 @@ public class GameWindow extends Application {
     }
 
     public GameWindow() {
-        gs = new GameState(stringFromFile("test/map3.txt"));
-        //System.out.println(gs);
+        gs = new GameState(stringFromFile("test/map.txt"));
     }
 
     private String stringFromFile(final String fileName) {

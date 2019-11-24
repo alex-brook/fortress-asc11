@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 class GameState {
+    public static final String MAP_DESC_DELIMITER = "MAP";
     public static final String TILE_DESC_DELIMITER = "TILES";
     public static final String ENEMY_DESC_DELIMITER = "ENEMIES";
     public static final String PLAYER_DESC_DELIMITER = "PLAYER";
@@ -20,20 +21,32 @@ class GameState {
     private Tile[][] grid;
     private Player player;
     private List<Enemy> enemies;
+    private long timeElapsed;
     private long startTime;
-    private long endTime;
 
     GameState(final String map) {
         load(map);
         currentState = State.RUNNING;
-        System.out.print(save());
     }
 
     private void load(final String map) {
+        final int timeIndex = 0;
+        final int mapIndex = 1;
+        final int tilesIndex = 2;
+        final int enemiesIndex = 3;
+        final int playerIndex = 4;
+
         String[] parts = getMapComponents(map);
-        loadTiles(parts[0], parts[1]);
-        loadEnemies(parts[2]);
-        loadPlayer(parts[3]);
+        loadTime(parts[timeIndex]);
+        loadTiles(parts[mapIndex], parts[tilesIndex]);
+        loadEnemies(parts[enemiesIndex]);
+        loadPlayer(parts[playerIndex]);
+    }
+
+    private void loadTime(final String time) {
+        timeElapsed = Long.parseLong(time.trim());
+        startTime = System.currentTimeMillis();
+        System.out.printf("[INFO]: time starting from %d\n", timeElapsed);
     }
 
     private void loadTiles(final String tileMap, final String tileDesc) {
@@ -106,7 +119,8 @@ class GameState {
     }
 
     private String[] getMapComponents(final String map) {
-        String splitRegex = String.format("%s%s|%s%s|%s%s",
+        String splitRegex = String.format("%s%s|%s%s|%s%s|%s%s",
+                MAP_DESC_DELIMITER, System.lineSeparator(),
                 TILE_DESC_DELIMITER, System.lineSeparator(),
                 ENEMY_DESC_DELIMITER, System.lineSeparator(),
                 PLAYER_DESC_DELIMITER, System.lineSeparator()
@@ -191,10 +205,16 @@ class GameState {
     }
 
     public String save() {
+        StringBuilder sbTime = new StringBuilder();
         StringBuilder sbMap = new StringBuilder();
         StringBuilder sbTiles = new StringBuilder();
         StringBuilder sbEnemies = new StringBuilder();
         StringBuilder sbPlayer = new StringBuilder();
+        //work out time
+        long timeCurrentSession = (System.currentTimeMillis() - startTime)
+                + timeElapsed;
+        sbTime.append(timeCurrentSession);
+        sbTime.append(System.lineSeparator());
         // get every map tile
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
@@ -234,7 +254,8 @@ class GameState {
         sbPlayer.append(player.getAdditionalInfo());
         sbPlayer.append(System.lineSeparator());
 
-        return sbMap.toString() + TILE_DESC_DELIMITER + System.lineSeparator()
+        return sbTime.toString() + MAP_DESC_DELIMITER + System.lineSeparator()
+                + sbMap.toString() + TILE_DESC_DELIMITER + System.lineSeparator()
                 + sbTiles.toString() + ENEMY_DESC_DELIMITER + System.lineSeparator()
                 + sbEnemies.toString() + PLAYER_DESC_DELIMITER + System.lineSeparator()
                 + sbPlayer.toString();
