@@ -8,6 +8,11 @@ public abstract class Tile {
     public boolean isPassable(final Player p) {
         return true;
     }
+    public boolean isPassable(final Enemy e) {
+        // probably easier to assume an enemy can't go on a tile unless
+        // told otherwise.
+        return false;
+    }
 
     public void playerContact(final Player p) {
         return;

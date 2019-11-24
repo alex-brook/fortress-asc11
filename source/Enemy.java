@@ -9,6 +9,11 @@ public abstract class Enemy {
         mapChar = mapc;
     }
 
+    public int[] getMove(final boolean[][] passableGrid,
+                               final int playerX, final int playerY) {
+        return null;
+    }
+
     public final int getXPos() {
         return xPos;
     }
