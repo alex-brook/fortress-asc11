@@ -3,6 +3,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -22,12 +23,17 @@ public class GameWindow extends Application {
     public void start(Stage primaryStage) {
         Group root = new Group();
         Scene s = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+
+         
+        ImageView iv = new ImageView();
+        iv.setImage(gs.img.get(GameState.Asset.WALL_MID));
+        root.getChildren().add(iv);
+
         final Canvas canvas = new Canvas(WIDTH - MARGIN, HEIGHT - MARGIN);
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFont(new Font("Courier New", 24));
-
         gc.setFill(Color.GREEN);
         gc.fillText(gs.toString(), MARGIN, MARGIN);
 

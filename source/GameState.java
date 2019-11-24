@@ -1,9 +1,68 @@
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 class GameState {
+    public static final class Asset {
+        public static final String WALL_TOP_LEFT = "wall_top_left.png";
+        public static final String WALL_TOP_MID = "wall_top_mid.png";
+        public static final String WALL_TOP_RIGHT = "wall_top_right.png";
+
+        public static final String WALL_LEFT = "wall_left.png";
+        public static final String WALL_MID = "wall_mid.png";
+        public static final String WALL_RIGHT = "wall_right.png";
+
+        public static final String WALL_SIDE_TOP_LEFT
+                = "wall_side_top_left.png";
+        public static final String WALL_SIDE_TOP_RIGHT
+                = "wall_side_top_right.png";
+        public static final String WALL_SIDE_MID_LEFT
+                = "wall_side_mid_left.png";
+        public static final String WALL_SIDE_MID_RIGHT
+                = "wall_side_mid_right.png";
+        public static final String WALL_SIDE_FRONT_LEFT
+                = "wall_side_front_left.png";
+        public static final String WALL_SIDE_FRONT_RIGHT
+                = "wall_side_front_right.png";
+
+        public static final String WALL_CORNER_TOP_LEFT
+                = "wall_corner_top_left.png";
+        public static final String WALL_CORNER_TOP_RIGHT
+                = "wall_corner_top_right.png";
+        public static final String WALL_CORNER_LEFT
+                = "wall_corner_left.png";
+        public static final String WALL_CORNER_RIGHT
+                = "wall_corner_right.png";
+        public static final String WALL_CORNER_BOTTOM_LEFT
+                = "wall_corner_bottom_left.png";
+        public static final String WALL_CORNER_BOTTOM_RIGHT
+                = "wall_corner_bottom_right.png";
+        public static final String WALL_CORNER_FRONT_LEFT
+                = "wall_corner_front_left.png";
+        public static final String WALL_CORNER_FRONT_RIGHT
+                = "wall_corner_front_right.png";
+
+        public static final String WALL_INNER_CORNER_L_TOP_LEFT
+                = "wall_inner_corner_l_top_left.png";
+        public static final String WALL_INNER_CORNER_L_TOP_RIGHT
+                = "wall_inner_corner_l_top_rigth.png";
+        public static final String WALL_INNER_CORNER_MID_LEFT
+                = "wall_inner_corner_mid_left.png";
+        public static final String WALL_INNER_CORNER_MID_RIGHT
+                = "wall_inner_corner_mid_rigth.png";
+        public static final String WALL_INNER_CORNER_T_TOP_LEFT
+                = "wall_inner_corner_t_top_left.png";
+        public static final String WALL_INNER_CORNER_T_TOP_RIGHT
+                = "wall_inner_corner_t_top_rigth.png";
+
+    }
+
+
     public static final String MAP_DESC_DELIMITER = "MAP";
     public static final String TILE_DESC_DELIMITER = "TILES";
     public static final String ENEMY_DESC_DELIMITER = "ENEMIES";
@@ -17,6 +76,7 @@ class GameState {
         RUNNING;
     }
 
+    public Map<String, Image> img;
     private State currentState;
     private Tile[][] grid;
     private Player player;
@@ -26,7 +86,22 @@ class GameState {
 
     GameState(final String map) {
         load(map);
+        loadImages("assets/");
         currentState = State.RUNNING;
+    }
+
+    private void loadImages(final String path) {
+        final String extension = ".png";
+
+        img = new HashMap<>();
+        File directory = new File(path);
+        for (final File f : directory.listFiles()) {
+            // if it is an image
+            if (f.getName().contains(extension)) {
+                Image image = new Image(f.toURI().toString());
+                img.put(f.getName(), image);
+            }
+        }
     }
 
     private void load(final String map) {
@@ -280,6 +355,14 @@ class GameState {
                 + sbTiles.toString() + ENEMY_DESC_DELIMITER + System.lineSeparator()
                 + sbEnemies.toString() + PLAYER_DESC_DELIMITER + System.lineSeparator()
                 + sbPlayer.toString();
+    }
+
+    public Image draw() {
+        return null;
+    }
+
+    public Image getTileImageAtLocation(final int x, final int y) {
+        return null;
     }
 
     @Override
