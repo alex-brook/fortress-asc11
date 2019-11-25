@@ -1,3 +1,4 @@
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
@@ -30,10 +31,9 @@ class GameState {
     private long startTime;
 
     GameState(final String map) {
-        load(map);
         loadImages("assets/");
+        load(map);
         currentState = State.RUNNING;
-        System.out.println(grid[1][0].sameLeftNeighbour());
     }
 
     private void loadImages(final String path) {
@@ -72,7 +72,7 @@ class GameState {
     }
 
     private void loadTiles(final String tileMap, final String tileDesc) {
-        TileFactory tf = new TileFactory();
+        TileFactory tf = new TileFactory(img);
         String[] rows = tileMap.split(System.lineSeparator());
         grid = new Tile[rows[0].length()][rows.length];
         String[] tiles =
@@ -316,6 +316,16 @@ class GameState {
                 + sbTiles.toString() + ENEMY_DESC_DELIMITER + System.lineSeparator()
                 + sbEnemies.toString() + PLAYER_DESC_DELIMITER + System.lineSeparator()
                 + sbPlayer.toString();
+    }
+
+    public void draw(final GraphicsContext gc) {
+        final double tileRes = 16;
+
+        for (int y = 0; y < grid[0].length; y++) {
+            for (int x = 0; x < grid.length; x++) {
+                grid[x][y].draw(gc, x * tileRes, y * tileRes, 0);
+            }
+        }
     }
 
     @Override

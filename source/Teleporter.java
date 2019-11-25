@@ -1,9 +1,14 @@
+import javafx.scene.image.Image;
+
+import java.util.Map;
+
 class Teleporter extends Tile {
     private int linkedX;
     private int linkedY;
 
-    Teleporter(final char mapChar, final int x, final int y) {
-        super(mapChar);
+    Teleporter(final char mapChar, final Map<String, Image> img,
+               final int x, final int y) {
+        super(mapChar, img);
         linkedX = x;
         linkedY = y;
     }

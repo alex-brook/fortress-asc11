@@ -32,6 +32,8 @@ public class GameWindow extends Application {
         gc.setFill(Color.GREEN);
         gc.fillText(gs.toString(), MARGIN, MARGIN);
 
+        gs.draw(gc);
+
         canvas.setOnKeyPressed(event -> {
             gc.setFill(Color.BLACK);
             gc.fillRect(0, 0, WIDTH - MARGIN, HEIGHT - MARGIN);

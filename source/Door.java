@@ -1,8 +1,11 @@
+import javafx.scene.image.Image;
+import java.util.Map;
+
 public abstract class Door extends Tile {
     private boolean locked;
 
-    public Door(final char mapChar) {
-        super(mapChar);
+    public Door(final char mapChar, final Map<String, Image> img) {
+        super(mapChar,  img);
         locked = true;
     }
 

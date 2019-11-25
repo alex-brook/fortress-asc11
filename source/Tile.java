@@ -6,13 +6,16 @@ import java.util.Map;
 public abstract class Tile {
     private char mapChar;
 
+    private Map<String, Image> images;
+
     private Tile upNeighbour;
     private Tile downNeighbour;
     private Tile leftNeighbour;
     private Tile rightNeighbour;
 
-    public Tile(final char mapc) {
+    public Tile(final char mapc, final Map<String, Image> img) {
         mapChar = mapc;
+        images = img;
     }
 
     public boolean isPassable(final Player p) {
@@ -45,21 +48,22 @@ public abstract class Tile {
         rightNeighbour = t;
     }
 
-    public boolean sameUpNeighbour() {
-        return upNeighbour != null && upNeighbour.getMapChar() == getMapChar();
+    public Tile getUpNeighbour() {
+        return upNeighbour;
     }
 
-    public boolean sameDownNeighbour() {
-        return downNeighbour != null && downNeighbour.getMapChar() == getMapChar();
+    public Tile getDownNeighbour() {
+        return downNeighbour;
     }
 
-    public boolean sameLeftNeighbour() {
-        return leftNeighbour != null && leftNeighbour.getMapChar() == getMapChar();
+    public Tile getLeftNeighbour() {
+        return leftNeighbour;
     }
 
-    public boolean sameRightNeighbour() {
-        return rightNeighbour != null && rightNeighbour.getMapChar() == getMapChar();
+    public Tile getRightNeighbour() {
+        return rightNeighbour;
     }
+
 
     public final char getMapChar() {
         return mapChar;
@@ -73,9 +77,13 @@ public abstract class Tile {
         return null;
     }
 
-    public void draw(final GraphicsContext gc, final int x, final int y,
-                     final Map<String, Image> images, final int animationTick) {
+    public void draw(final GraphicsContext gc, final double x, final double y,
+                     final int animationTick) {
         return;
+    }
+
+    protected Image getImage(final String name) {
+        return images.get(name);
     }
 
     @Override

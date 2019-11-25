@@ -1,8 +1,12 @@
+import javafx.scene.image.Image;
+
+import java.util.Map;
+
 class ScoreDoor extends Door {
     private int tokensNeeded;
 
-    ScoreDoor(final char mapChar, final int tokens) {
-        super(mapChar);
+    ScoreDoor(final char mapChar, final Map<String, Image> img, final int tokens) {
+        super(mapChar, img);
         tokensNeeded = tokens;
     }
     @Override

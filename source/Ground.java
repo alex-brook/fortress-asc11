@@ -1,20 +1,22 @@
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
+import java.util.Map;
+
 class Ground extends Tile {
     // basic image
-    private static final String GROUND = "floor_1.png";
+    private static final String GROUND_IMG = "ground.png";
     // tokens
-    private static final String TOKEN_0 = "coin_anim_f0.png";
-    private static final String TOKEN_1 = "coin_anim_f1.png";
-    private static final String TOKEN_2 = "coin_anim_f2.png";
 
 
     private Item hasItem;
 
-    Ground(final char mapChar) {
-        super(mapChar);
+    Ground(final char mapChar, final Map<String, Image> img) {
+        super(mapChar, img);
         this.hasItem = null;
     }
-    Ground(final char mapChar, final Item item) {
-        super(mapChar);
+    Ground(final char mapChar, final Map<String, Image> img, final Item item) {
+        super(mapChar, img);
         this.hasItem = item;
     }
 
@@ -27,6 +29,12 @@ class Ground extends Tile {
 
     public void setItem(final Item item) {
         this.hasItem = item;
+    }
+
+    @Override
+    public void draw(final GraphicsContext gc, final double x, final double y,
+                     final int animationTick) {
+        gc.drawImage(getImage(GROUND_IMG), x, y);
     }
 
     @Override

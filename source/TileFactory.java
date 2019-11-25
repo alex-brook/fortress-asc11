@@ -1,5 +1,9 @@
+import javafx.scene.image.Image;
+import java.util.Map;
 
 public final class TileFactory {
+    private Map<String, Image> images;
+
     public static final class MapChars {
         //Tiles
         public static final char WALL = '#';
@@ -19,6 +23,10 @@ public final class TileFactory {
         public static final char GREEN_KEY = 'g';
     }
 
+    public TileFactory(final Map<String, Image> img) {
+        images = img;
+    }
+
     public Tile getTile(final char c) {
         return getTile(c, new String[0]);
     }
@@ -30,34 +38,34 @@ public final class TileFactory {
     public Tile getTile(final char c, final String[] additionalInfo) {
         switch (c) {
             case MapChars.GROUND:
-                return new Ground(c);
+                return new Ground(c, images);
             case MapChars.WALL:
-                return new Wall(c);
+                return new Wall(c, images);
             case MapChars.FIRE:
-                return new Hazard(c, Item.FIRE_BOOTS);
+                return new Hazard(c, images, Item.FIRE_BOOTS);
             case MapChars.WATER:
-                return new Hazard(c, Item.FLIPPERS);
+                return new Hazard(c, images, Item.FLIPPERS);
             case MapChars.GOAL:
-                return new Goal(c);
+                return new Goal(c, images);
             case MapChars.KEY_DOOR:
-                return new KeyDoor(c, keyFromChar(additionalInfo[0].charAt(0)));
+                return new KeyDoor(c, images, keyFromChar(additionalInfo[0].charAt(0)));
             case MapChars.SCORE_DOOR:
-                return new ScoreDoor(c, Integer.parseInt(additionalInfo[0]));
+                return new ScoreDoor(c, images, Integer.parseInt(additionalInfo[0]));
             case MapChars.TELEPORTER:
-                return new Teleporter(c, Integer.parseInt(additionalInfo[0]),
+                return new Teleporter(c, images, Integer.parseInt(additionalInfo[0]),
                         Integer.parseInt(additionalInfo[1]));
             case MapChars.TOKEN:
-                return new Ground(c, Item.TOKEN);
+                return new Ground(c, images, Item.TOKEN);
             case MapChars.FIRE_BOOTS:
-                return new Ground(c, Item.FIRE_BOOTS);
+                return new Ground(c, images, Item.FIRE_BOOTS);
             case MapChars.FLIPPERS:
-                return new Ground(c, Item.FLIPPERS);
+                return new Ground(c, images, Item.FLIPPERS);
             case MapChars.RED_KEY:
-                return new Ground(c, Item.RED_KEY);
+                return new Ground(c, images, Item.RED_KEY);
             case MapChars.GREEN_KEY:
-                return new Ground(c, Item.GREEN_KEY);
+                return new Ground(c, images, Item.GREEN_KEY);
             case MapChars.BLUE_KEY:
-                return new Ground(c, Item.BLUE_KEY);
+                return new Ground(c, images, Item.BLUE_KEY);
             default:
                 return null;
         }

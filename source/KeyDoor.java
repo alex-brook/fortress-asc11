@@ -1,8 +1,12 @@
+import javafx.scene.image.Image;
+
+import java.util.Map;
+
 class KeyDoor extends Door {
     private Item requiredItem;
 
-    KeyDoor(final char mapChar, final Item item) {
-        super(mapChar);
+    KeyDoor(final char mapChar, final Map<String, Image> img, final Item item) {
+        super(mapChar, img);
         requiredItem = item;
     }
 
