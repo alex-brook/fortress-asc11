@@ -24,11 +24,6 @@ public class GameWindow extends Application {
         Group root = new Group();
         Scene s = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
 
-         
-        ImageView iv = new ImageView();
-        iv.setImage(gs.img.get(GameState.Asset.WALL_MID));
-        root.getChildren().add(iv);
-
         final Canvas canvas = new Canvas(WIDTH - MARGIN, HEIGHT - MARGIN);
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
@@ -61,7 +56,8 @@ public class GameWindow extends Application {
     }
 
     public GameWindow() {
-        gs = new GameState(stringFromFile("test/map.txt"));
+        gs = new GameState(stringFromFile("test/map3.txt"));
+
     }
 
     private String stringFromFile(final String fileName) {
