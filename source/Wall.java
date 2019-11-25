@@ -20,6 +20,8 @@ class Wall extends Tile {
         super(mapChar, img);
     }
 
+    // there is loads of dope duplication in the draw logic
+    // should be refactored at some point
     private boolean isBottomMid() {
         return getDownNeighbour() == null
                 && getLeftNeighbour() != null
@@ -54,22 +56,22 @@ class Wall extends Tile {
                 && getDownNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isVerticalMid() {
-        return getUpNeighbour() != null
+    private boolean isConcaveBottomLeft() {
+        return getLeftNeighbour() == null
+                && getDownNeighbour() == null
+                && getUpNeighbour() != null
                 && getUpNeighbour().getMapChar() == getMapChar()
-                && getDownNeighbour() != null
-                && getDownNeighbour().getMapChar() == getMapChar()
-                && getLeftNeighbour() != null
-                && getLeftNeighbour().getMapChar() != getMapChar()
                 && getRightNeighbour() != null
-                && getRightNeighbour().getMapChar() != getMapChar();
+                && getRightNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isMidEndTop() {
-        return getUpNeighbour() != null
+    private boolean isConcaveBottomRight() {
+        return getRightNeighbour() == null
+                && getDownNeighbour() == null
+                && getUpNeighbour() != null
                 && getUpNeighbour().getMapChar() == getMapChar()
-                && getDownNeighbour() != null
-                && getDownNeighbour().getMapChar() != getMapChar();
+                && getLeftNeighbour() != null
+                && getLeftNeighbour().getMapChar() == getMapChar();
     }
 
     private boolean isConcaveTopLeft() {
@@ -90,34 +92,49 @@ class Wall extends Tile {
                 && getLeftNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isConcaveBottomLeft() {
-        return getLeftNeighbour() == null
-                && getDownNeighbour() == null
-                && getUpNeighbour() != null
-                && getUpNeighbour().getMapChar() == getMapChar()
-                && getRightNeighbour() != null
-                && getRightNeighbour().getMapChar() == getMapChar();
-    }
-
-    private boolean isConcaveBottomRight() {
-        return getRightNeighbour() == null
-                && getDownNeighbour() == null
-                && getUpNeighbour() != null
-                && getUpNeighbour().getMapChar() == getMapChar()
-                && getLeftNeighbour() != null
-                && getLeftNeighbour().getMapChar() == getMapChar();
-    }
-
-    private boolean isConvexBottomLeft() {
+    private boolean isConvexTopRight() {
         return getUpNeighbour() != null
                 && getUpNeighbour().getMapChar() == getMapChar()
                 && getRightNeighbour() != null
                 && getRightNeighbour().getMapChar() == getMapChar()
+                && getLeftNeighbour() != null
+                && getLeftNeighbour().getMapChar() != getMapChar()
                 && getDownNeighbour() != null
                 && getDownNeighbour().getMapChar() != getMapChar();
     }
 
+    private boolean isConvexBottomRight() {
+        return getDownNeighbour() != null
+                && getDownNeighbour().getMapChar() == getMapChar()
+                && getRightNeighbour() != null
+                && getRightNeighbour().getMapChar() == getMapChar()
+                && getLeftNeighbour() != null
+                && getLeftNeighbour().getMapChar() != getMapChar()
+                && getUpNeighbour() != null
+                && getUpNeighbour().getMapChar() != getMapChar();
+    }
 
+    private boolean isConvexBottomLeft() {
+        return getDownNeighbour() != null
+                && getDownNeighbour().getMapChar() == getMapChar()
+                && getLeftNeighbour() != null
+                && getLeftNeighbour().getMapChar() == getMapChar()
+                && getRightNeighbour() != null
+                && getRightNeighbour().getMapChar() != getMapChar()
+                && getUpNeighbour() != null
+                && getUpNeighbour().getMapChar() != getMapChar();
+    }
+
+    private boolean isConvexTopLeft() {
+        return getUpNeighbour() != null
+                && getUpNeighbour().getMapChar() == getMapChar()
+                && getLeftNeighbour() != null
+                && getLeftNeighbour().getMapChar() == getMapChar()
+                && getRightNeighbour() != null
+                && getRightNeighbour().getMapChar() != getMapChar()
+                && getDownNeighbour() != null
+                && getDownNeighbour().getMapChar() != getMapChar();
+    }
 
 
     @Override
@@ -136,17 +153,22 @@ class Wall extends Tile {
             gc.drawImage(getImage(WALL_LEFT_MID_IMG), x, y);
         } else if (isRightMid()) {
             gc.drawImage(getImage(WALL_RIGHT_MID_IMG), x, y);
-        } else if (isVerticalMid()) {
-            gc.drawImage(getImage(WALL_LEFT_MID_IMG), x, y);
-            gc.drawImage(getImage(WALL_RIGHT_MID_IMG), x, y);
-        } else if (isConcaveTopLeft()) {
-            gc.drawImage(getImage(WALL_CONCAVE_TOP_LEFT_IMG), x, y);
-        } else if (isConcaveTopRight()) {
-            gc.drawImage(getImage(WALL_CONCAVE_TOP_RIGHT_IMG), x, y);
         } else if (isConcaveBottomLeft()) {
             gc.drawImage(getImage(WALL_CONCAVE_BOTTOM_LEFT_IMG), x, y);
         } else if (isConcaveBottomRight()) {
             gc.drawImage(getImage(WALL_CONCAVE_BOTTOM_RIGHT_IMG), x, y);
+        } else if (isConcaveTopLeft()) {
+            gc.drawImage(getImage(WALL_CONCAVE_TOP_LEFT_IMG), x, y);
+        } else if (isConcaveTopRight()) {
+            gc.drawImage(getImage(WALL_CONCAVE_TOP_RIGHT_IMG), x, y);
+        } else if (isConvexTopRight()) {
+            gc.drawImage(getImage(WALL_CONVEX_TOP_RIGHT_IMG), x, y);
+        } else if (isConvexBottomRight()) {
+            gc.drawImage(getImage(WALL_CONVEX_BOTTOM_RIGHT_IMG), x, y);
+        } else if (isConvexBottomLeft()) {
+            gc.drawImage(getImage(WALL_CONVEX_BOTTOM_LEFT_IMG), x, y);
+        } else if (isConvexTopLeft()) {
+            gc.drawImage(getImage(WALL_CONVEX_TOP_LEFT_IMG), x, y);
         }
     }
 }

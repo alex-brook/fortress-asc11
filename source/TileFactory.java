@@ -21,6 +21,8 @@ public final class TileFactory {
         public static final char RED_KEY = 'r';
         public static final char BLUE_KEY = 'b';
         public static final char GREEN_KEY = 'g';
+        // Misc
+        public static final char EMPTY_TILE = '.';
     }
 
     public TileFactory(final Map<String, Image> img) {
@@ -66,6 +68,8 @@ public final class TileFactory {
                 return new Ground(c, images, Item.GREEN_KEY);
             case MapChars.BLUE_KEY:
                 return new Ground(c, images, Item.BLUE_KEY);
+            case MapChars.EMPTY_TILE:
+                return null;
             default:
                 return null;
         }

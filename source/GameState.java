@@ -82,7 +82,8 @@ class GameState {
         for (int y = 0; y < rows.length; y++) {
             for (int x = 0; x < rows[0].length(); x++) {
                 char cur = rows[y].charAt(x);
-                boolean hasDesc = cur == currentDesc[0].charAt(0);
+                boolean hasDesc = currentDesc[0].length() >= 1
+                    && cur == currentDesc[0].charAt(0);
 
                 if (hasDesc) {
                     grid[x][y] = tf.getTile(cur, currentDesc[1]);
@@ -101,18 +102,24 @@ class GameState {
 
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
-                boolean bottom = y == (grid[0].length - 1);
-                boolean top = y == 0;
-                boolean left = x == 0;
-                boolean right = x == (grid.length - 1);
+                if (grid[x][y] != null) {
+                    boolean bottom = y == (grid[0].length - 1);
+                    boolean top = y == 0;
+                    boolean left = x == 0;
+                    boolean right = x == (grid.length - 1);
 
-                if (!top) {
-                    grid[x][y].setUpNeighbour(grid[x][y - 1]);
-                    grid[x][y - 1].setDownNeighbour(grid[x][y]);
-                }
-                if (!left) {
-                    grid[x][y].setLeftNeighbour(grid[x - 1][y]);
-                    grid[x - 1][y].setRightNeighbour(grid[x][y]);
+                    if (!top) {
+                        grid[x][y].setUpNeighbour(grid[x][y - 1]);
+                        if (grid[x][y - 1] != null) {
+                            grid[x][y - 1].setDownNeighbour(grid[x][y]);
+                        }
+                    }
+                    if (!left) {
+                        grid[x][y].setLeftNeighbour(grid[x - 1][y]);
+                        if (grid[x - 1][y] != null) {
+                            grid[x - 1][y].setRightNeighbour(grid[x][y]);
+                        }
+                    }
                 }
             }
         }
@@ -123,6 +130,11 @@ class GameState {
         enemies = new LinkedList<>();
         EnemyFactory ef = new EnemyFactory();
         String[] enemyDescriptions = enemyDesc.split(System.lineSeparator());
+
+        if (enemyDescriptions[0].length() == 0) {
+            return;
+        }
+
         for (String desc : enemyDescriptions) {
             String splitRegex = String.format("%s|%s", ID_DELIMITER,
                     INFO_DELIMITER);
@@ -323,7 +335,9 @@ class GameState {
 
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
-                grid[x][y].draw(gc, x * tileRes, y * tileRes, 0);
+                if (grid[x][y] != null) {
+                    grid[x][y].draw(gc, x * tileRes, y * tileRes, 0);
+                }
             }
         }
     }
@@ -334,17 +348,20 @@ class GameState {
         StringBuilder out = new StringBuilder();
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
+                if (grid[x][y] != null) {
+                    boolean playerHere = (player.getXPos() == x
+                            && player.getYPos() == y);
+                    boolean enemyHere = getEnemyAtLocation(x, y) != null;
 
-                boolean playerHere = (player.getXPos() == x
-                        && player.getYPos() == y);
-                boolean enemyHere = getEnemyAtLocation(x, y) != null;
-
-                if (playerHere) {
-                    out.append(player.getMapChar());
-                } else if (enemyHere) {
-                    out.append(getEnemyAtLocation(x, y).getMapChar());
+                    if (playerHere) {
+                        out.append(player.getMapChar());
+                    } else if (enemyHere) {
+                        out.append(getEnemyAtLocation(x, y).getMapChar());
+                    } else {
+                        out.append(grid[x][y].getMapChar());
+                    }
                 } else {
-                    out.append(grid[x][y].getMapChar());
+                    out.append(' ');
                 }
             }
             out.append(System.lineSeparator());
