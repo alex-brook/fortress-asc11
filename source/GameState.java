@@ -139,7 +139,7 @@ class GameState {
     private void loadEnemies(final String enemyDesc) {
         final int numMandatoryInfo = 3;
         enemies = new LinkedList<>();
-        EnemyFactory ef = new EnemyFactory();
+        EnemyFactory ef = new EnemyFactory(img);
         String[] enemyDescriptions = enemyDesc.split(System.lineSeparator());
 
         if (enemyDescriptions[0].length() == 0) {
@@ -356,6 +356,10 @@ class GameState {
                     grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
                 }
             }
+        }
+        //enemies
+        for (Enemy e : enemies) {
+            e.draw(gc, e.getXPos() * TILE_RES, e.getYPos() * TILE_RES, animationTick);
         }
         //player
         player.draw(gc, player.getXPos() * TILE_RES,

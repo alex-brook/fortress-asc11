@@ -133,6 +133,11 @@ class Player {
         return sb.toString();
     }
 
+    public void drawInventory(final GraphicsContext gc, final double x,
+                              final double y) {
+
+    }
+
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
         final int playerAnims = 6;

@@ -38,9 +38,16 @@ public class GameWindow extends Application {
 
             @Override
             public void handle(long now) {
-                if (frame % 10 == 0) {
+                if (frame % 10 == 0
+                        && gs.getCurrentState() == GameState.State.RUNNING) {
                     gs.draw(gc, true);
                     frame = 0;
+                } else if (gs.getCurrentState() == GameState.State.WIN) {
+                    gc.setFill(Color.WHITE);
+                    gc.fillText("YOU WON!", MARGIN, MARGIN);
+                } else if (gs.getCurrentState() == GameState.State.LOSE) {
+                    gc.setFill(Color.RED);
+                    gc.fillText("YOU LOST...", MARGIN, MARGIN);
                 }
                 frame++;
             }
@@ -48,18 +55,9 @@ public class GameWindow extends Application {
         at.start();
 
         canvas.setOnKeyPressed(event -> {
-            gc.setFill(Color.BLACK);
-            gc.fillRect(0, 0, WIDTH - MARGIN, HEIGHT - MARGIN);
             if (gs.getCurrentState() == GameState.State.RUNNING) {
                 gs.update(event.getCode());
                 gs.draw(gc, false);
-            } else if (gs.getCurrentState() == GameState.State.WIN) {
-                gc.setFill(Color.WHITE);
-                gc.fillText("YOU WON!", MARGIN, MARGIN);
-                System.out.println(gs.save());
-            } else if (gs.getCurrentState() == GameState.State.LOSE) {
-                gc.setFill(Color.RED);
-                gc.fillText("YOU LOST...", MARGIN, MARGIN);
             }
         });
 
