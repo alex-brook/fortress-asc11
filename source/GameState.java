@@ -50,9 +50,12 @@ class GameState {
         for (final File f : directory.listFiles()) {
             if (f.isDirectory()) {
                 loadImages(f.getPath());
-            } else if (f.getName().contains(extension)) {
+            } else if (f.getName().contains(extension) && !f.getName().equals(BACKGROUND_IMG)) {
                 Image image = new Image(f.toURI().toString(),
                         TILE_RES, TILE_RES, false, false);
+                img.put(f.getName(), image);
+            } else if (f.getName().equals(BACKGROUND_IMG)) {
+                Image image = new Image(f.toURI().toString());
                 img.put(f.getName(), image);
             }
         }
@@ -338,19 +341,19 @@ class GameState {
                 + sbPlayer.toString();
     }
 
-    public void draw(final GraphicsContext gc) {
+    public void draw(final GraphicsContext gc, final boolean tick) {
         gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
         //tiles
         for (int y = 0; y < grid[0].length; y++) {
             // only draw walls
             for (int x = 0; x < grid.length; x++) {
                 if (grid[x][y] != null && grid[x][y].getMapChar() == TileFactory.MapChars.WALL) {
-                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, 0);
+                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
                 }
             }
             for (int x = 0; x < grid.length; x++) {
                 if (grid[x][y] != null && grid[x][y].getMapChar() != TileFactory.MapChars.WALL) {
-                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, 0);
+                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
                 }
             }
         }
@@ -358,7 +361,9 @@ class GameState {
         player.draw(gc, player.getXPos() * TILE_RES,
                 player.getYPos() * TILE_RES, animationTick);
 
-        animationTick = (animationTick + 1) % 5;
+        if (tick) {
+            animationTick++;
+        }
     }
 
     @Override

@@ -135,7 +135,9 @@ class Player {
 
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
-        switch (animationTick) {
+        final int playerAnims = 6;
+
+        switch (animationTick % playerAnims) {
             case 0:
                 gc.drawImage(img.get(PLAYER_0_IMG), x, y);
                 break;

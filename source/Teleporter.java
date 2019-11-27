@@ -1,8 +1,11 @@
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.Map;
 
 class Teleporter extends Tile {
+    private static final String TELEPORTER_IMG = "potion_green.png";
+
     private int linkedX;
     private int linkedY;
 
@@ -11,6 +14,13 @@ class Teleporter extends Tile {
         super(mapChar, img);
         linkedX = x;
         linkedY = y;
+    }
+
+    @Override
+    public void draw(final GraphicsContext gc, final double x, final double y,
+                     final int animationTick) {
+        gc.drawImage(getImage(GROUND_IMG), x, y);
+        gc.drawImage(getImage(TELEPORTER_IMG), x, y);
     }
 
     @Override

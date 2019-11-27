@@ -34,10 +34,15 @@ public class GameWindow extends Application {
         //gc.fillText(gs.toString(), MARGIN, MARGIN);
 
         AnimationTimer at = new AnimationTimer() {
+            private long frame = 0;
+
             @Override
             public void handle(long now) {
-
-                gs.draw(gc);
+                if (frame % 10 == 0) {
+                    gs.draw(gc, true);
+                    frame = 0;
+                }
+                frame++;
             }
         };
         at.start();
@@ -47,7 +52,7 @@ public class GameWindow extends Application {
             gc.fillRect(0, 0, WIDTH - MARGIN, HEIGHT - MARGIN);
             if (gs.getCurrentState() == GameState.State.RUNNING) {
                 gs.update(event.getCode());
-                gs.draw(gc);
+                gs.draw(gc, false);
             } else if (gs.getCurrentState() == GameState.State.WIN) {
                 gc.setFill(Color.WHITE);
                 gc.fillText("YOU WON!", MARGIN, MARGIN);
@@ -65,7 +70,7 @@ public class GameWindow extends Application {
     }
 
     public GameWindow() {
-        gs = new GameState(stringFromFile("test/map_polygon.txt"));
+        gs = new GameState(stringFromFile("test/map3.txt"));
 
     }
 

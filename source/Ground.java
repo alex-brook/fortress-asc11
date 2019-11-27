@@ -10,6 +10,9 @@ class Ground extends Tile {
     private static final String RED_KEY_IMG = "key_red.png";
     private static final String BLUE_KEY_IMG = "key_blue.png";
     private static final String GREEN_KEY_IMG = "key_green.png";
+    //clothes
+    private static final String FIRE_BOOTS_IMG = "brown_boots.png";
+    private static final String FLIPPERS_IMG = "silver_boots.png";
     // tokens
     private static final String TOKEN_IMG = "bag_coins.png";
 
@@ -48,6 +51,10 @@ class Ground extends Tile {
             gc.drawImage(getImage(GREEN_KEY_IMG), x, y);
         } else if (hasItem == Item.TOKEN) {
             gc.drawImage(getImage(TOKEN_IMG), x, y);
+        } else if (hasItem == Item.FIRE_BOOTS) {
+            gc.drawImage(getImage(FIRE_BOOTS_IMG), x, y);
+        } else if (hasItem == Item.FLIPPERS) {
+            gc.drawImage(getImage(FLIPPERS_IMG), x, y);
         }
     }
 
