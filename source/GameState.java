@@ -356,7 +356,9 @@ class GameState {
         }
         //player
         player.draw(gc, player.getXPos() * TILE_RES,
-                player.getYPos() * TILE_RES, 0);
+                player.getYPos() * TILE_RES, animationTick);
+
+        animationTick = (animationTick + 1) % 5;
     }
 
     @Override

@@ -8,7 +8,14 @@ import java.util.Map;
 
 class Player {
     public static final char PLAYER = 'P';
-    public static final String PLAYER_IMG = "knight_idle_anim_f0.png";
+
+    public static final String PLAYER_0_IMG = "knight_idle_anim_f0.png";
+    public static final String PLAYER_1_IMG = "knight_idle_anim_f1.png";
+    public static final String PLAYER_2_IMG = "knight_idle_anim_f2.png";
+    public static final String PLAYER_3_IMG = "knight_idle_anim_f3.png";
+    public static final String PLAYER_4_IMG = "knight_idle_anim_f4.png";
+    public static final String PLAYER_5_IMG = "knight_idle_anim_f5.png";
+
 
     private Map<String, Image> img;
 
@@ -128,7 +135,28 @@ class Player {
 
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
-        gc.drawImage(img.get(PLAYER_IMG), x, y);
+        switch (animationTick) {
+            case 0:
+                gc.drawImage(img.get(PLAYER_0_IMG), x, y);
+                break;
+            case 1:
+                gc.drawImage(img.get(PLAYER_1_IMG), x, y);
+                break;
+            case 2:
+                gc.drawImage(img.get(PLAYER_2_IMG), x, y);
+                break;
+            case 3:
+                gc.drawImage(img.get(PLAYER_3_IMG), x, y);
+                break;
+            case 4:
+                gc.drawImage(img.get(PLAYER_4_IMG), x, y);
+                break;
+            case 5:
+                gc.drawImage(img.get(PLAYER_5_IMG), x, y);
+                break;
+            default:
+                gc.drawImage(img.get(PLAYER_0_IMG), x, y);
+        }
     }
 
     @Override

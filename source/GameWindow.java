@@ -1,3 +1,4 @@
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -32,7 +33,14 @@ public class GameWindow extends Application {
         gc.setFill(Color.GREEN);
         //gc.fillText(gs.toString(), MARGIN, MARGIN);
 
-        gs.draw(gc);
+        AnimationTimer at = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+
+                gs.draw(gc);
+            }
+        };
+        at.start();
 
         canvas.setOnKeyPressed(event -> {
             gc.setFill(Color.BLACK);
