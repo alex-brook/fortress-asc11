@@ -13,8 +13,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class GameWindow extends Application {
-    private static final int WIDTH = 640;
-    private static final int HEIGHT = 480;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
     private static final int MARGIN = 20;
 
     private GameState gs;
@@ -30,7 +30,7 @@ public class GameWindow extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFont(new Font("Courier New", 24));
         gc.setFill(Color.GREEN);
-        gc.fillText(gs.toString(), MARGIN, MARGIN);
+        //gc.fillText(gs.toString(), MARGIN, MARGIN);
 
         gs.draw(gc);
 
@@ -39,8 +39,7 @@ public class GameWindow extends Application {
             gc.fillRect(0, 0, WIDTH - MARGIN, HEIGHT - MARGIN);
             if (gs.getCurrentState() == GameState.State.RUNNING) {
                 gs.update(event.getCode());
-                gc.setFill(Color.GREEN);
-                gc.fillText(gs.toString(), MARGIN, MARGIN);
+                gs.draw(gc);
             } else if (gs.getCurrentState() == GameState.State.WIN) {
                 gc.setFill(Color.WHITE);
                 gc.fillText("YOU WON!", MARGIN, MARGIN);

@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import java.util.Map;
 
 public abstract class Tile {
+    protected static final String GROUND_IMG = "ground.png";
+
     private char mapChar;
 
     private Map<String, Image> images;

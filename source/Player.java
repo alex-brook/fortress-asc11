@@ -1,9 +1,17 @@
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 class Player {
     public static final char PLAYER = 'P';
+    public static final String PLAYER_IMG = "knight_idle_anim_f0.png";
+
+    private Map<String, Image> img;
+
     private int xPos;
     private int yPos;
 
@@ -13,15 +21,18 @@ class Player {
     private boolean won;
     private boolean dead;
 
-    Player(final int x, final int y, final String[] addInfo) {
-        this(x, y, Integer.parseInt(addInfo[0]), inventoryFromInfo(addInfo));
+    Player(final int x, final int y, final String[] addInfo,
+           final Map<String, Image> image) {
+        this(x, y, Integer.parseInt(addInfo[0]), inventoryFromInfo(addInfo), image);
     }
 
-    private Player(final int x, final int y, final int tokens, final Item[] inv) {
+    private Player(final int x, final int y, final int tokens, final Item[] inv,
+                   final Map<String, Image> image) {
         xPos = x;
         yPos = y;
         tokenCount = tokens;
         inventory = new LinkedList<>(Arrays.asList(inv));
+        img = image;
     }
 
     private static Item[] inventoryFromInfo(final String[] info) {
@@ -114,6 +125,12 @@ class Player {
         }
         return sb.toString();
     }
+
+    public void draw(final GraphicsContext gc, final double x, final double y,
+                     final int animationTick) {
+        gc.drawImage(img.get(PLAYER_IMG), x, y);
+    }
+
     @Override
     public String toString() {
         return String.valueOf(getMapChar());

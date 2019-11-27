@@ -9,12 +9,16 @@ import java.util.List;
 import java.util.Map;
 
 class GameState {
+    private static final String BACKGROUND_IMG = "background1.png";
+
     public static final String MAP_DESC_DELIMITER = "MAP";
     public static final String TILE_DESC_DELIMITER = "TILES";
     public static final String ENEMY_DESC_DELIMITER = "ENEMIES";
     public static final String PLAYER_DESC_DELIMITER = "PLAYER";
     public static final String ID_DELIMITER = ":";
     public static final String INFO_DELIMITER = ",";
+
+    public static final double TILE_RES = 32;
 
     public enum State {
         WIN,
@@ -29,6 +33,7 @@ class GameState {
     private List<Enemy> enemies;
     private long timeElapsed;
     private long startTime;
+    private int animationTick = 0;
 
     GameState(final String map) {
         loadImages("assets/");
@@ -38,6 +43,7 @@ class GameState {
 
     private void loadImages(final String path) {
         final String extension = ".png";
+        System.out.println("[LOADING] Loading images...");
 
         img = new HashMap<>();
         File directory = new File(path);
@@ -45,10 +51,12 @@ class GameState {
             if (f.isDirectory()) {
                 loadImages(f.getPath());
             } else if (f.getName().contains(extension)) {
-                Image image = new Image(f.toURI().toString());
+                Image image = new Image(f.toURI().toString(),
+                        TILE_RES, TILE_RES, false, false);
                 img.put(f.getName(), image);
             }
         }
+        System.out.println("[LOADING] Finished loading images.");
     }
 
     private void load(final String map) {
@@ -167,7 +175,7 @@ class GameState {
         String[] addInfo = new String[numAdditionalInfo];
         System.arraycopy(vals, numMandatoryInfo,
                     addInfo, 0, numAdditionalInfo);
-        player = new Player(x, y, addInfo);
+        player = new Player(x, y, addInfo, img);
     }
 
     private String[] getMapComponents(final String map) {
@@ -331,15 +339,24 @@ class GameState {
     }
 
     public void draw(final GraphicsContext gc) {
-        final double tileRes = 16;
-
+        gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
+        //tiles
         for (int y = 0; y < grid[0].length; y++) {
+            // only draw walls
             for (int x = 0; x < grid.length; x++) {
-                if (grid[x][y] != null) {
-                    grid[x][y].draw(gc, x * tileRes, y * tileRes, 0);
+                if (grid[x][y] != null && grid[x][y].getMapChar() == TileFactory.MapChars.WALL) {
+                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, 0);
+                }
+            }
+            for (int x = 0; x < grid.length; x++) {
+                if (grid[x][y] != null && grid[x][y].getMapChar() != TileFactory.MapChars.WALL) {
+                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, 0);
                 }
             }
         }
+        //player
+        player.draw(gc, player.getXPos() * TILE_RES,
+                player.getYPos() * TILE_RES, 0);
     }
 
     @Override

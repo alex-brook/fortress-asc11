@@ -15,6 +15,7 @@ class Wall extends Tile {
     private static final String WALL_LEFT_MID_IMG = "wall_left_mid.png";
     private static final String WALL_RIGHT_MID_IMG = "wall_right_mid.png";
     private static final String WALL_TOP_MID_IMG = "wall_top_mid.png";
+    private static final String WALL_BLOCK = "block.png";
 
     Wall(final char mapChar, final Map<String, Image> img) {
         super(mapChar, img);
@@ -22,7 +23,18 @@ class Wall extends Tile {
 
     // there is loads of dope duplication in the draw logic
     // should be refactored at some point
-    private boolean isBottomMid() {
+    public boolean isInternal() {
+        return getLeftNeighbour() != null
+                && getRightNeighbour() != null
+                && getDownNeighbour() != null
+                && getUpNeighbour() != null
+                && getLeftNeighbour().getDownNeighbour() != null
+                && getRightNeighbour().getDownNeighbour() != null
+                && getLeftNeighbour().getUpNeighbour() != null
+                && getRightNeighbour().getUpNeighbour() != null;
+    }
+
+    public boolean isBottomMid() {
         return getDownNeighbour() == null
                 && getLeftNeighbour() != null
                 && getLeftNeighbour().getMapChar() == getMapChar()
@@ -30,17 +42,15 @@ class Wall extends Tile {
                 && getRightNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isTopMid() {
+    public boolean isTopMid() {
         return getUpNeighbour() == null
                 && getLeftNeighbour() != null
                 && getLeftNeighbour().getMapChar() == getMapChar()
                 && getRightNeighbour() != null
-                && getRightNeighbour().getMapChar() == getMapChar()
-                && getDownNeighbour() != null
-                && getDownNeighbour().getMapChar() != getMapChar();
+                && getRightNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isLeftMid() {
+    public boolean isLeftMid() {
         return getLeftNeighbour() == null
                 && getUpNeighbour() != null
                 && getUpNeighbour().getMapChar() == getMapChar()
@@ -48,7 +58,7 @@ class Wall extends Tile {
                 && getDownNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isRightMid() {
+    public boolean isRightMid() {
         return getRightNeighbour() == null
                 && getUpNeighbour() != null
                 && getUpNeighbour().getMapChar() == getMapChar()
@@ -56,7 +66,7 @@ class Wall extends Tile {
                 && getDownNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isConcaveBottomLeft() {
+    public boolean isConcaveBottomLeft() {
         return getLeftNeighbour() == null
                 && getDownNeighbour() == null
                 && getUpNeighbour() != null
@@ -65,7 +75,7 @@ class Wall extends Tile {
                 && getRightNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isConcaveBottomRight() {
+    public boolean isConcaveBottomRight() {
         return getRightNeighbour() == null
                 && getDownNeighbour() == null
                 && getUpNeighbour() != null
@@ -74,7 +84,7 @@ class Wall extends Tile {
                 && getLeftNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isConcaveTopLeft() {
+    public boolean isConcaveTopLeft() {
         return getLeftNeighbour() == null
                 && getUpNeighbour() == null
                 && getDownNeighbour() != null
@@ -83,7 +93,7 @@ class Wall extends Tile {
                 && getRightNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isConcaveTopRight() {
+    public boolean isConcaveTopRight() {
         return getRightNeighbour() == null
                 && getUpNeighbour() == null
                 && getDownNeighbour() != null
@@ -92,48 +102,48 @@ class Wall extends Tile {
                 && getLeftNeighbour().getMapChar() == getMapChar();
     }
 
-    private boolean isConvexTopRight() {
-        return getUpNeighbour() != null
+    public boolean isConvexTopRight() {
+        return !isInternal()
+                && getUpNeighbour() != null
                 && getUpNeighbour().getMapChar() == getMapChar()
                 && getRightNeighbour() != null
                 && getRightNeighbour().getMapChar() == getMapChar()
                 && getLeftNeighbour() != null
-                && getLeftNeighbour().getMapChar() != getMapChar()
                 && getDownNeighbour() != null
-                && getDownNeighbour().getMapChar() != getMapChar();
+                && getRightNeighbour().getUpNeighbour() == null;
     }
 
-    private boolean isConvexBottomRight() {
-        return getDownNeighbour() != null
+    public boolean isConvexBottomRight() {
+        return !isInternal()
+                && getDownNeighbour() != null
                 && getDownNeighbour().getMapChar() == getMapChar()
                 && getRightNeighbour() != null
                 && getRightNeighbour().getMapChar() == getMapChar()
                 && getLeftNeighbour() != null
-                && getLeftNeighbour().getMapChar() != getMapChar()
                 && getUpNeighbour() != null
-                && getUpNeighbour().getMapChar() != getMapChar();
+                && getRightNeighbour().getDownNeighbour() == null;
     }
 
-    private boolean isConvexBottomLeft() {
-        return getDownNeighbour() != null
+    public boolean isConvexBottomLeft() {
+        return !isInternal()
+                && getDownNeighbour() != null
                 && getDownNeighbour().getMapChar() == getMapChar()
                 && getLeftNeighbour() != null
                 && getLeftNeighbour().getMapChar() == getMapChar()
                 && getRightNeighbour() != null
-                && getRightNeighbour().getMapChar() != getMapChar()
                 && getUpNeighbour() != null
-                && getUpNeighbour().getMapChar() != getMapChar();
+                && getLeftNeighbour().getDownNeighbour() == null;
     }
 
-    private boolean isConvexTopLeft() {
-        return getUpNeighbour() != null
+    public boolean isConvexTopLeft() {
+        return !isInternal()
+                && getUpNeighbour() != null
                 && getUpNeighbour().getMapChar() == getMapChar()
                 && getLeftNeighbour() != null
                 && getLeftNeighbour().getMapChar() == getMapChar()
                 && getRightNeighbour() != null
-                && getRightNeighbour().getMapChar() != getMapChar()
                 && getDownNeighbour() != null
-                && getDownNeighbour().getMapChar() != getMapChar();
+                && getLeftNeighbour().getUpNeighbour() == null;
     }
 
 
@@ -145,6 +155,8 @@ class Wall extends Tile {
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
+        // the order these are checked in matters
+
         if (isBottomMid()) {
             gc.drawImage(getImage(WALL_BOTTOM_MID_IMG), x, y);
         } else if (isTopMid()) {
@@ -169,6 +181,8 @@ class Wall extends Tile {
             gc.drawImage(getImage(WALL_CONVEX_BOTTOM_LEFT_IMG), x, y);
         } else if (isConvexTopLeft()) {
             gc.drawImage(getImage(WALL_CONVEX_TOP_LEFT_IMG), x, y);
+        } else {
+            gc.drawImage(getImage(WALL_BLOCK), x, y);
         }
     }
 }
