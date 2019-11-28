@@ -149,13 +149,9 @@ class Player {
 
     public void drawInventory(final GraphicsContext gc, final double x,
                               final double y) {
-
-    }
-
-    private void drawFacingDirection(final GraphicsContext gc,
-                                     final double x, final double y,
-                                     final int animationTick) {
-
+        double offset = GameState.TILE_RES;
+        gc.drawImage(img.get(PLAYER_0_IMG), x, y);
+        gc.drawImage(img.get(Tile.TOKEN_IMG), x + offset, y);
     }
 
     public void draw(final GraphicsContext gc, final double x, final double y,

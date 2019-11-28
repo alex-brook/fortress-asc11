@@ -24,5 +24,6 @@ T:1,4
 @:r
 @:r
 ENEMIES
+S:5,8
 PLAYER
 P:3,1,0

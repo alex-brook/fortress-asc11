@@ -14,7 +14,7 @@ class Ground extends Tile {
     private static final String FIRE_BOOTS_IMG = "brown_boots.png";
     private static final String FLIPPERS_IMG = "silver_boots.png";
     // tokens
-    private static final String TOKEN_IMG = "bag_coins.png";
+
 
     private Item hasItem;
 

@@ -344,14 +344,16 @@ class GameState {
     public void draw(final GraphicsContext gc, final boolean tick) {
         gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
         //tiles
-        for (int y = 0; y < grid[0].length; y++) {
+        int x = 0;
+        int y = 0;
+        for (y = 0; y < grid[0].length; y++) {
             // only draw walls
-            for (int x = 0; x < grid.length; x++) {
+            for (x = 0; x < grid.length; x++) {
                 if (grid[x][y] != null && grid[x][y].getMapChar() == TileFactory.MapChars.WALL) {
                     grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
                 }
             }
-            for (int x = 0; x < grid.length; x++) {
+            for (x = 0; x < grid.length; x++) {
                 if (grid[x][y] != null && grid[x][y].getMapChar() != TileFactory.MapChars.WALL) {
                     grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
                 }
@@ -368,6 +370,9 @@ class GameState {
         if (tick) {
             animationTick++;
         }
+
+        //inventory;
+        player.drawInventory(gc, 0, (y * TILE_RES) + TILE_RES);
     }
 
     @Override
