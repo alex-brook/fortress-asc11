@@ -25,7 +25,20 @@ class Teleporter extends Tile {
 
     @Override
     public void playerContact(final Player p) {
-        p.teleportTo(linkedX, linkedY);
+        switch (p.getDirection()) {
+            case UP:
+                p.teleportTo(linkedX, linkedY - 1);
+                break;
+            case DOWN:
+                p.teleportTo(linkedX, linkedY + 1);
+                break;
+            case LEFT:
+                p.teleportTo(linkedX - 1, linkedY);
+                break;
+            case RIGHT:
+                p.teleportTo(linkedX + 1, linkedY);
+                break;
+        }
     }
 
     @Override

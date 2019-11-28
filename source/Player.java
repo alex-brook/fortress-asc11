@@ -21,6 +21,8 @@ class Player {
 
     private int xPos;
     private int yPos;
+    private boolean lookingRight;
+    private Direction direction;
 
     private List<Item> inventory;
     private int tokenCount;
@@ -35,6 +37,8 @@ class Player {
 
     private Player(final int x, final int y, final int tokens, final Item[] inv,
                    final Map<String, Image> image) {
+        lookingRight = true;
+        direction = Direction.RIGHT;
         xPos = x;
         yPos = y;
         tokenCount = tokens;
@@ -74,6 +78,10 @@ class Player {
         return tokenCount;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
     public void teleportTo(final int newX, final int newY) {
         xPos = newX;
         yPos = newY;
@@ -81,10 +89,14 @@ class Player {
 
     public void moveLeft() {
         xPos -= 1;
+        direction = Direction.LEFT;
+        lookingRight = false;
     }
 
     public void moveRight() {
         xPos += 1;
+        direction = Direction.RIGHT;
+        lookingRight = true;
     }
 
     public int getXPos() {
@@ -93,10 +105,12 @@ class Player {
 
     public void moveUp() {
         yPos -= 1;
+        direction = Direction.UP;
     }
 
     public void moveDown() {
         yPos += 1;
+        direction = Direction.DOWN;
     }
 
     public int getYPos() {
@@ -138,32 +152,65 @@ class Player {
 
     }
 
+    private void drawFacingDirection(final GraphicsContext gc,
+                                     final double x, final double y,
+                                     final int animationTick) {
+
+    }
+
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
         final int playerAnims = 6;
+        final int leanDegrees = 10;
+        Image image;
+
+        gc.save();
+
+        if (!lookingRight) {
+            gc.translate(x, y);
+            gc.scale(-1, 1);
+            gc.translate(-x - GameState.TILE_RES, -y);
+        }
+
+        if (direction == Direction.UP) {
+            gc.translate(x, y);
+            gc.rotate(-leanDegrees);
+            gc.translate(-x, -y);
+        } else if (direction == Direction.DOWN) {
+            gc.translate(x, y);
+            gc.rotate(leanDegrees);
+            gc.translate(-x, -y);
+        }
 
         switch (animationTick % playerAnims) {
             case 0:
-                gc.drawImage(img.get(PLAYER_0_IMG), x, y);
+                image = img.get(PLAYER_0_IMG);
+                gc.drawImage(image, x, y);
                 break;
             case 1:
-                gc.drawImage(img.get(PLAYER_1_IMG), x, y);
+                image = img.get(PLAYER_1_IMG);
+                gc.drawImage(image, x, y);
                 break;
             case 2:
-                gc.drawImage(img.get(PLAYER_2_IMG), x, y);
+                image = img.get(PLAYER_2_IMG);
+                gc.drawImage(image, x, y);
                 break;
             case 3:
-                gc.drawImage(img.get(PLAYER_3_IMG), x, y);
+                image = img.get(PLAYER_3_IMG);
+                gc.drawImage(image, x, y);
                 break;
             case 4:
-                gc.drawImage(img.get(PLAYER_4_IMG), x, y);
+                image = img.get(PLAYER_4_IMG);
+                gc.drawImage(image, x, y);
                 break;
             case 5:
-                gc.drawImage(img.get(PLAYER_5_IMG), x, y);
+                image = img.get(PLAYER_5_IMG);
+                gc.drawImage(image, x, y);
                 break;
             default:
-                gc.drawImage(img.get(PLAYER_0_IMG), x, y);
+                break;
         }
+        gc.restore();
     }
 
     @Override
