@@ -29,7 +29,7 @@ public class GameWindow extends Application {
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFont(new Font("Courier New", 24));
+        //gc.setFont(new Font("Courier New", 24));
         gc.setFill(Color.GREEN);
         //gc.fillText(gs.toString(), MARGIN, MARGIN);
 
@@ -68,7 +68,7 @@ public class GameWindow extends Application {
     }
 
     public GameWindow() {
-        gs = new GameState(stringFromFile("test/map3.txt"));
+        gs = new GameState(stringFromFile("test/map_polygon.txt"));
 
     }
 

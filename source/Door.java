@@ -17,6 +17,7 @@ public abstract class Door extends Tile {
     private static final String DOOR_UP_3_IMG = "door_top_3.png";
 
 
+    static boolean drewLeftDoor = false;
     private boolean locked;
 
     public Door(final char mapChar, final Map<String, Image> img) {
