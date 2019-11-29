@@ -42,7 +42,7 @@ public final class EnemyFactory {
                 return new SmartTargetEnemy(x, y, MapChars.SMART_TARGET_ENEMY, images);
             case MapChars.STRAIGHT_LINE_ENEMY:
                 return new StraightLineEnemy(x, y, MapChars.STRAIGHT_LINE_ENEMY,
-                        images, additionalInfo[0]);
+                        images, Direction.getDirection(additionalInfo[0]));
             case MapChars.WALL_FOLLOW_ENEMY:
                 return new WallFollowEnemy(x, y, MapChars.WALL_FOLLOW_ENEMY, images);
             default:

@@ -24,7 +24,7 @@ class WallFollowEnemy extends Enemy {
     }
 
     @Override
-	public void getMove(boolean[][] passableGrid, int playerX, int playerY) {
+	public void move(boolean[][] passableGrid, int playerX, int playerY) {
 	}
     
     @Override

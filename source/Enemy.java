@@ -28,8 +28,8 @@ public abstract class Enemy {
         return images.get(name);
     }
 
-    public abstract void getMove(final boolean[][] passableGrid,
-            final int playerX, final int playerY);
+    public abstract void move(final boolean[][] passableGrid,
+                              final int playerX, final int playerY);
 
     public final int getXPos() {
         return xPos;

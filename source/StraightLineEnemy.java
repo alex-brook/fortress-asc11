@@ -16,52 +16,52 @@ class StraightLineEnemy extends Enemy {
     private static final String STRAIGHT_2_IMG = "fly_anim_f2.png";
     private static final String STRAIGHT_3_IMG = "fly_anim_f3.png";
 
-    private String direction;
+    private Direction direction;
 
     StraightLineEnemy(final int x, final int y, final char mapChar,
-                      final Map<String, Image> img, final String dir) {
+                      final Map<String, Image> img, final Direction dir) {
         super(x, y, mapChar, img);
         direction = dir;
     }
 
     @Override
-	public void getMove(boolean[][] passableGrid, int playerX, int playerY) {
-		switch (direction) {
-			case "up":
-				if (passableGrid[getXPos()][getUpY()] == false) {
-					direction = "down";
-					moveDown();
-				} else if (passableGrid[getXPos()][getUpY()] == true) {
-					moveUp();
-				}
-				break;
-			case "down":
-				if (passableGrid[getXPos()][getDownY()] == false) {
-					direction = "up";
-					moveUp();
-				} else if (passableGrid[getXPos()][getDownY()] == true) {
-					moveDown();
-				}
-				break;
-			case "left":
-				if (passableGrid[getLeftX()][getYPos()] == false) {
-					direction = "right";
-					moveRight();
-				} else if (passableGrid[getLeftX()][getYPos()] == true) {
-					moveLeft();
-				}
-				break;
-			case "right":
-				if (passableGrid[getRightX()][getYPos()] == false) {
-					direction = "left";
-					moveLeft();
-				} else if (passableGrid[getRightX()][getYPos()] == true) {
-					moveRight();
-				}
-				break;
-		}
-	} 
-    
+    public void move(final boolean[][] passable, final int playerX,
+                     final int playerY) {
+        switch (direction) {
+            case UP:
+                if (passable[getXPos()][getUpY()]) {
+                    moveUp();
+                } else {
+                    direction = Direction.DOWN;
+                    moveDown();
+                }
+                break;
+            case DOWN:
+                if (passable[getXPos()][getDownY()]) {
+                    moveDown();
+                } else {
+                    direction = Direction.UP;
+                    moveUp();
+                }
+                break;
+            case LEFT:
+                if (passable[getLeftX()][getYPos()]) {
+                    moveLeft();
+                } else {
+                    direction = Direction.RIGHT;
+                    moveRight();
+                }
+                break;
+            case RIGHT:
+                if (passable[getRightX()][getYPos()]) {
+                    moveRight();
+                } else {
+                    direction = Direction.LEFT;
+                    moveLeft();
+                }
+                break;
+        }
+    }
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {

@@ -5,8 +5,28 @@
  * @author Alex
  */
 public enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
+    UP("up"),
+    DOWN("down"),
+    LEFT("left"),
+    RIGHT("right");
+
+    private String mapStr;
+
+    private Direction(final String dirStr) {
+        mapStr = dirStr;
+    }
+
+    public static Direction getDirection(final String str) {
+        for (Direction d : values()) {
+            if (d.toString().equals(str)) {
+                return d;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return mapStr;
+    }
 }

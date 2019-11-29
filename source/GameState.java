@@ -338,7 +338,7 @@ class GameState {
      */
     private void updateEnemies() {
         for (Enemy e : enemies) {
-            e.getMove(getPassableGrid(e), player.getXPos(), player.getYPos());
+            e.move(getPassableGrid(e), player.getXPos(), player.getYPos());
             if (getEnemyAtLocation(player.getXPos(), player.getYPos())
                     != null) {
                 player.kill();

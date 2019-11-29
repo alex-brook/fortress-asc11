@@ -17,7 +17,7 @@ class DumbTargetEnemy extends Enemy {
     private static final String DUMB_4_IMG = "red_goblin_idle_anim_f4.png";
     
     private double xDiff;
-	private double yDiff;
+    private double yDiff;
 
     DumbTargetEnemy(final int x, final int y, final char mapChar,
                     final Map<String, Image> img) {
@@ -25,65 +25,65 @@ class DumbTargetEnemy extends Enemy {
     }
 
     @Override
-	public void getMove(boolean[][] passableGrid, int playerX, int playerY) {
-    	compareX(playerX);
-    	compareY(playerY);
-    	
-    	if (xDiff == 0) {
-    		if (yDiff == 0) {
-    			//kill player
-    		} else if (yDiff < 0) {
-				if (passableGrid[getXPos()][getUpY()] == true) {
-					moveUp();
-				}
-			} else if (yDiff > 0) {
-				if (passableGrid[getXPos()][getDownY()] == true) {
-					moveDown();
-				}
-			}
-    	} else if (yDiff == 0) {
-    		if (xDiff == 0) {
-    			//kill player
-    		} else if (xDiff < 0) {
-				if (passableGrid[getLeftX()][getYPos()] == true) {
-					moveLeft();
-				}
-			} else if (xDiff > 0) {
-				if (passableGrid[getRightX()][getYPos()] == true) {
-					moveRight();
-				}
-			}
-    	} else if (Math.abs(xDiff) > Math.abs(yDiff)) {
-			if (yDiff < 0) {
-				if (passableGrid[getXPos()][getUpY()] == true) {
-					moveUp();
-				}
-			} else if (yDiff > 0) {
-				if (passableGrid[getXPos()][getDownY()] == true) {
-					moveDown();
-				}
-			}
-		} else {
-			if (xDiff < 0) {
-				if (passableGrid[getLeftX()][getYPos()] == true) {
-					moveLeft();
-				}
-			} else if (xDiff > 0) {
-				if (passableGrid[getRightX()][getYPos()] == true) {
-					moveRight();
-				}
-			}
-		}
-	}
+    public void move(boolean[][] passableGrid, int playerX, int playerY) {
+        compareX(playerX);
+        compareY(playerY);
+
+        if (xDiff == 0) {
+            if (yDiff == 0) {
+                //kill player
+            } else if (yDiff < 0) {
+                if (passableGrid[getXPos()][getUpY()] == true) {
+                    moveUp();
+                }
+            } else if (yDiff > 0) {
+                if (passableGrid[getXPos()][getDownY()] == true) {
+                    moveDown();
+                }
+            }
+        } else if (yDiff == 0) {
+            if (xDiff == 0) {
+                //kill player
+            } else if (xDiff < 0) {
+                if (passableGrid[getLeftX()][getYPos()] == true) {
+                    moveLeft();
+                }
+            } else if (xDiff > 0) {
+                if (passableGrid[getRightX()][getYPos()] == true) {
+                    moveRight();
+                }
+            }
+        } else if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            if (yDiff < 0) {
+                if (passableGrid[getXPos()][getUpY()] == true) {
+                    moveUp();
+                }
+            } else if (yDiff > 0) {
+                if (passableGrid[getXPos()][getDownY()] == true) {
+                    moveDown();
+                }
+            }
+        } else {
+            if (xDiff < 0) {
+                if (passableGrid[getLeftX()][getYPos()] == true) {
+                    moveLeft();
+                }
+            } else if (xDiff > 0) {
+                if (passableGrid[getRightX()][getYPos()] == true) {
+                    moveRight();
+                }
+            }
+        }
+    }
     
     public void compareX(int playerX) {
-		xDiff =  playerX - getXPos();
-	}
-	
-	public void compareY(int playerY) {
-		yDiff = playerY - getYPos();
-	}
-	
+        xDiff =  playerX - getXPos();
+    }
+
+    public void compareY(int playerY) {
+        yDiff = playerY - getYPos();
+    }
+
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
