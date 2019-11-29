@@ -15,7 +15,9 @@ class WallFollowEnemy extends Enemy {
     private static String WALL_FOLLOW_3_IMG = "slime_idle_anim_f3.png";
     private static String WALL_FOLLOW_4_IMG = "slime_idle_anim_f4.png";
     private static String WALL_FOLLOW_5_IMG = "slime_idle_anim_f5.png";
-
+    
+    private String direction;
+    private String wallTracker;
 
     WallFollowEnemy(final int x, final int y, final char mapChar,
                     final Map<String, Image> img) {
@@ -24,6 +26,108 @@ class WallFollowEnemy extends Enemy {
 
     @Override
 	public void getMove(boolean[][] passableGrid, int playerX, int playerY) {
+	    	switch (direction) {
+    			case "up":
+    				switch (wallTracker) {
+    					case "left":
+    						if (passableGrid[getXPos()][getUpY()] == true) {
+    							moveUp();
+    						} else if (passableGrid[getLeftX()][getYPos()] == true){
+    							moveLeft();
+    							direction = "left";
+    							wallTracker = "down";
+    						} else {
+    							moveDown();
+    							direction = "down";
+    						}
+    					case "right":
+    						if (passableGrid[getXPos()][getUpY()] == true) {
+    							moveUp();
+    						} else if (passableGrid[getRightX()][getYPos()] == true){
+    							moveRight();
+    							direction = "right";
+    							wallTracker = "down";
+    						} else {
+    							moveDown();
+    							direction = "down";
+    						}		
+    				}
+    			case "down":
+    				switch (wallTracker) {
+    					case "left":
+    						if (passableGrid[getXPos()][getDownY()] == true) {
+    							moveDown();
+    						} else if (passableGrid[getLeftX()][getYPos()] == true){
+    							moveLeft();
+    							direction = "left";
+    							wallTracker = "up";
+    						} else {
+    							moveUp();
+    							direction = "up";
+    						}
+    					case "right":
+    						if (passableGrid[getXPos()][getDownY()] == true) {
+    							moveDown();
+    						} else if (passableGrid[getRightX()][getYPos()] == true){
+    							moveRight();
+    							direction = "right";
+    							wallTracker = "up";
+    						} else {
+    							moveUp();
+    							direction = "up";
+    						}
+    				}
+    			case "left":
+    				switch (wallTracker) {
+    					case "up":
+    						if (passableGrid[getLeftX()][getYPos()] == true) {
+    							moveLeft();
+    						} else if (passableGrid[getXPos()][getUpY()] == true){
+    							moveUp();
+    							direction = "up";
+    							wallTracker = "right";
+    						} else {
+    							moveRight();
+    							direction = "right";
+    						}
+    					case "down":
+    						if (passableGrid[getLeftX()][getYPos()] == true) {
+    							moveLeft();
+    						} else if (passableGrid[getXPos()][getDownY()] == true){
+    							moveDown();
+    							direction = "down";
+    							wallTracker = "right";
+    						} else {
+    							moveRight();
+    							direction = "right";
+    						}
+    				}
+    			case "right":
+    				switch (wallTracker) {
+    					case "up":
+    						if (passableGrid[getRightX()][getYPos()] == true) {
+    							moveRight();
+    						} else if (passableGrid[getXPos()][getUpY()] == true){
+    							moveUp();
+    							direction = "up";
+    							wallTracker = "left";
+    						} else {
+    							moveLeft();
+    							direction = "left";
+    						}
+    					case "down":
+    						if (passableGrid[getLeftX()][getYPos()] == true) {
+    							moveRight();
+    						} else if (passableGrid[getXPos()][getDownY()] == true){
+    							moveDown();
+    							direction = "down";
+    							wallTracker = "left";
+    						} else {
+    							moveLeft();
+    							direction = "left";
+    						}
+    				}
+		}
 	}
     
     @Override
