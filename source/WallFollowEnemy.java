@@ -2,6 +2,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.Map;
 
+ /**
+ * Type of enemy that moves by following alongside wall tiles
+ *
+ * @author Irfaan
+ */
+
 class WallFollowEnemy extends Enemy {
     private static String WALL_FOLLOW_0_IMG = "slime_idle_anim_f0.png";
     private static String WALL_FOLLOW_1_IMG = "slime_idle_anim_f1.png";

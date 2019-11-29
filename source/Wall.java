@@ -2,6 +2,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.Map;
 
+/**
+ * Type of tile that is impassable by both the player and enemies
+ *
+ * @author Alex
+ */
 class Wall extends Tile {
     private static final String WALL_BOTTOM_MID_IMG = "wall_bottom_mid.png";
     private static final String WALL_CONCAVE_BOTTOM_LEFT_IMG = "wall_concave_bottom_left.png";

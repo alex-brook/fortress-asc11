@@ -13,6 +13,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ *  Creates a window which displays the game
+ *
+ * @author Alex
+ */
+
 public class GameWindow extends Application {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;

@@ -1,3 +1,8 @@
+/**
+ * Definitions for items
+ *
+ * @author Alex
+ */
 public enum Item{
     FIRE_BOOTS(TileFactory.MapChars.FIRE_BOOTS),
     FLIPPERS(TileFactory.MapChars.FLIPPERS),

@@ -8,6 +8,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Reads in data from a save file uses that to create the level layout, then
+ * controls and coordinates all of the game elements while the game is
+ * being run. Saves the current level layout to a separate file
+ *
+ * @author Alex
+ */
+
 class GameState {
     private static final String BACKGROUND_IMG = "background1.png";
 
@@ -41,6 +49,7 @@ class GameState {
         currentState = State.RUNNING;
     }
 
+    //Apply's the images to the correct tiles when drawn
     private void loadImages(final String path) {
         final String extension = ".png";
         System.out.println("[LOADING] Loading images...");
@@ -62,6 +71,10 @@ class GameState {
         System.out.println("[LOADING] Finished loading images.");
     }
 
+    /**
+     * Creates a level from designated map
+     * @param map name of the map file to be drawn
+     */
     private void load(final String map) {
         final int timeIndex = 0;
         final int mapIndex = 1;
@@ -76,12 +89,21 @@ class GameState {
         loadPlayer(parts[playerIndex]);
     }
 
+    /**
+     *
+     * @param time
+     */
     private void loadTime(final String time) {
         timeElapsed = Long.parseLong(time.trim());
         startTime = System.currentTimeMillis();
         System.out.printf("[INFO]: time starting from %d\n", timeElapsed);
     }
 
+    /**
+     * Creates and loads the tiles into the level scene
+     * @param tileMap
+     * @param tileDesc
+     */
     private void loadTiles(final String tileMap, final String tileDesc) {
         TileFactory tf = new TileFactory(img);
         String[] rows = tileMap.split(System.lineSeparator());
@@ -136,6 +158,10 @@ class GameState {
         }
     }
 
+    /**
+     * Creates and loads the enemies into the level scene
+     * @param enemyDesc
+     */
     private void loadEnemies(final String enemyDesc) {
         final int numMandatoryInfo = 3;
         enemies = new LinkedList<>();
@@ -166,6 +192,10 @@ class GameState {
         }
     }
 
+    /**
+     * Creates and loads the player into teh level scene
+     * @param desc
+     */
     private void loadPlayer(final String desc) {
         final int numMandatoryInfo = 3;
         String splitRegex = String.format("%s|%s", ID_DELIMITER,
@@ -181,6 +211,11 @@ class GameState {
         player = new Player(x, y, addInfo, img);
     }
 
+    /**
+     * Returns the components of a level map from the current scene
+     * @param map
+     * @return
+     */
     private String[] getMapComponents(final String map) {
         String splitRegex = String.format("%s%s|%s%s|%s%s|%s%s",
                 MAP_DESC_DELIMITER, System.lineSeparator(),
@@ -195,6 +230,10 @@ class GameState {
         return parts;
     }
 
+    /**
+     * Changes the current game state from running to lose or win
+     * @param kc
+     */
     public void update(final KeyCode kc) {
         updatePlayer(kc);
         updateEnemies();
@@ -205,6 +244,10 @@ class GameState {
         }
     }
 
+    /**
+     * Moves the player in the designated direction from player input
+     * @param kc
+     */
     private void updatePlayer(final KeyCode kc) {
         int playerX = player.getXPos();
         int playerY = player.getYPos();
@@ -242,10 +285,21 @@ class GameState {
         }
     }
 
+    /**
+     * returns the player's current x,y coordinates
+     * @param p player instance to be used
+     * @return player position
+     */
     private Tile getTileAtPlayer(final Player p) {
         return grid[p.getXPos()][p.getYPos()];
     }
 
+    /**
+     * Returns the
+     * @param x
+     * @param y
+     * @return
+     */
     private Enemy getEnemyAtLocation(final int x, final int y) {
         for (Enemy e : enemies) {
             if (e.getXPos() == x && e.getYPos() == y) {
@@ -255,6 +309,11 @@ class GameState {
         return null;
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     private boolean[][] getPassableGrid(final Enemy e) {
     	boolean[][] passableGrid = new boolean[grid.length][grid[0].length];
         for (int y = 0; y < grid[0].length; y++) {
@@ -268,16 +327,27 @@ class GameState {
         return passableGrid;
     }
 
+    /**
+     *
+     */
     private void updateEnemies() {
     	for (Enemy e : enemies) { 
         	e.getMove(getPassableGrid(e), player.getXPos(), player.getYPos());
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public State getCurrentState() {
         return currentState;
     }
 
+    /**
+     *
+     * @return
+     */
     public String save() {
         StringBuilder sbTime = new StringBuilder();
         StringBuilder sbMap = new StringBuilder();
@@ -335,6 +405,11 @@ class GameState {
                 + sbPlayer.toString();
     }
 
+    /**
+     *
+     * @param gc
+     * @param tick
+     */
     public void draw(final GraphicsContext gc, final boolean tick) {
         gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
         //tiles
@@ -369,6 +444,10 @@ class GameState {
         player.drawInventory(gc, 0, (y * TILE_RES) + TILE_RES);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         // pretty output until we get a tileset

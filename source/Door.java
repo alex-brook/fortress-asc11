@@ -2,6 +2,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.Map;
 
+/**
+ * Door is a tile that acts as a wall unless the player has the correct
+ * condition to open it
+ *
+ * @author Alex
+ */
 public abstract class Door extends Tile {
     private static final String DOOR_DOWN_2_IMG = "door_bottom_2.png";
     private static final String DOOR_DOWN_1_IMG = "door_bottom_1.png";

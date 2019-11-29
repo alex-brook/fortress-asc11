@@ -4,6 +4,13 @@ import javafx.scene.paint.Color;
 
 import java.util.Map;
 
+/**
+ * Type of door tile that is openable by the player if they have the correct
+ * number of points
+ *
+ * @author Alex
+ */
+
 class ScoreDoor extends Door {
     private static final String LOCK_UP = "token_door_bottom.png";
     private static final String LOCK_DOWN = "token_door_top.png";

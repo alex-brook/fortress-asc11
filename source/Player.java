@@ -6,6 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Contains the behaviors of the player character and its interactions
+ *
+ * @author Alex
+ */
+
 class Player {
     public static final char PLAYER = 'P';
 

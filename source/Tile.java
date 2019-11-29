@@ -3,6 +3,11 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Contains the inherited behaviors of various types of tile
+ *
+ * @author Alex
+ */
 public abstract class Tile {
     protected static final String GROUND_IMG = "ground.png";
     public static final String TOKEN_IMG = "bag_coins.png";

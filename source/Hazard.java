@@ -3,6 +3,12 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Tile that if the player comes into contact with loses them the game, unless
+ * they have the required safe item
+ *
+ * @author Alex
+ */
 class Hazard extends Tile {
     private static final String LAVA_0_IMG = "l0.png";
     private static final String LAVA_1_IMG = "l1.png";

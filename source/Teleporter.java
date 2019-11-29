@@ -3,6 +3,11 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Type of tile that moves the player to a predesignated position
+ *
+ * @author Alex
+ */
 class Teleporter extends Tile {
     private static final String TELEPORTER_IMG = "potion_green.png";
 

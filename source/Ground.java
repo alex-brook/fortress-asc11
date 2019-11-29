@@ -3,6 +3,12 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Tile that is walkable by player and enemy, can contain items
+ *
+ * @author Alex
+ */
+
 class Ground extends Tile {
     // basic image
 

@@ -3,6 +3,11 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Type of enemy that follows the player taking an optimised route
+ *
+ * @author Irfaan
+ */
 class SmartTargetEnemy extends Enemy {
     private static final String SMART_0_IMG = "red_goblin_idle_anim_f0.png";
     private static final String SMART_1_IMG = "red_goblin_idle_anim_f1.png";

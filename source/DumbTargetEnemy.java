@@ -3,6 +3,12 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * An enemy type which follows the player taking an unoptimised route
+ *
+ * @author Irfaan
+ */
+
 class DumbTargetEnemy extends Enemy {
     private static final String DUMB_0_IMG = "red_goblin_idle_anim_f0.png";
     private static final String DUMB_1_IMG = "red_goblin_idle_anim_f1.png";

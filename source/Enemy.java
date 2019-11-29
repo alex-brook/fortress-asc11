@@ -3,6 +3,12 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Contains the inherited behaviours of the various types of enemy
+ *
+ * @author Alex and Irfaan
+ */
+
 public abstract class Enemy {
     private char mapChar;
     private int xPos;

@@ -3,6 +3,12 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Type of door tile that is openable by the player if they have the correct
+ * colour key
+ *
+ * @author Alex
+ */
 class KeyDoor extends Door {
     private static final String LOCK_LEFT_IMG = "door_lock_right.png";
     private static final String LOCK_RIGHT_IMG = "door_lock_left.png";

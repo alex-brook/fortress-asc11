@@ -2,6 +2,13 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Creates instances of the various types of enemy from characters in the save
+ * file along with any additional information
+ *
+ * @author Alex
+ */
+
 public final class EnemyFactory {
     private static final class MapChars {
         public static final char WALL_FOLLOW_ENEMY = 'W';

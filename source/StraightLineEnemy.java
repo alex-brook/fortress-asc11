@@ -3,6 +3,13 @@ import javafx.scene.image.Image;
 
 import java.util.Map;
 
+/**
+ * Type of enemy that walks in a straight line until it reaches an impassable
+ * tile, where it turns and moves in the opposite direction
+ *
+ * @author Irfaan
+ */
+
 class StraightLineEnemy extends Enemy {
     private static final String STRAIGHT_0_IMG = "fly_anim_f0.png";
     private static final String STRAIGHT_1_IMG = "fly_anim_f1.png";

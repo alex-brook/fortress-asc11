@@ -2,6 +2,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.Map;
 
+/**
+ * Tile that ends the level when the player comes into contact with it
+ *
+ * @author Alex
+ */
+
 class Goal extends Tile {
     private static final String GOAL_IMG = "stair_nextlevel.png";
 

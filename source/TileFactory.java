@@ -1,6 +1,13 @@
 import javafx.scene.image.Image;
 import java.util.Map;
 
+/**
+ * Creates instances of the various types of tile from characters in the save
+ * file along with any additional information
+ *
+ * @author Alex
+ */
+
 public final class TileFactory {
     private Map<String, Image> images;
 
