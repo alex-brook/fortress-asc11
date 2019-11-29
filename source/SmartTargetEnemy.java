@@ -16,6 +16,10 @@ class SmartTargetEnemy extends Enemy {
     }
 
     @Override
+	public void getMove(boolean[][] passableGrid, int playerX, int playerY) {
+	}
+    
+    @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                     final int animationTick) {
         final int anims = 5;

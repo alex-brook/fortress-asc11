@@ -269,14 +269,9 @@ class GameState {
     }
 
     private void updateEnemies() {
-    	/*
-        for each enemy {
-            find out the move it wants to do
-            is it valid? {
-                do the move
-            }
+    	for (Enemy e : enemies) { 
+        	e.getMove(getPassableGrid(e), player.getXPos(), player.getYPos());
         }
-         */
     }
 
     public State getCurrentState() {

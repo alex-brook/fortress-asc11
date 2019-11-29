@@ -22,10 +22,8 @@ public abstract class Enemy {
         return images.get(name);
     }
 
-    public int[] getMove(final boolean[][] passableGrid,
-                               final int playerX, final int playerY) {
-        return null;
-    }
+    public abstract void getMove(final boolean[][] passableGrid,
+            final int playerX, final int playerY);
 
     public final int getXPos() {
         return xPos;
@@ -47,6 +45,38 @@ public abstract class Enemy {
                      final int animationTick) {
         return;
     }
+    
+    public void moveLeft() {
+        xPos -= 1;
+    }
+
+    public void moveRight() {
+        xPos += 1;
+    }
+
+    public void moveUp() {
+        yPos -= 1;
+    }
+
+    public void moveDown() {
+        yPos += 1;
+    }
+
+	public int getUpY() {
+		return yPos - 1;
+	}
+
+	public int getRightX() {
+		return xPos + 1;
+	}
+
+	public int getDownY() {
+		return yPos + 1;
+	}
+	
+	public int getLeftX() {
+		return xPos - 1;
+	}
 
     @Override
     public final String toString() {
