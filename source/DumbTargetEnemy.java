@@ -87,6 +87,7 @@ class DumbTargetEnemy extends Enemy {
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
+        super.draw(gc, x, y, animationTick);
         final int anims = 5;
         switch (animationTick % anims) {
             case 0:
@@ -105,5 +106,6 @@ class DumbTargetEnemy extends Enemy {
                 gc.drawImage(getImage(DUMB_4_IMG), x, y);
                 break;
         }
+        gc.restore();
     }
 }

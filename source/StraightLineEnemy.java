@@ -16,8 +16,6 @@ class StraightLineEnemy extends Enemy {
     private static final String STRAIGHT_2_IMG = "fly_anim_f2.png";
     private static final String STRAIGHT_3_IMG = "fly_anim_f3.png";
 
-    private Direction direction;
-
     StraightLineEnemy(final int x, final int y, final char mapChar,
                       final Map<String, Image> img, final Direction dir) {
         super(x, y, mapChar, img);
@@ -32,7 +30,6 @@ class StraightLineEnemy extends Enemy {
                 if (passable[getXPos()][getUpY()]) {
                     moveUp();
                 } else {
-                    direction = Direction.DOWN;
                     moveDown();
                 }
                 break;
@@ -40,7 +37,6 @@ class StraightLineEnemy extends Enemy {
                 if (passable[getXPos()][getDownY()]) {
                     moveDown();
                 } else {
-                    direction = Direction.UP;
                     moveUp();
                 }
                 break;
@@ -48,7 +44,6 @@ class StraightLineEnemy extends Enemy {
                 if (passable[getLeftX()][getYPos()]) {
                     moveLeft();
                 } else {
-                    direction = Direction.RIGHT;
                     moveRight();
                 }
                 break;
@@ -56,7 +51,6 @@ class StraightLineEnemy extends Enemy {
                 if (passable[getRightX()][getYPos()]) {
                     moveRight();
                 } else {
-                    direction = Direction.LEFT;
                     moveLeft();
                 }
                 break;
@@ -65,7 +59,9 @@ class StraightLineEnemy extends Enemy {
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
+        super.draw(gc, x, y, animationTick);
         final int anims = 4;
+
         switch (animationTick % anims) {
             case 0:
                 gc.drawImage(getImage(STRAIGHT_0_IMG), x, y);
@@ -80,6 +76,7 @@ class StraightLineEnemy extends Enemy {
                 gc.drawImage(getImage(STRAIGHT_3_IMG), x, y);
                 break;
         }
+        gc.restore();
     }
 
     @Override

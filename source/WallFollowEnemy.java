@@ -24,12 +24,13 @@ class WallFollowEnemy extends Enemy {
     }
 
     @Override
-	public void move(boolean[][] passableGrid, int playerX, int playerY) {
-	}
+    public void move(boolean[][] passableGrid, int playerX, int playerY) {
+    }
     
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
+        super.draw(gc, x, y, animationTick);
         final int anims = 6;
         switch (animationTick % anims) {
             case 0:
@@ -51,5 +52,6 @@ class WallFollowEnemy extends Enemy {
                 gc.drawImage(getImage(WALL_FOLLOW_5_IMG), x, y);
                 break;
         }
+        gc.restore();
     }
 }
