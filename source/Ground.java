@@ -67,4 +67,9 @@ class Ground extends Tile {
             p.giveItem(pickupItem());
         }
     }
+    
+    @Override
+    public boolean isPassable(final Enemy e) {
+        return true;
+    }
 }

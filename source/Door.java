@@ -81,6 +81,14 @@ public abstract class Door extends Tile {
                     || ((Wall) right).isInternal());
     }
 
+    public boolean isPassable(final Enemy e) {
+    	if (isLocked() == true) {
+    		return false;
+    	}else {
+    		return true;
+    	}
+    }
+    
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
