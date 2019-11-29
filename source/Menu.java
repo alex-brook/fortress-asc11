@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -41,6 +42,7 @@ public class Menu extends Application {
 
     private Canvas canvas;
     private GameState gs;
+    private Scene menuScene;
     private Scene scene;
     private Stage mainStage = new Stage();
 
@@ -52,8 +54,9 @@ public class Menu extends Application {
         mainStage = stage;
         Pane root = buildMmGUI();
 
-        scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        menuScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+        scene = menuScene;
         mainStage.setScene(scene);
         mainStage.show();
         mainStage.setTitle("Starship ASC11");
@@ -239,9 +242,13 @@ public class Menu extends Application {
             if (gs.getCurrentState() == GameState.State.RUNNING) {
                 gs.update(event.getCode());
                 gs.draw(gc, false);
-            }
-            else if(gs.getCurrentState() == GameState.State.LOSE) {
-
+            } else if (gs.getCurrentState() == GameState.State.LOSE
+                    || gs.getCurrentState() == GameState.State.WIN) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    mainStage.setScene(menuScene);
+                } else {
+                    gs.restart();
+                }
             }
         });
 

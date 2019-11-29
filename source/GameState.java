@@ -35,6 +35,7 @@ class GameState {
     }
 
     private Map<String, Image> img;
+    private String map;
     private State currentState;
     private Tile[][] grid;
     private Player player;
@@ -43,7 +44,8 @@ class GameState {
     private long startTime;
     private int animationTick = 0;
 
-    GameState(final String map) {
+    GameState(final String mapStr) {
+        map = mapStr;
         loadImages("assets/");
         load(map);
         currentState = State.RUNNING;
@@ -318,7 +320,7 @@ class GameState {
      * @return 2D array of booleans that dictate if the enemy can move there or not
      */
     private boolean[][] getPassableGrid(final Enemy e) {
-    	boolean[][] passableGrid = new boolean[grid.length][grid[0].length];
+        boolean[][] passableGrid = new boolean[grid.length][grid[0].length];
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
                 boolean anotherEnemyHere = getEnemyAtLocation(x, y) != null
@@ -334,8 +336,12 @@ class GameState {
      * Moves enemy
      */
     private void updateEnemies() {
-    	for (Enemy e : enemies) { 
-        	e.getMove(getPassableGrid(e), player.getXPos(), player.getYPos());
+        for (Enemy e : enemies) {
+            e.getMove(getPassableGrid(e), player.getXPos(), player.getYPos());
+            if (getEnemyAtLocation(player.getXPos(), player.getYPos())
+                    != null) {
+                player.kill();
+            }
         }
     }
 
@@ -365,15 +371,17 @@ class GameState {
         // get every map tile
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
-                char current = grid[x][y].getMapChar();
-                sbMap.append(current);
-                // if this tile needs a description
-                String info = grid[x][y].getAdditionalInfo();
-                if (info != null) {
-                    sbTiles.append(current);
-                    sbTiles.append(ID_DELIMITER);
-                    sbTiles.append(info);
-                    sbTiles.append(System.lineSeparator());
+                if (grid[x][y] != null) {
+                    char current = grid[x][y].getMapChar();
+                    sbMap.append(current);
+                    // if this tile needs a description
+                    String info = grid[x][y].getAdditionalInfo();
+                    if (info != null) {
+                        sbTiles.append(current);
+                        sbTiles.append(ID_DELIMITER);
+                        sbTiles.append(info);
+                        sbTiles.append(System.lineSeparator());
+                    }
                 }
             }
             sbMap.append(System.lineSeparator());
@@ -408,6 +416,11 @@ class GameState {
                 + sbPlayer.toString();
     }
 
+    public void restart() {
+        load(map);
+        currentState = State.RUNNING;
+    }
+
     /**
      * Draws all components of a level
      * @param gc canvas it draws on
@@ -425,6 +438,7 @@ class GameState {
                     grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
                 }
             }
+            // draw everything apart from walls
             for (x = 0; x < grid.length; x++) {
                 if (grid[x][y] != null && grid[x][y].getMapChar() != TileFactory.MapChars.WALL) {
                     grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);

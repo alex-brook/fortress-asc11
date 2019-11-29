@@ -162,6 +162,10 @@ class Player {
 
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
+        if (isDead()) {
+            return;
+        }
+
         final int playerAnims = 6;
         final int leanDegrees = 10;
         Image image;
