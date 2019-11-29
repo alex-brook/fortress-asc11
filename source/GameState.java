@@ -49,7 +49,10 @@ class GameState {
         currentState = State.RUNNING;
     }
 
-    //Apply's the images to the correct tiles when drawn
+    /**
+     * Puts all .png files at designated filepath into a hash map
+     * @param path filepath
+     */
     private void loadImages(final String path) {
         final String extension = ".png";
         System.out.println("[LOADING] Loading images...");
@@ -90,8 +93,8 @@ class GameState {
     }
 
     /**
-     *
-     * @param time
+     * Creates framework to save time spent on level
+     * @param time milliseconds spent on the level
      */
     private void loadTime(final String time) {
         timeElapsed = Long.parseLong(time.trim());
@@ -100,9 +103,9 @@ class GameState {
     }
 
     /**
-     * Creates and loads the tiles into the level scene
-     * @param tileMap
-     * @param tileDesc
+     * Creates and loads the tiles into the level scene from a save file
+     * @param tileMap map file text
+     * @param tileDesc extra info for certain tiles
      */
     private void loadTiles(final String tileMap, final String tileDesc) {
         TileFactory tf = new TileFactory(img);
@@ -160,7 +163,7 @@ class GameState {
 
     /**
      * Creates and loads the enemies into the level scene
-     * @param enemyDesc
+     * @param enemyDesc extra info for certain enemy types
      */
     private void loadEnemies(final String enemyDesc) {
         final int numMandatoryInfo = 3;
@@ -193,8 +196,8 @@ class GameState {
     }
 
     /**
-     * Creates and loads the player into teh level scene
-     * @param desc
+     * Creates and loads the player into the level scene
+     * @param desc Extra info for player
      */
     private void loadPlayer(final String desc) {
         final int numMandatoryInfo = 3;
@@ -212,9 +215,9 @@ class GameState {
     }
 
     /**
-     * Returns the components of a level map from the current scene
-     * @param map
-     * @return
+     * Returns the components of a level map from the save file
+     * @param map map filename
+     * @return Array of logical components of the map file
      */
     private String[] getMapComponents(final String map) {
         String splitRegex = String.format("%s%s|%s%s|%s%s|%s%s",
@@ -232,7 +235,7 @@ class GameState {
 
     /**
      * Changes the current game state from running to lose or win
-     * @param kc
+     * @param kc key pressed
      */
     public void update(final KeyCode kc) {
         updatePlayer(kc);
@@ -246,7 +249,7 @@ class GameState {
 
     /**
      * Moves the player in the designated direction from player input
-     * @param kc
+     * @param kc key pressed
      */
     private void updatePlayer(final KeyCode kc) {
         int playerX = player.getXPos();
@@ -286,19 +289,19 @@ class GameState {
     }
 
     /**
-     * returns the player's current x,y coordinates
+     * returns the tile at the player's current x,y coordinates
      * @param p player instance to be used
-     * @return player position
+     * @return tile at current player position
      */
     private Tile getTileAtPlayer(final Player p) {
         return grid[p.getXPos()][p.getYPos()];
     }
 
     /**
-     * Returns the
-     * @param x
-     * @param y
-     * @return
+     * Checks specified coordinates for an instance of enemy
+     * @param x x coordinate being checked
+     * @param y y coordinate being checked
+     * @return enemy at specified coordinates or null
      */
     private Enemy getEnemyAtLocation(final int x, final int y) {
         for (Enemy e : enemies) {
@@ -310,9 +313,9 @@ class GameState {
     }
 
     /**
-     *
-     * @param e
-     * @return
+     * Checks every tile in the scene for if the instance of enemy can move there
+     * @param e instance of enemy
+     * @return 2D array of booleans that dictate if the enemy can move there or not
      */
     private boolean[][] getPassableGrid(final Enemy e) {
     	boolean[][] passableGrid = new boolean[grid.length][grid[0].length];
@@ -328,7 +331,7 @@ class GameState {
     }
 
     /**
-     *
+     * Moves enemy
      */
     private void updateEnemies() {
     	for (Enemy e : enemies) { 
@@ -337,16 +340,16 @@ class GameState {
     }
 
     /**
-     *
-     * @return
+     * Gets the current state of the level (running, lose, win)
+     * @return current state of the level
      */
     public State getCurrentState() {
         return currentState;
     }
 
     /**
-     *
-     * @return
+     * Converts the current game state to a string
+     * @return game state as a string
      */
     public String save() {
         StringBuilder sbTime = new StringBuilder();
@@ -406,9 +409,9 @@ class GameState {
     }
 
     /**
-     *
-     * @param gc
-     * @param tick
+     * Draws all components of a level
+     * @param gc canvas it draws on
+     * @param tick flag for if you want to update the animation
      */
     public void draw(final GraphicsContext gc, final boolean tick) {
         gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
@@ -445,8 +448,8 @@ class GameState {
     }
 
     /**
-     *
-     * @return
+     * Standard toString override
+     * @return new toString override
      */
     @Override
     public String toString() {

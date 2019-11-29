@@ -26,6 +26,11 @@ public abstract class Door extends Tile {
     static boolean drewLeftDoor = false;
     private boolean locked;
 
+    /**
+     *
+     * @param mapChar
+     * @param img
+     */
     public Door(final char mapChar, final Map<String, Image> img) {
         super(mapChar,  img);
         locked = true;

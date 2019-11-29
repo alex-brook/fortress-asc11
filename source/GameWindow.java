@@ -26,6 +26,11 @@ public class GameWindow extends Application {
 
     private GameState gs;
 
+    public GameWindow() {
+        gs = new GameState(stringFromFile("test/map3.txt"));
+
+    }
+
     @Override
     public void start(Stage primaryStage) {
         Group root = new Group();
@@ -71,11 +76,6 @@ public class GameWindow extends Application {
         primaryStage.setTitle("Starship ASC11");
         primaryStage.setScene(s);
         primaryStage.show();
-    }
-
-    public GameWindow() {
-        gs = new GameState(stringFromFile("test/map3.txt"));
-
     }
 
     private String stringFromFile(final String fileName) {

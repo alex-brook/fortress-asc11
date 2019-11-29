@@ -1,3 +1,4 @@
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -5,19 +6,24 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Main menu of game
  *
  * @author Stephen Colegrove
- *
  */
 public class Menu extends Application {
     // The size of the window
@@ -28,20 +34,35 @@ public class Menu extends Application {
     private static final int CANVAS_WIDTH = 400;
     private static final int CANVAS_HEIGHT = 400;
 
-    private Canvas canvas;
+    // The size of game window
+    private static final int GAME_WIDTH = 800;
+    private static final int GAME_HEIGHT = 600;
+    private static final int GAME_MARGIN = 20;
 
-    public void start(Stage primaryStage) {
-        // Build the GUI and scene
+    private Canvas canvas;
+    private GameState gs;
+    private Scene scene;
+    private Stage mainStage = new Stage();
+
+    /**
+     * Builds the scene and displays
+     */
+    @Override
+    public void start(Stage stage) {
+        mainStage = stage;
         Pane root = buildMmGUI();
 
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        // Display the scene on the stage
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        primaryStage.setTitle("Starship ASC11");
+        mainStage.setScene(scene);
+        mainStage.show();
+        mainStage.setTitle("Starship ASC11");
     }
 
+    /**
+     * It's a main, yay
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
@@ -81,7 +102,7 @@ public class Menu extends Application {
         leaderboardButton.setMaxWidth(Double.MAX_VALUE);
         quitButton.setMaxWidth(Double.MAX_VALUE);
 
-        //Set button behaviours
+        //Sets button behaviours
         ngButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 loadNewGame();
@@ -115,27 +136,6 @@ public class Menu extends Application {
         return root;
     }
 
-    private Pane buildNgGUI() {
-        BorderPane root = new BorderPane();
-
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
-
-        VBox sidebar = new VBox();
-        sidebar.setSpacing(20);
-        sidebar.setPadding(new Insets(10, 10, 10, 10));
-        root.setLeft(sidebar);
-
-        Label title = new Label("Starship ASC11");
-        title.setFont(new Font(60));
-        Label m1 = new Label("Level 1");
-        m1.setFont(new Font(20));
-
-        sidebar.getChildren().addAll(title, m1);
-
-        return root;
-
-    }
 
     private Pane buildLgGUI() {
         BorderPane root = new BorderPane();
@@ -201,17 +201,76 @@ public class Menu extends Application {
         return root;
     }
 
-    /*
+    /**
      * Creates a new game on chosen profile
      */
     private void loadNewGame() {
-        Stage secondaryStage = new Stage();
-        Pane root = buildNgGUI();
+        gs = new GameState(stringFromFile("test/map3.txt"));
+        BorderPane root = new BorderPane();
+        scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
 
-        Scene sceneNG = new Scene(root, WINDOW_WIDTH - 50, WINDOW_HEIGHT - 50);
-        secondaryStage.setScene(sceneNG);
-        secondaryStage.show();
-        secondaryStage.setTitle("Level 1");
+        final Canvas canvas = new Canvas(GAME_WIDTH - GAME_MARGIN, GAME_HEIGHT - GAME_MARGIN);
+        canvas.setFocusTraversable(true);
+        canvas.requestFocus();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        AnimationTimer at = new AnimationTimer() {
+            private long frame = 0;
+
+            @Override
+            public void handle(long now) {
+                if (frame % 10 == 0
+                        && gs.getCurrentState() == GameState.State.RUNNING) {
+                    gs.draw(gc, true);
+                    frame = 0;
+                } else if (gs.getCurrentState() == GameState.State.WIN) {
+                    gc.setFill(Color.WHITE);
+                    gc.fillText("YOU WON!", GAME_MARGIN, GAME_MARGIN);
+                } else if (gs.getCurrentState() == GameState.State.LOSE) {
+                    gc.setFill(Color.RED);
+                    gc.fillText("YOU LOST...", GAME_MARGIN, GAME_MARGIN);
+                }
+                frame++;
+            }
+        };
+        at.start();
+
+        canvas.setOnKeyPressed(event -> {
+            if (gs.getCurrentState() == GameState.State.RUNNING) {
+                gs.update(event.getCode());
+                gs.draw(gc, false);
+            }
+            else if(gs.getCurrentState() == GameState.State.LOSE) {
+                
+            }
+        });
+
+        root.getChildren().add(canvas);
+        mainStage.setTitle("Starship ASC11");
+        mainStage.setScene(scene);
+        mainStage.show();
+    }
+
+    /**
+     *
+     * @param fileName
+     * @return
+     */
+    private String stringFromFile(final String fileName) {
+        try {
+            File file = new File(fileName);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+            return new String(data, "UTF-8");
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public void hideMenu(Stage primaryStage) {
+        primaryStage.hide();
     }
 
     /**
