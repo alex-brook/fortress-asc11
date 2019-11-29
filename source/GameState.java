@@ -256,13 +256,12 @@ class GameState {
     }
 
     private boolean[][] getPassableGrid(final Enemy e) {
-        boolean[][] passableGrid = new boolean[grid[0].length][grid.length];
+    	boolean[][] passableGrid = new boolean[grid.length][grid[0].length];
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
                 boolean anotherEnemyHere = getEnemyAtLocation(x, y) != null
                         && getEnemyAtLocation(x, y) != e;
                 boolean tileIsPassable = grid[x][y].isPassable(e);
-
                 passableGrid[x][y] = tileIsPassable && !anotherEnemyHere;
             }
         }
@@ -270,7 +269,7 @@ class GameState {
     }
 
     private void updateEnemies() {
-        /*
+    	/*
         for each enemy {
             find out the move it wants to do
             is it valid? {
