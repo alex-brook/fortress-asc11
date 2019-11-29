@@ -27,6 +27,7 @@ class GameState {
     public static final String INFO_DELIMITER = ",";
 
     public static final double TILE_RES = 32;
+    public static final int VIEW_RADIUS = 5;
 
     public enum State {
         WIN,
@@ -419,6 +420,43 @@ class GameState {
     public void restart() {
         load(map);
         currentState = State.RUNNING;
+    }
+
+    public void drawRadius(final GraphicsContext gc, final boolean tick) {
+        final double viewOffset = VIEW_RADIUS * TILE_RES;
+
+        int playerX = player.getXPos();
+        int playerY = player.getYPos();
+
+        int xMin = playerX - VIEW_RADIUS;
+        int xMax = playerX + VIEW_RADIUS;
+        int yMin = playerY - VIEW_RADIUS;
+        int yMax = playerY + VIEW_RADIUS;
+
+        gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
+
+        for (int y = yMin; y < yMax; y++) {
+            for (int x = xMin; x < xMax; x++) {
+                boolean xInBounds = x >= 0 && x < grid.length;
+                boolean yInBounds = y >= 0 && y < grid[0].length;
+                double drawX = (x - xMin) * TILE_RES;
+                double drawY = (y - yMin) * TILE_RES;
+                if (xInBounds && yInBounds && grid[x][y] != null) {
+                    grid[x][y].draw(gc, drawX, drawY, animationTick);
+                }
+                Enemy enemyHere = getEnemyAtLocation(x, y);
+                if (enemyHere != null) {
+                    enemyHere.draw(gc, drawX, drawY, animationTick);
+                }
+                if (playerX == x && playerY == y) {
+                    player.draw(gc, drawX, drawY, animationTick);
+                }
+            }
+        }
+        player.drawInventory(gc, 0, (VIEW_RADIUS * TILE_RES) * 2 );
+        if (tick) {
+            animationTick++;
+        }
     }
 
     /**

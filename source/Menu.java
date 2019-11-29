@@ -224,7 +224,7 @@ public class Menu extends Application {
             public void handle(long now) {
                 if (frame % 10 == 0
                         && gs.getCurrentState() == GameState.State.RUNNING) {
-                    gs.draw(gc, true);
+                    gs.drawRadius(gc, true);
                     frame = 0;
                 } else if (gs.getCurrentState() == GameState.State.WIN) {
                     gc.setFill(Color.WHITE);
@@ -241,7 +241,7 @@ public class Menu extends Application {
         canvas.setOnKeyPressed(event -> {
             if (gs.getCurrentState() == GameState.State.RUNNING) {
                 gs.update(event.getCode());
-                gs.draw(gc, false);
+                gs.drawRadius(gc, false);
             } else if (gs.getCurrentState() == GameState.State.LOSE
                     || gs.getCurrentState() == GameState.State.WIN) {
                 if (event.getCode() == KeyCode.ESCAPE) {

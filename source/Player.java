@@ -1,5 +1,6 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -155,9 +156,20 @@ class Player {
 
     public void drawInventory(final GraphicsContext gc, final double x,
                               final double y) {
-        double offset = GameState.TILE_RES;
-        gc.drawImage(img.get(PLAYER_0_IMG), x, y);
-        gc.drawImage(img.get(Tile.TOKEN_IMG), x + offset, y);
+        final double offset = GameState.TILE_RES;
+        final double cointsHeightOffset = 1.7;
+        gc.save();
+        gc.drawImage(img.get(PLAYER_0_IMG), x,  y);
+        gc.drawImage(img.get(Item.TOKEN.getImageName()), x,  y + offset);
+        gc.setFill(Color.WHITE);
+        gc.fillText(String.format("x %d", tokenCount), x + offset,
+                y + (offset * cointsHeightOffset));
+        for (int i = 0; i < inventory.size(); i++) {
+            gc.drawImage(img.get(inventory.get(i).getImageName()),
+                    x + (i * offset),
+                    y + (2 * offset));
+        }
+        gc.restore();
     }
 
     public void draw(final GraphicsContext gc, final double x, final double y,

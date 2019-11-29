@@ -11,10 +11,25 @@ public enum Item{
     GREEN_KEY(TileFactory.MapChars.GREEN_KEY),
     BLUE_KEY(TileFactory.MapChars.BLUE_KEY);
 
+    private String imageFile;
+
+    static {
+        FIRE_BOOTS.imageFile = "brown_boots.png";
+        FLIPPERS.imageFile = "silver_boots.png";
+        TOKEN.imageFile = "bag_coins.png";
+        RED_KEY.imageFile =  "key_red.png";
+        GREEN_KEY.imageFile =  "key_green.png";
+        BLUE_KEY.imageFile = "key_blue.png";
+    }
+
     private final char mapChar;
 
     private Item(final char mapc) {
         this.mapChar = mapc;
+    }
+
+    public String getImageName() {
+        return imageFile;
     }
 
     public char getMapChar() {

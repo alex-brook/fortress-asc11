@@ -10,18 +10,6 @@ import java.util.Map;
  */
 
 class Ground extends Tile {
-    // basic image
-
-    //keys
-    private static final String RED_KEY_IMG = "key_red.png";
-    private static final String BLUE_KEY_IMG = "key_blue.png";
-    private static final String GREEN_KEY_IMG = "key_green.png";
-    //clothes
-    private static final String FIRE_BOOTS_IMG = "brown_boots.png";
-    private static final String FLIPPERS_IMG = "silver_boots.png";
-    // tokens
-
-
     private Item hasItem;
 
     Ground(final char mapChar, final Map<String, Image> img) {
@@ -48,19 +36,8 @@ class Ground extends Tile {
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
         gc.drawImage(getImage(GROUND_IMG), x, y);
-
-        if (hasItem == Item.RED_KEY) {
-            gc.drawImage(getImage(RED_KEY_IMG), x, y);
-        } else if (hasItem == Item.BLUE_KEY) {
-            gc.drawImage(getImage(BLUE_KEY_IMG), x, y);
-        } else if (hasItem == Item.GREEN_KEY) {
-            gc.drawImage(getImage(GREEN_KEY_IMG), x, y);
-        } else if (hasItem == Item.TOKEN) {
-            gc.drawImage(getImage(TOKEN_IMG), x, y);
-        } else if (hasItem == Item.FIRE_BOOTS) {
-            gc.drawImage(getImage(FIRE_BOOTS_IMG), x, y);
-        } else if (hasItem == Item.FLIPPERS) {
-            gc.drawImage(getImage(FLIPPERS_IMG), x, y);
+        if (hasItem != null) {
+            gc.drawImage(getImage(hasItem.getImageName()), x, y);
         }
     }
 

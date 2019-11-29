@@ -10,7 +10,6 @@ import java.util.Map;
  */
 public abstract class Tile {
     protected static final String GROUND_IMG = "ground.png";
-    public static final String TOKEN_IMG = "bag_coins.png";
 
     private char mapChar;
 
