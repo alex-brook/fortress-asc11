@@ -241,7 +241,7 @@ public class Menu extends Application {
                 gs.draw(gc, false);
             }
             else if(gs.getCurrentState() == GameState.State.LOSE) {
-                
+
             }
         });
 
