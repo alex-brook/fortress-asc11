@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
+<Pane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
    <children>
-      <Canvas fx:id="gameCanvas" height="200.0" layoutX="200.0" layoutY="100.0" width="200.0" />
+      <Canvas fx:id="gameCanvas" height="200.0" layoutX="0.0" layoutY="0.0" width="200.0" onKeyPressed="#keyPress"/>
    </children>
 </Pane>

@@ -16,15 +16,15 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="failPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+<AnchorPane fx:id="failPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FailController">
     <children>
     <Label layoutX="14.0" layoutY="14.0" text="Level Failed">
         <font>
             <Font size="15.0" />
         </font>
     </Label>
-        <Button layoutX="100.0" layoutY="87.0" mnemonicParsing="false" text="Restart Level" onAction="#ngButton"/>
-        <Button layoutX="300.0" layoutY="87.0" mnemonicParsing="false" text="Main Menu" onAction="#mainMenu"/>
+        <Button layoutX="100.0" layoutY="87.0" mnemonicParsing="false" text="Restart Level" />
+        <Button layoutX="300.0" layoutY="87.0" mnemonicParsing="false" text="Main Menu" onAction="#switchToMenu"/>
     </children>
 
 </AnchorPane>
