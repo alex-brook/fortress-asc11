@@ -23,16 +23,39 @@ public final class EnemyFactory {
         this.images = img;
     }
 
+    /**
+     *
+     * @param c
+     * @param x
+     * @param y
+     * @return
+     */
     public Enemy getEnemy(final char c, final int x, final int y) {
         return getEnemy(c, x, y, new String[0]);
     }
 
+    /**
+     *
+     * @param c
+     * @param x
+     * @param y
+     * @param additionalInfo
+     * @return
+     */
     public Enemy getEnemy(final char c, final int x, final int y,
                           final String additionalInfo) {
         return getEnemy(c, x, y,
                 additionalInfo.split(GameState.INFO_DELIMITER));
     }
 
+    /**
+     *
+     * @param c
+     * @param x
+     * @param y
+     * @param additionalInfo
+     * @return
+     */
     public Enemy getEnemy(final char c, final int x, final int y,
                           final String[] additionalInfo) {
         switch (c) {

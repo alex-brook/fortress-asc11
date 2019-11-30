@@ -421,11 +421,19 @@ class GameState {
                 + sbPlayer.toString();
     }
 
+    /**
+     *
+     */
     public void restart() {
         load(map);
         currentState = State.RUNNING;
     }
 
+    /**
+     *
+     * @param gc
+     * @param tick
+     */
     public void drawRadius(final GraphicsContext gc, final boolean tick) {
         final double viewOffset = VIEW_RADIUS * TILE_RES;
 

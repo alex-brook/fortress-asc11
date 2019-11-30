@@ -27,8 +27,8 @@ public abstract class Door extends Tile {
     private boolean locked;
 
     /**
-     *
-     * @param mapChar
+     * Creates a locked door
+     * @param mapChar character from save file
      * @param img
      */
     public Door(final char mapChar, final Map<String, Image> img) {
@@ -36,14 +36,26 @@ public abstract class Door extends Tile {
         locked = true;
     }
 
+    /**
+     * Getter for locked
+     * @return locked boolean
+     */
     protected final boolean isLocked() {
         return locked;
     }
+
+    /**
+     * Unlocked setter for locked boolean
+     */
     protected final void unlock() {
         locked = false;
         setMapChar(TileFactory.MapChars.GROUND);
     }
 
+    /**
+     *
+     * @return
+     */
     protected final boolean isLeft() {
         Tile up = getUpNeighbour();
         Tile down = getDownNeighbour();
@@ -56,6 +68,10 @@ public abstract class Door extends Tile {
                     || ((Wall) down).isInternal());
     }
 
+    /**
+     *
+     * @return
+     */
     protected final boolean isRight() {
         Tile up = getUpNeighbour();
         Tile down = getDownNeighbour();
@@ -68,6 +84,10 @@ public abstract class Door extends Tile {
                     || ((Wall) down).isInternal());
     }
 
+    /**
+     *
+     * @return
+     */
     protected final boolean isUp() {
         Tile left = getLeftNeighbour();
         Tile right = getRightNeighbour();
@@ -80,6 +100,10 @@ public abstract class Door extends Tile {
                     || ((Wall) right).isInternal());
     }
 
+    /**
+     *
+     * @return
+     */
     protected final boolean isDown() {
         Tile left = getLeftNeighbour();
         Tile right = getRightNeighbour();
@@ -92,6 +116,11 @@ public abstract class Door extends Tile {
                     || ((Wall) right).isInternal());
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     public boolean isPassable(final Enemy e) {
     	if (isLocked() == true) {
     		return false;
@@ -99,7 +128,14 @@ public abstract class Door extends Tile {
     		return true;
     	}
     }
-    
+
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {

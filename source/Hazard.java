@@ -42,6 +42,13 @@ class Hazard extends Tile {
         requiredItem = item;
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -124,6 +131,10 @@ class Hazard extends Tile {
         }
     }
 
+    /**
+     *
+     * @param p
+     */
     @Override
     public void playerContact(final Player p) {
         if (!p.hasItem(requiredItem)) {

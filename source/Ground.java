@@ -21,6 +21,10 @@ class Ground extends Tile {
         this.hasItem = item;
     }
 
+    /**
+     *
+     * @return
+     */
     public Item pickupItem() {
         Item item = hasItem;
         hasItem = null;
@@ -28,10 +32,21 @@ class Ground extends Tile {
         return item;
     }
 
+    /**
+     *
+     * @param item
+     */
     public void setItem(final Item item) {
         this.hasItem = item;
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -41,6 +56,10 @@ class Ground extends Tile {
         }
     }
 
+    /**
+     *
+     * @param p
+     */
     @Override
     public void playerContact(final Player p) {
         if (hasItem != null && hasItem == Item.TOKEN) {
@@ -50,7 +69,12 @@ class Ground extends Tile {
             p.giveItem(pickupItem());
         }
     }
-    
+
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public boolean isPassable(final Enemy e) {
         return true;

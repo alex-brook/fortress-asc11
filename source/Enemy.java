@@ -27,6 +27,11 @@ public abstract class Enemy {
         lookingRight = true;
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public Image getImage(final String name) {
         return images.get(name);
     }
@@ -34,22 +39,45 @@ public abstract class Enemy {
     public abstract void move(final boolean[][] passableGrid,
                               final int playerX, final int playerY);
 
+    /**
+     *
+     * @return
+     */
     public final int getXPos() {
         return xPos;
     }
 
+    /**
+     *
+     * @return
+     */
     public final int getYPos() {
         return yPos;
     }
 
+    /**
+     *
+     * @return
+     */
     public final char getMapChar() {
         return mapChar;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAdditionalInfo() {
         return null;
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
         final int leanDegrees = 10;
@@ -69,45 +97,77 @@ public abstract class Enemy {
             gc.translate(-x, -y);
         }
     }
-    
+
+    /**
+     *
+     */
     public void moveLeft() {
         xPos -= 1;
         direction = Direction.LEFT;
         lookingRight = false;
     }
 
+    /**
+     *
+     */
     public void moveRight() {
         xPos += 1;
         direction = Direction.RIGHT;
         lookingRight = true;
     }
 
+    /**
+     *
+     */
     public void moveUp() {
         yPos -= 1;
         direction = Direction.UP;
     }
 
+    /**
+     *
+     */
     public void moveDown() {
         yPos += 1;
         direction = Direction.DOWN;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getUpY() {
         return yPos - 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRightX() {
         return xPos + 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDownY() {
         return yPos + 1;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLeftX() {
         return xPos - 1;
     }
 
+    /**
+     * Generic toString override
+     * @return wanted toString output
+     */
     @Override
     public final String toString() {
         return String.valueOf(getMapChar());

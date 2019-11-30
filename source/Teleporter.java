@@ -21,6 +21,13 @@ class Teleporter extends Tile {
         linkedY = y;
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -28,6 +35,10 @@ class Teleporter extends Tile {
         gc.drawImage(getImage(TELEPORTER_IMG), x, y);
     }
 
+    /**
+     *
+     * @param p
+     */
     @Override
     public void playerContact(final Player p) {
         switch (p.getDirection()) {
@@ -46,6 +57,10 @@ class Teleporter extends Tile {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getAdditionalInfo() {
         return String.format("%d%s%d",

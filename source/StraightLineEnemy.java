@@ -22,6 +22,12 @@ class StraightLineEnemy extends Enemy {
         direction = dir;
     }
 
+    /**
+     *
+     * @param passable
+     * @param playerX
+     * @param playerY
+     */
     @Override
     public void move(final boolean[][] passable, final int playerX,
                      final int playerY) {
@@ -56,6 +62,14 @@ class StraightLineEnemy extends Enemy {
                 break;
         }
     }
+
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -79,6 +93,10 @@ class StraightLineEnemy extends Enemy {
         gc.restore();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getAdditionalInfo() {
         return String.format("%s", direction);

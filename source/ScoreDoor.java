@@ -24,6 +24,12 @@ class ScoreDoor extends Door {
         super(mapChar, img);
         tokensNeeded = tokens;
     }
+
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean isPassable(final Player p) {
         if (isLocked()) {
@@ -32,6 +38,10 @@ class ScoreDoor extends Door {
         return true;
     }
 
+    /**
+     *
+     * @param p
+     */
     @Override
     public void playerContact(final Player p) {
         if (isLocked()) {
@@ -40,6 +50,13 @@ class ScoreDoor extends Door {
         }
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x,
                      final double y, final int animationTick) {
@@ -58,6 +75,10 @@ class ScoreDoor extends Door {
         gc.restore();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getAdditionalInfo() {
         if (isLocked()) {
