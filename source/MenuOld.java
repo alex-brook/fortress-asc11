@@ -26,7 +26,7 @@ import java.io.IOException;
  *
  * @author Stephen Colegrove
  */
-public class Menu extends Application {
+public class MenuOld extends Application {
     // The size of the window
     private static final int WINDOW_WIDTH = 400;
     private static final int WINDOW_HEIGHT = 400;
@@ -36,9 +36,9 @@ public class Menu extends Application {
     private static final int CANVAS_HEIGHT = 400;
 
     // The size of game window
-    private static final int GAME_WIDTH = 800;
-    private static final int GAME_HEIGHT = 600;
-    private static final int GAME_MARGIN = 20;
+    private static final double GAME_WIDTH = ((GameState.VIEW_RADIUS * 2) * (GameState.TILE_RES)) - GameState.TILE_RES * 2;
+    private static final double GAME_HEIGHT = ((GameState.VIEW_RADIUS + 2) * (GameState.TILE_RES * 2));
+    private static final int GAME_MARGIN = 0;
 
     private Canvas canvas;
     private GameState gs;
@@ -208,11 +208,12 @@ public class Menu extends Application {
      * Creates a new game on chosen profile
      */
     private void loadNewGame() {
-        gs = new GameState(stringFromFile("test/map3.txt"));
+        gs = new GameState(stringFromFile(getClass().getResource("./map/map3.txt").getPath()));
         BorderPane root = new BorderPane();
         scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
 
         final Canvas canvas = new Canvas(GAME_WIDTH - GAME_MARGIN, GAME_HEIGHT - GAME_MARGIN);
+        //mainStage.setResizable(false);
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -226,12 +227,6 @@ public class Menu extends Application {
                         && gs.getCurrentState() == GameState.State.RUNNING) {
                     gs.drawRadius(gc, true);
                     frame = 0;
-                } else if (gs.getCurrentState() == GameState.State.WIN) {
-                    gc.setFill(Color.WHITE);
-                    gc.fillText("YOU WON!", GAME_MARGIN, GAME_MARGIN);
-                } else if (gs.getCurrentState() == GameState.State.LOSE) {
-                    gc.setFill(Color.RED);
-                    gc.fillText("YOU LOST...", GAME_MARGIN, GAME_MARGIN);
                 }
                 frame++;
             }

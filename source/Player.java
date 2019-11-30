@@ -156,12 +156,32 @@ class Player {
 
     public void drawInventory(final GraphicsContext gc, final double x,
                               final double y) {
+        final double leanDegrees = 90;
+        final double rows = 3;
+        final double arcWidth = 20;
+        final double arcHeight = 10;
         final double offset = GameState.TILE_RES;
         final double cointsHeightOffset = 1.7;
+        final double textOffset = 0.6;
         gc.save();
-        gc.drawImage(img.get(PLAYER_0_IMG), x,  y);
-        gc.drawImage(img.get(Item.TOKEN.getImageName()), x,  y + offset);
+        gc.setFill(Color.DARKSLATEGREY);
+        gc.fillRoundRect(x, y, Math.max(inventory.size(), 2) * GameState.TILE_RES,
+                rows * GameState.TILE_RES, arcWidth, arcHeight);
         gc.setFill(Color.WHITE);
+        String playerText = isDead() ? "x 0" : "x 1";
+        gc.fillText(playerText, x + GameState.TILE_RES,
+                y + (GameState.TILE_RES * textOffset));
+        if (isDead()) {
+            gc.translate(x + GameState.TILE_RES, y);
+            gc.rotate(leanDegrees);
+            gc.translate(-x, -y);
+        }
+        gc.drawImage(img.get(PLAYER_0_IMG), x,  y);
+        gc.restore();
+        gc.save();
+
+        gc.setFill(Color.GOLD);
+        gc.drawImage(img.get(Item.TOKEN.getImageName()), x,  y + offset);
         gc.fillText(String.format("x %d", tokenCount), x + offset,
                 y + (offset * cointsHeightOffset));
         for (int i = 0; i < inventory.size(); i++) {

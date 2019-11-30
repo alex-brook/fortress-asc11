@@ -3,6 +3,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,7 +28,7 @@ class GameState {
     public static final String INFO_DELIMITER = ",";
 
     public static final double TILE_RES = 32;
-    public static final int VIEW_RADIUS = 5;
+    public static final int VIEW_RADIUS = 7;
 
     public enum State {
         WIN,
@@ -47,7 +48,8 @@ class GameState {
 
     GameState(final String mapStr) {
         map = mapStr;
-        loadImages("assets/");
+        String path = getClass().getClassLoader().getResource("./assets").getPath();
+        loadImages(path);
         load(map);
         currentState = State.RUNNING;
     }
@@ -324,10 +326,12 @@ class GameState {
         boolean[][] passableGrid = new boolean[grid.length][grid[0].length];
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
-                boolean anotherEnemyHere = getEnemyAtLocation(x, y) != null
-                        && getEnemyAtLocation(x, y) != e;
-                boolean tileIsPassable = grid[x][y].isPassable(e);
-                passableGrid[x][y] = tileIsPassable && !anotherEnemyHere;
+                if (grid[x][y] != null) {
+                    boolean anotherEnemyHere = getEnemyAtLocation(x, y) != null
+                            && getEnemyAtLocation(x, y) != e;
+                    boolean tileIsPassable = grid[x][y].isPassable(e);
+                    passableGrid[x][y] = tileIsPassable && !anotherEnemyHere;
+                }
             }
         }
         return passableGrid;
