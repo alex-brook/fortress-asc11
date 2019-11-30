@@ -36,14 +36,31 @@ public final class TileFactory {
         images = img;
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     public Tile getTile(final char c) {
         return getTile(c, new String[0]);
     }
 
+    /**
+     *
+     * @param c
+     * @param additionalInfo
+     * @return
+     */
     public Tile getTile(final char c, final String additionalInfo) {
         return getTile(c, additionalInfo.split(GameState.INFO_DELIMITER));
     }
 
+    /**
+     *
+     * @param c
+     * @param additionalInfo
+     * @return
+     */
     public Tile getTile(final char c, final String[] additionalInfo) {
         switch (c) {
             case MapChars.GROUND:
@@ -81,6 +98,12 @@ public final class TileFactory {
                 return null;
         }
     }
+
+    /**
+     *
+     * @param c
+     * @return
+     */
     private Item keyFromChar(final char c) {
         switch (c) {
             case MapChars.RED_KEY:

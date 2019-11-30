@@ -16,6 +16,11 @@ public enum Direction {
         mapStr = dirStr;
     }
 
+    /**
+     * Returns correct direction for input
+     * @param str
+     * @return
+     */
     public static Direction getDirection(final String str) {
         for (Direction d : values()) {
             if (d.toString().equals(str)) {
@@ -25,6 +30,10 @@ public enum Direction {
         return null;
     }
 
+    /**
+     * Generic toString override
+     * @return wanted toString output
+     */
     @Override
     public String toString() {
         return mapStr;

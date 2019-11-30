@@ -28,13 +28,27 @@ public enum Item{
         this.mapChar = mapc;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getImageName() {
         return imageFile;
     }
 
+    /**
+     *
+     * @return
+     */
     public char getMapChar() {
         return mapChar;
     }
+
+    /**
+     *
+     * @param c
+     * @return
+     */
     public static Item getItem(final char c) {
         for (Item i : values()) {
             if (i.getMapChar() == c) {

@@ -28,6 +28,10 @@ class Wall extends Tile {
 
     // there is loads of dope duplication in the draw logic
     // should be refactored at some point
+    /**
+     *
+     * @return
+     */
     public boolean isInternal() {
         return getLeftNeighbour() != null
                 && getRightNeighbour() != null
@@ -39,6 +43,10 @@ class Wall extends Tile {
                 && getRightNeighbour().getUpNeighbour() != null;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isBottomMid() {
         return getDownNeighbour() == null
                 && getLeftNeighbour() != null
@@ -47,6 +55,10 @@ class Wall extends Tile {
                 && getRightNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isTopMid() {
         return getUpNeighbour() == null
                 && getLeftNeighbour() != null
@@ -55,6 +67,10 @@ class Wall extends Tile {
                 && getRightNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isLeftMid() {
         return getLeftNeighbour() == null
                 && getUpNeighbour() != null
@@ -63,6 +79,10 @@ class Wall extends Tile {
                 && getDownNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isRightMid() {
         return getRightNeighbour() == null
                 && getUpNeighbour() != null
@@ -71,6 +91,10 @@ class Wall extends Tile {
                 && getDownNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConcaveBottomLeft() {
         return getLeftNeighbour() == null
                 && getDownNeighbour() == null
@@ -80,6 +104,10 @@ class Wall extends Tile {
                 && getRightNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConcaveBottomRight() {
         return getRightNeighbour() == null
                 && getDownNeighbour() == null
@@ -89,6 +117,10 @@ class Wall extends Tile {
                 && getLeftNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConcaveTopLeft() {
         return getLeftNeighbour() == null
                 && getUpNeighbour() == null
@@ -98,6 +130,10 @@ class Wall extends Tile {
                 && getRightNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConcaveTopRight() {
         return getRightNeighbour() == null
                 && getUpNeighbour() == null
@@ -107,6 +143,10 @@ class Wall extends Tile {
                 && getLeftNeighbour().getMapChar() == getMapChar();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConvexTopRight() {
         return !isInternal()
                 && getUpNeighbour() != null
@@ -118,6 +158,10 @@ class Wall extends Tile {
                 && getRightNeighbour().getUpNeighbour() == null;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConvexBottomRight() {
         return !isInternal()
                 && getDownNeighbour() != null
@@ -129,6 +173,10 @@ class Wall extends Tile {
                 && getRightNeighbour().getDownNeighbour() == null;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConvexBottomLeft() {
         return !isInternal()
                 && getDownNeighbour() != null
@@ -140,6 +188,10 @@ class Wall extends Tile {
                 && getLeftNeighbour().getDownNeighbour() == null;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isConvexTopLeft() {
         return !isInternal()
                 && getUpNeighbour() != null
@@ -151,12 +203,23 @@ class Wall extends Tile {
                 && getLeftNeighbour().getUpNeighbour() == null;
     }
 
-
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean isPassable(final Player p) {
         return false;
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {

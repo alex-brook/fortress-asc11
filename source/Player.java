@@ -53,6 +53,11 @@ class Player {
         img = image;
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private static Item[] inventoryFromInfo(final String[] info) {
         Item[] inv = new Item[info.length - 1];
         for (int i = 0; i < inv.length; i++) {
@@ -61,89 +66,164 @@ class Player {
         return inv;
     }
 
+    /**
+     *
+     * @param item
+     */
     public void giveItem(final Item item) {
         inventory.add(item);
     }
 
+    /**
+     *
+     * @param item
+     */
     public void takeItem(final Item item) {
         inventory.remove(item);
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     public boolean hasItem(final Item item) {
         return inventory.contains(item);
     }
 
+    /**
+     *
+     */
     public void giveToken() {
         tokenCount++;
     }
 
+    /**
+     *
+     * @param count
+     */
     public void takeTokens(final int count) {
         tokenCount -= count;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTokenCount() {
         return tokenCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     *
+     * @param newX
+     * @param newY
+     */
     public void teleportTo(final int newX, final int newY) {
         xPos = newX;
         yPos = newY;
     }
 
+    /**
+     *
+     */
     public void moveLeft() {
         xPos -= 1;
         direction = Direction.LEFT;
         lookingRight = false;
     }
 
+    /**
+     *
+     */
     public void moveRight() {
         xPos += 1;
         direction = Direction.RIGHT;
         lookingRight = true;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getXPos() {
         return xPos;
     }
 
+    /**
+     *
+     */
     public void moveUp() {
         yPos -= 1;
         direction = Direction.UP;
     }
 
+    /**
+     *
+     */
     public void moveDown() {
         yPos += 1;
         direction = Direction.DOWN;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getYPos() {
         return yPos;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDead() {
         return dead;
     }
 
+    /**
+     *
+     */
     public void kill() {
         dead = true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean hasWon() {
         return won;
     }
 
+    /**
+     *
+     */
     public void win() {
         won = true;
     }
 
+    /**
+     *
+     * @return
+     */
     public final char getMapChar() {
         return PLAYER;
     }
 
+    /**
+     *
+     * @return
+     */
     public final String getAdditionalInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append(tokenCount);
@@ -154,6 +234,12 @@ class Player {
         return sb.toString();
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     */
     public void drawInventory(final GraphicsContext gc, final double x,
                               final double y) {
         final double leanDegrees = 90;
@@ -192,6 +278,13 @@ class Player {
         gc.restore();
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
         if (isDead()) {
@@ -251,6 +344,10 @@ class Player {
         gc.restore();
     }
 
+    /**
+     * 
+     * @return
+     */
     @Override
     public String toString() {
         return String.valueOf(getMapChar());

@@ -37,6 +37,11 @@ class KeyDoor extends Door {
         requiredItem = item;
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean isPassable(final Player p) {
         if (isLocked()) {
@@ -45,6 +50,10 @@ class KeyDoor extends Door {
         return true;
     }
 
+    /**
+     *
+     * @param p
+     */
     @Override
     public void playerContact(final Player p) {
         if (isLocked()) {
@@ -53,6 +62,10 @@ class KeyDoor extends Door {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getAdditionalInfo() {
         if (isLocked()) {
@@ -61,6 +74,12 @@ class KeyDoor extends Door {
         return null;
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     */
     private void drawLock(final GraphicsContext gc, final double x,
                           final double y) {
         switch (requiredItem) {
@@ -110,6 +129,13 @@ class KeyDoor extends Door {
         }
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {

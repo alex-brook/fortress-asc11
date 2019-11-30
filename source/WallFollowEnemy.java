@@ -23,10 +23,23 @@ class WallFollowEnemy extends Enemy {
         super(x, y, mapChar, img);
     }
 
+     /**
+      *
+      * @param passableGrid
+      * @param playerX
+      * @param playerY
+      */
     @Override
     public void move(boolean[][] passableGrid, int playerX, int playerY) {
     }
-    
+
+     /**
+      *
+      * @param gc
+      * @param x
+      * @param y
+      * @param animationTick
+      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {

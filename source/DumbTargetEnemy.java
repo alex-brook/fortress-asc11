@@ -24,6 +24,12 @@ class DumbTargetEnemy extends Enemy {
         super(x, y, mapChar, img);
     }
 
+    /**
+     *
+     * @param passableGrid
+     * @param playerX
+     * @param playerY
+     */
     @Override
     public void move(boolean[][] passableGrid, int playerX, int playerY) {
         compareX(playerX);
@@ -75,15 +81,30 @@ class DumbTargetEnemy extends Enemy {
             }
         }
     }
-    
+
+    /**
+     *
+     * @param playerX
+     */
     public void compareX(int playerX) {
         xDiff =  playerX - getXPos();
     }
 
+    /**
+     *
+     * @param playerY
+     */
     public void compareY(int playerY) {
         yDiff = playerY - getYPos();
     }
 
+    /**
+     *
+     * @param gc
+     * @param x
+     * @param y
+     * @param animationTick
+     */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
