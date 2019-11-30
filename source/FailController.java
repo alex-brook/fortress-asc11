@@ -1,3 +1,4 @@
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -18,5 +19,11 @@ public class FailController {
 
     public void setGameScene(Scene scene) {
         this.gameScene = scene;
+    }
+
+    @FXML
+    public void switchToMenu() {
+        stage.setScene(menuScene);
+        stage.show();
     }
 }

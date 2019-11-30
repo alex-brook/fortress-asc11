@@ -63,7 +63,7 @@ public class Main extends Application {
         winController.setGameScene(gameScene);
         winController.setMenuScene(menuScene);
 
-        stage.setScene(menuScene);
+        stage.setScene(gameScene);
         stage.show();
 
     }
