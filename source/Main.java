@@ -9,6 +9,7 @@ import java.net.URL;
 public class Main extends Application {
     private static final String MENU_VIEW_PATH = "./view/menu.fxml";
     private static final String TITLE = "Game";
+    private Scene menuScene;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -16,8 +17,9 @@ public class Main extends Application {
         URL url = getClass().getResource(MENU_VIEW_PATH);
         ld.setLocation(url);
         Parent root = ld.load();
+        menuScene = new Scene(root);
 
-        stage.setScene(new Scene(root));
+        stage.setScene(menuScene);
         stage.show();
     }
 

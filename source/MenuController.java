@@ -43,11 +43,11 @@ public class MenuController {
 
     private void loadLevel() {
         gs = new GameState(stringFromFile(getClass().getResource("./map/map3.txt").getPath()));
-        BorderPane root = new BorderPane();
-        scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
+       BorderPane root = new BorderPane();
+       scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
 
-        final Canvas canvas = new Canvas(GAME_WIDTH - GAME_MARGIN, GAME_HEIGHT - GAME_MARGIN);
-        //mainStage.setResizable(false);
+       final Canvas canvas = new Canvas(GAME_WIDTH - GAME_MARGIN, GAME_HEIGHT - GAME_MARGIN);
+       mainStage.setResizable(false);
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -81,7 +81,7 @@ public class MenuController {
                 try {
                     levelFailMenu();
                 } catch (IOException e) {
-                    
+
                 }
             }
         });
@@ -91,6 +91,8 @@ public class MenuController {
         mainStage.setScene(scene);
         mainStage.show();
     }
+
+
 
     /**
      *
