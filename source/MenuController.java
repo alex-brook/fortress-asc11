@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -25,72 +26,79 @@ public class MenuController {
     private static final String FAIL_VIEW_PATH = "./view/levelFail.fxml";
     private static final String MENU_VIEW_PATH = "./view/menu.fxml";
 
-    private GameState gs;
-    private Scene scene;
-    private Stage mainStage = new Stage();
+    private GameState gs;;
 
-    public void test() {
-        //click on the window
-        System.out.println("it works!");
+    private Scene gameScene;
+    private Stage stage;
+
+//    @FXML
+//    public  void initalize() {
+//
+//    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
-    /**
-     *
-     */
-    public void ngButton() {
-        loadLevel();
+    public void setGameScene(Scene scene) {
+        this.gameScene = scene;
     }
 
-    private void loadLevel() {
-        gs = new GameState(stringFromFile(getClass().getResource("./map/map3.txt").getPath()));
-       BorderPane root = new BorderPane();
-       scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
 
-       final Canvas canvas = new Canvas(GAME_WIDTH - GAME_MARGIN, GAME_HEIGHT - GAME_MARGIN);
-       mainStage.setResizable(false);
-        canvas.setFocusTraversable(true);
-        canvas.requestFocus();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+//    public void ngButton() {
+//        loadLevel();
+//    }
 
-        AnimationTimer at = new AnimationTimer() {
-            private long frame = 0;
-
-            @Override
-            public void handle(long now) {
-                if (frame % 10 == 0
-                        && gs.getCurrentState() == GameState.State.RUNNING) {
-                    gs.drawRadius(gc, true);
-                    frame = 0;
-                }
-                frame++;
-            }
-        };
-        at.start();
-
-        canvas.setOnKeyPressed(event -> {
-            if (gs.getCurrentState() == GameState.State.RUNNING) {
-                gs.update(event.getCode());
-                gs.drawRadius(gc, false);
-            } else if (gs.getCurrentState() == GameState.State.WIN) {
-                if (event.getCode() == KeyCode.ESCAPE) {
-                    mainStage.setScene(scene);
-                } else {
-                    gs.restart();
-                }
-            } else if (gs.getCurrentState() == GameState.State.LOSE) {
-                try {
-                    levelFailMenu();
-                } catch (IOException e) {
-
-                }
-            }
-        });
-
-        root.getChildren().add(canvas);
-        mainStage.setTitle("Starship ASC11");
-        mainStage.setScene(scene);
-        mainStage.show();
-    }
+//    private void loadLevel() {
+//        gs = new GameState(stringFromFile(getClass().getResource("./map/map3.txt").getPath()));
+//       BorderPane root = new BorderPane();
+//       scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.BLACK);
+//
+//       final Canvas canvas = new Canvas(GAME_WIDTH - GAME_MARGIN, GAME_HEIGHT - GAME_MARGIN);
+//       mainStage.setResizable(false);
+//        canvas.setFocusTraversable(true);
+//        canvas.requestFocus();
+//        GraphicsContext gc = canvas.getGraphicsContext2D();
+//
+//        AnimationTimer at = new AnimationTimer() {
+//            private long frame = 0;
+//
+//            @Override
+//            public void handle(long now) {
+//                if (frame % 10 == 0
+//                        && gs.getCurrentState() == GameState.State.RUNNING) {
+//                    gs.drawRadius(gc, true);
+//                    frame = 0;
+//                }
+//                frame++;
+//            }
+//        };
+//        at.start();
+//
+//        canvas.setOnKeyPressed(event -> {
+//            if (gs.getCurrentState() == GameState.State.RUNNING) {
+//                gs.update(event.getCode());
+//                gs.drawRadius(gc, false);
+//            } else if (gs.getCurrentState() == GameState.State.WIN) {
+//                if (event.getCode() == KeyCode.ESCAPE) {
+//                    mainStage.setScene(scene);
+//                } else {
+//                    gs.restart();
+//                }
+//            } else if (gs.getCurrentState() == GameState.State.LOSE) {
+//                try {
+//                    levelFailMenu();
+//                } catch (IOException e) {
+//
+//                }
+//            }
+//        });
+//
+//        root.getChildren().add(canvas);
+//        mainStage.setTitle("Starship ASC11");
+//        mainStage.setScene(scene);
+//        mainStage.show();
+//    }
 
 
 
