@@ -1,6 +1,8 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.net.URL;
@@ -29,6 +31,7 @@ class GameState {
 
     public static final double TILE_RES = 32;
     public static final int VIEW_RADIUS = 7;
+    public static final double MINIMAP_PIXEL_SIZE = 7;
 
     public enum State {
         WIN,
@@ -440,10 +443,10 @@ class GameState {
         int playerX = player.getXPos();
         int playerY = player.getYPos();
 
-        int xMin = playerX - VIEW_RADIUS;
-        int xMax = playerX + VIEW_RADIUS;
-        int yMin = playerY - VIEW_RADIUS;
-        int yMax = playerY + VIEW_RADIUS;
+        int xMin = playerX - VIEW_RADIUS + 1;
+        int xMax = playerX + VIEW_RADIUS + 1;
+        int yMin = playerY - VIEW_RADIUS - 1;
+        int yMax = playerY + VIEW_RADIUS - 1;
 
         gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
 
@@ -466,6 +469,7 @@ class GameState {
             }
         }
         player.drawInventory(gc, 0, (VIEW_RADIUS * TILE_RES) * 2 );
+        drawMinimap(gc, 0, 0);
         if (tick) {
             animationTick++;
         }
@@ -506,9 +510,34 @@ class GameState {
         if (tick) {
             animationTick++;
         }
+    }
 
-        //inventory;
-        player.drawInventory(gc, 0, (y * TILE_RES) + TILE_RES);
+    private void drawMinimap(final GraphicsContext gc,
+                             final double xOrigin, final double yOrigin) {
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, (grid.length + 1) * MINIMAP_PIXEL_SIZE,
+                (grid[0].length + 1) * MINIMAP_PIXEL_SIZE);
+
+        for (int y = 0; y < grid[0].length; y++) {
+            for (int x = 0; x < grid.length; x++) {
+                if (player.getXPos() == x && player.getYPos() == y) {
+                    gc.setFill(Color.WHITE);
+                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
+                            , yOrigin + (y * MINIMAP_PIXEL_SIZE)
+                            , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
+                } else if (getEnemyAtLocation(x, y) != null) {
+                    gc.setFill(Color.RED);
+                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
+                            , yOrigin + (y * MINIMAP_PIXEL_SIZE)
+                            , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
+                } else if (grid[x][y] != null) {
+                    gc.setFill(grid[x][y].getMinimapColor());
+                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
+                            , yOrigin + (y * MINIMAP_PIXEL_SIZE)
+                            , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
+                }
+            }
+        }
     }
 
     /**

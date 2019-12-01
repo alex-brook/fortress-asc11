@@ -1,5 +1,6 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.Map;
 
@@ -38,6 +39,12 @@ class Ground extends Tile {
      */
     public void setItem(final Item item) {
         this.hasItem = item;
+    }
+
+
+    @Override
+    public Color getMinimapColor() {
+        return hasItem == null ? super.getMinimapColor() : Color.GOLD;
     }
 
     /**

@@ -240,7 +240,7 @@ class Player {
      * @param x
      * @param y
      */
-    public void drawInventory(final GraphicsContext gc, final double x,
+    public double drawInventory(final GraphicsContext gc, final double x,
                               final double y) {
         final double leanDegrees = 90;
         final double rows = 3;
@@ -270,12 +270,14 @@ class Player {
         gc.drawImage(img.get(Item.TOKEN.getImageName()), x,  y + offset);
         gc.fillText(String.format("x %d", tokenCount), x + offset,
                 y + (offset * cointsHeightOffset));
-        for (int i = 0; i < inventory.size(); i++) {
+        int i;
+        for (i = 0; i < inventory.size(); i++) {
             gc.drawImage(img.get(inventory.get(i).getImageName()),
                     x + (i * offset),
                     y + (2 * offset));
         }
         gc.restore();
+        return x + (i * offset);
     }
 
     /**

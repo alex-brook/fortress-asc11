@@ -1,5 +1,7 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+
 import java.util.Map;
 
 /**
@@ -211,6 +213,11 @@ class Wall extends Tile {
     @Override
     public boolean isPassable(final Player p) {
         return false;
+    }
+
+    @Override
+    public Color getMinimapColor() {
+        return Color.GREY;
     }
 
     /**

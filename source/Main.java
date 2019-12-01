@@ -17,7 +17,7 @@ public class Main extends Application {
     private static final String GAME_VIEW_PATH = "./view/game.fxml";
     private static final String FAIL_VIEW_PATH = "./view/levelFail.fxml";
     private static final String WIN_VIEW_PATH = "./view/levelWin.fxml";
-    private static final String TITLE = "Game";
+    private static final String TITLE = "FORTRESS ASC11";
 
     private static Scene menuScene;
     private static MenuController menuController;
@@ -67,6 +67,7 @@ public class Main extends Application {
         winController.setStage(stage);
 
         stage.setScene(menuScene);
+        stage.setTitle(TITLE);
         stage.show();
 
     }

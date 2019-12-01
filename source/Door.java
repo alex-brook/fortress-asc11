@@ -1,5 +1,7 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+
 import java.util.Map;
 
 /**
@@ -122,11 +124,16 @@ public abstract class Door extends Tile {
      * @return
      */
     public boolean isPassable(final Enemy e) {
-    	if (isLocked() == true) {
-    		return false;
-    	}else {
-    		return true;
-    	}
+        if (isLocked() == true) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public Color getMinimapColor() {
+        return isLocked() ? Color.BROWN : super.getMinimapColor();
     }
 
     /**

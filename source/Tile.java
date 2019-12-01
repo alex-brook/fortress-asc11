@@ -1,5 +1,6 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.Map;
 
@@ -158,6 +159,10 @@ public abstract class Tile {
      */
     protected Image getImage(final String name) {
         return images.get(name);
+    }
+
+    public Color getMinimapColor() {
+        return Color.DARKSLATEGREY;
     }
 
     /**
