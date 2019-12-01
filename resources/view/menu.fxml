@@ -24,10 +24,10 @@
       <Label layoutX="14.0" layoutY="123.0" text="Password:" />
       <Button layoutX="207.0" layoutY="149.0" mnemonicParsing="false" text="Login" />
       <Button layoutX="90.0" layoutY="149.0" mnemonicParsing="false" text="Create Profile" />
-      <ComboBox layoutX="295.0" layoutY="87.0" prefHeight="26.0" prefWidth="171.0" promptText="Select Map..." />
+      <ComboBox fx:id="mapSelector" layoutX="295.0" layoutY="87.0" prefHeight="26.0" prefWidth="171.0" promptText="Select Map..." />
       <Button layoutX="295.0" layoutY="118.0" mnemonicParsing="false" text="Continue" />
-      <Button layoutX="476.0" layoutY="87.0" mnemonicParsing="false" text="New Game" />
-       <Button layoutX="90.0" layoutY="200.0" mnemonicParsing="false" text="Quit Game" onAction="#quitGame"/>
+      <Button layoutX="476.0" layoutY="87.0" mnemonicParsing="false" text="New Game" onAction="#handleNewGameButtonAction"/>
+       <Button layoutX="90.0" layoutY="200.0" mnemonicParsing="false" text="Quit Game" onAction="#handleQuitButtonAction"/>
       <TableView layoutX="295.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn prefWidth="71.0" text="Username" />

@@ -14,36 +14,44 @@ public class Main extends Application {
     private static final String FAIL_VIEW_PATH = "./view/levelFail.fxml";
     private static final String WIN_VIEW_PATH = "./view/levelWin.fxml";
     private static final String TITLE = "Game";
-    private Scene menuScene;
-    private Scene gameScene;
-    private Scene winScene;
-    private Scene failScene;
+
+    private static Scene menuScene;
+    private static MenuController menuController;
+
+    private static Scene gameScene;
+    private static GameController gameController;
+
+    private static Scene winScene;
+    private static WinController winController;
+
+    private static Scene failScene;
+    private static FailController failController;
 
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(final Stage stage) throws IOException {
         FXMLLoader menuLoader = new FXMLLoader();
         URL url = getClass().getResource(MENU_VIEW_PATH);
         menuLoader.setLocation(url);
         Parent menuRoot = menuLoader.load();
         menuScene = new Scene(menuRoot);
-        MenuController menuController = (MenuController)menuLoader.getController();
+        menuController = (MenuController) menuLoader.getController();
         menuController.setStage(stage);
 
         FXMLLoader gameLoader = new FXMLLoader();
         URL gameUrl = getClass().getResource(GAME_VIEW_PATH);
         gameLoader.setLocation(gameUrl);
-        Pane gameRoot = (Pane) gameLoader.load();
+        Pane gameRoot = gameLoader.load();
         gameScene = new Scene(gameRoot);
-        GameController gameController = (GameController)gameLoader.getController();
+        gameController = gameLoader.getController();
         gameController.setStage(stage);
 
         FXMLLoader failLoader = new FXMLLoader();
         URL failUrl = getClass().getResource(FAIL_VIEW_PATH);
         failLoader.setLocation(failUrl);
-        Pane failRoot = (Pane) failLoader.load();
+        Pane failRoot = failLoader.load();
         failScene = new Scene(failRoot);
-        FailController failController = (FailController)failLoader.getController();
+        failController = failLoader.getController();
         failController.setStage(stage);
 
         FXMLLoader winLoader = new FXMLLoader();
@@ -51,22 +59,46 @@ public class Main extends Application {
         winLoader.setLocation(winUrl);
         Parent winRoot = winLoader.load();
         winScene = new Scene(winRoot);
-        WinController winController = (WinController)winLoader.getController();
+        winController = winLoader.getController();
         winController.setStage(stage);
 
-        menuController.setGameScene(gameScene);
-        gameController.setFailScene(failScene);
-        gameController.setMenuScene(menuScene);
-        gameController.setWinScene(winScene);
-        failController.setGameScene(gameScene);
-        failController.setMenuScene(menuScene);
-        winController.setGameScene(gameScene);
-        winController.setMenuScene(menuScene);
-
-        stage.setScene(gameScene);
+        stage.setScene(menuScene);
         stage.show();
 
     }
+
+    public static MenuController getMenuController() {
+        return menuController;
+    }
+
+    public static GameController getGameController() {
+        return gameController;
+    }
+
+    public static WinController getWinController() {
+        return winController;
+    }
+
+    public static FailController getFailController() {
+        return failController;
+    }
+
+    public static Scene getMenuScene() {
+        return menuScene;
+    }
+
+    public static Scene getGameScene() {
+        return gameScene;
+    }
+
+    public static Scene getWinScene() {
+        return winScene;
+    }
+
+    public static Scene getFailScene() {
+        return failScene;
+    }
+
 
     public static void main(final String[] args) {
         launch(args);

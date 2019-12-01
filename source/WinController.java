@@ -1,3 +1,5 @@
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -7,6 +9,12 @@ public class WinController {
     private Scene gameScene;
 
     private Stage stage;
+
+    @FXML
+    public void switchToMenu() {
+        stage.setScene(Main.getMenuScene());
+        stage.show();
+    }
 
     public void setStage(Stage stage) {
         this.stage = stage;

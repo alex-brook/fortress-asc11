@@ -23,7 +23,14 @@ public class FailController {
 
     @FXML
     public void switchToMenu() {
-        stage.setScene(menuScene);
+        stage.setScene(Main.getMenuScene());
+        stage.show();
+    }
+
+    @FXML
+    public void switchToGame() {
+        Main.getGameController().restartGame();
+        stage.setScene(Main.getGameScene());
         stage.show();
     }
 }
