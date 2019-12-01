@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * @author Alex
+ * @author Stephen Colegrove
+ */
 public class Main extends Application {
     private static final String MENU_VIEW_PATH = "./view/menu.fxml";
     private static final String GAME_VIEW_PATH = "./view/game.fxml";
