@@ -13,11 +13,11 @@ import java.util.Map;
  * @author Irfaan
  */
 class SmartTargetEnemy extends Enemy {
-    private static final String SMART_0_IMG = "red_goblin_idle_anim_f0.png";
-    private static final String SMART_1_IMG = "red_goblin_idle_anim_f1.png";
-    private static final String SMART_2_IMG = "red_goblin_idle_anim_f2.png";
-    private static final String SMART_3_IMG = "red_goblin_idle_anim_f3.png";
-    private static final String SMART_4_IMG = "red_goblin_idle_anim_f4.png";
+    private static final String SMART_0_IMG = "goblin_idle_anim_f0.png";
+    private static final String SMART_1_IMG = "goblin_idle_anim_f1.png";
+    private static final String SMART_2_IMG = "goblin_idle_anim_f2.png";
+    private static final String SMART_3_IMG = "goblin_idle_anim_f3.png";
+    private static final String SMART_4_IMG = "goblin_idle_anim_f4.png";
 
     private List<Node> openNodes = new ArrayList<Node>();
     private List<Node> closedNodes = new ArrayList<Node>();
