@@ -61,7 +61,6 @@ class SmartTargetEnemy extends Enemy {
     	
     	move2();
     	//previousCycle = closedNodes.get(0);
-    	
     }
     
     private void move2() {
