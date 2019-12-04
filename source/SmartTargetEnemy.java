@@ -50,9 +50,9 @@ class SmartTargetEnemy extends Enemy {
     	createNeighbours(current, passableGrid, playerX, playerY);
     	
     	while (current.getXCoord() != playerX || current.getYCoord() != playerY) {
-    		/*if (openNodes.isEmpty()) {
+    		if (openNodes.isEmpty()) {
     			break;
-    		}*/
+    		}
     		current = openNodes.get(0);
     		openNodes.remove(0);
     		closedNodes.add(current);
@@ -60,12 +60,12 @@ class SmartTargetEnemy extends Enemy {
     	}
     	
     	move2();
-    	//previousCycle = closedNodes.get(0);
+    	previousCycle = closedNodes.get(0);
     }
     
     private void move2() {
     	//This part might be necessary for certain positions of walls not entirely sure.
-    	/*if (closedNodes.get(1).getXCoord() == previousCycle.getXCoord()
+    	if (closedNodes.get(1).getXCoord() == previousCycle.getXCoord()
     			&& closedNodes.get(1).getYCoord() == previousCycle.getYCoord()) {
     		if (getXPos() != closedNodes.get(2).getXCoord()) {
             	if (getXPos() < closedNodes.get(2).getXCoord()) {
@@ -80,7 +80,7 @@ class SmartTargetEnemy extends Enemy {
             		moveUp();
             	}
             }
-    	} else { */
+    	} else { 
     		if (getXPos() != closedNodes.get(1).getXCoord()) {
             	if (getXPos() < closedNodes.get(1).getXCoord()) {
             		moveRight();
@@ -95,7 +95,7 @@ class SmartTargetEnemy extends Enemy {
             	}
             }
     	}
-    //}
+    }
     
     private void createNeighbours(Node n, boolean[][] passableGrid, int playerX, int playerY) {
     	//Node above current
