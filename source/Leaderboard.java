@@ -1,7 +1,8 @@
 import java.sql.*;
 
 public class Leaderboard {
-
+    private static final String DATABASE_PATH
+            = "jdbc:sqlite:resources/Leaderboard.db";
 
     public Leaderboard() {
         createNewDatabase();
@@ -14,8 +15,8 @@ public class Leaderboard {
     public void createNewDatabase() {
         Connection c = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:resources\\Leaderboard.db");
+            //Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection(DATABASE_PATH);
             System.out.println("Database Connected");
         } catch (Exception e) {
             System.out.println(e);
@@ -27,7 +28,7 @@ public class Leaderboard {
      */
     private void createNewTable() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = DATABASE_PATH;
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS LeaderBoardScores (\n"
@@ -51,7 +52,7 @@ public class Leaderboard {
      */
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = DATABASE_PATH;
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);

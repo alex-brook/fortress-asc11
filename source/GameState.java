@@ -30,7 +30,7 @@ class GameState {
     public static final String INFO_DELIMITER = ",";
 
     public static final double TILE_RES = 32;
-    public static final int VIEW_RADIUS = 7;
+    public static final int VIEW_RADIUS = 8;
     public static final double MINIMAP_PIXEL_SIZE = 7;
 
     public enum State {
@@ -43,6 +43,7 @@ class GameState {
     private String map;
     private State currentState;
     private Tile[][] grid;
+    private boolean[][] discovered;
     private Player player;
     private List<Enemy> enemies;
     private long timeElapsed;
@@ -55,6 +56,8 @@ class GameState {
         loadImages(path);
         load(map);
         currentState = State.RUNNING;
+        discovered = new boolean[grid.length][grid[0].length];
+        updateDiscovered();
     }
 
     /**
@@ -294,6 +297,17 @@ class GameState {
             default:
                 System.err.println("[GameState] Invalid key " + kc.getName());
         }
+        updateDiscovered();
+    }
+
+    private void updateDiscovered() {
+        for (int x = player.getXPos() - VIEW_RADIUS; x < player.getXPos() + VIEW_RADIUS; x++) {
+            for (int y = player.getYPos() - VIEW_RADIUS; y < player.getYPos() + VIEW_RADIUS; y++) {
+                if (x >= 0 && y >= 0 && x < grid.length && y < grid[0].length) {
+                    discovered[x][y] = true;
+                }
+            }
+        }
     }
 
     /**
@@ -443,12 +457,14 @@ class GameState {
         int playerX = player.getXPos();
         int playerY = player.getYPos();
 
-        int xMin = playerX - VIEW_RADIUS + 1;
-        int xMax = playerX + VIEW_RADIUS + 1;
-        int yMin = playerY - VIEW_RADIUS - 1;
-        int yMax = playerY + VIEW_RADIUS - 1;
+        int xMin = playerX - VIEW_RADIUS;
+        int xMax = playerX + VIEW_RADIUS;
+        int yMin = playerY - VIEW_RADIUS;
+        int yMax = playerY + VIEW_RADIUS;
 
         gc.drawImage(img.get(BACKGROUND_IMG), 0, 0);
+        gc.save();
+        gc.scale(1.3, 1.3);
 
         for (int y = yMin; y < yMax; y++) {
             for (int x = xMin; x < xMax; x++) {
@@ -468,6 +484,7 @@ class GameState {
                 }
             }
         }
+        gc.restore();
         player.drawInventory(gc, 0, (VIEW_RADIUS * TILE_RES) * 2 );
         drawMinimap(gc, 0, 0);
         if (tick) {
@@ -520,17 +537,19 @@ class GameState {
 
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
-                if (player.getXPos() == x && player.getYPos() == y) {
+                if (discovered[x][y]
+                        && player.getXPos() == x && player.getYPos() == y) {
                     gc.setFill(Color.WHITE);
                     gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
                             , yOrigin + (y * MINIMAP_PIXEL_SIZE)
                             , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
-                } else if (getEnemyAtLocation(x, y) != null) {
+                } else if (discovered[x][y]
+                        && getEnemyAtLocation(x, y) != null) {
                     gc.setFill(Color.RED);
                     gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
                             , yOrigin + (y * MINIMAP_PIXEL_SIZE)
                             , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
-                } else if (grid[x][y] != null) {
+                } else if (discovered[x][y] && grid[x][y] != null) {
                     gc.setFill(grid[x][y].getMinimapColor());
                     gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
                             , yOrigin + (y * MINIMAP_PIXEL_SIZE)

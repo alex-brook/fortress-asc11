@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -12,12 +13,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class GameController {
-
-    private static final double GAME_WIDTH = ((GameState.VIEW_RADIUS * 2) * (GameState.TILE_RES)) - GameState.TILE_RES * 2;
-    private static final double GAME_HEIGHT = ((GameState.VIEW_RADIUS + 2) * (GameState.TILE_RES * 2));
-
     @FXML
     private Canvas gameCanvas;
+    @FXML
+    private Pane gamePane;
 
     private GraphicsContext gc;
     private GameState gs;
@@ -35,8 +34,6 @@ public class GameController {
         gameCanvas.setFocusTraversable(true);
         gameCanvas.requestFocus();
         gc = gameCanvas.getGraphicsContext2D();
-        gameCanvas.setHeight(GAME_HEIGHT);
-        gameCanvas.setWidth(GAME_WIDTH);
 
         at = new AnimationTimer() {
             private long frame = 0;
