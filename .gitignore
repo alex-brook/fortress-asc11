@@ -1,2 +1,4 @@
 # ignore intellij folder
 .idea
+out
+lib
