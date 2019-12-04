@@ -84,13 +84,8 @@ class SmartTargetEnemy extends Enemy {
     	} else { */
     		if (getXPos() != closedNodes.get(1).getXCoord()) {
             	if (getXPos() < closedNodes.get(1).getXCoord()) {
-
-                	System.out.println("right");
-                	System.out.println(" ");
             		moveRight();
             	} else {
-            		System.out.println("left");
-                	System.out.println(" ");
             		moveLeft();
             	}
             }else if (getYPos() != closedNodes.get(1).getYCoord()) {

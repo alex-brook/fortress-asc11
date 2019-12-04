@@ -14,7 +14,7 @@ public class Node {
 		heuristic = h;
 		distanceFromStart = g;
 		totalDistance = f;
-		parent = n;
+		parent = n; 
 	}
 	
 	public int getXCoord() {
