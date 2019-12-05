@@ -16,7 +16,7 @@ public class Leaderboard {
         Connection c = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:resources\\Leaderboard.db");
+            c = DriverManager.getConnection("jdbc:sqlite:resources/Leaderboard.db");
             System.out.println("Database Connected");
         } catch (Exception e) {
             System.out.println(e);
@@ -25,7 +25,7 @@ public class Leaderboard {
 
     private void createUserTable() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = "jdbc:sqlite:resources/Leaderboard.db";
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS UserProfiles (\n"
@@ -49,7 +49,7 @@ public class Leaderboard {
      */
     private void createScoreTable() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = "jdbc:sqlite:resources/Leaderboard.db";
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS LeaderBoardScores (\n"
@@ -75,7 +75,7 @@ public class Leaderboard {
      */
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = "jdbc:sqlite:resources/Leaderboard.db";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);

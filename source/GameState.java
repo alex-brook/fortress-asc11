@@ -250,7 +250,14 @@ class GameState {
      */
     public void update(final KeyCode kc) {
         updatePlayer(kc);
+        if (enemyCollidesWithPlayer()) {
+            player.kill();
+        }
         updateEnemies();
+        if (enemyCollidesWithPlayer()) {
+            player.kill();
+        }
+
         if (player.isDead()) {
             currentState = State.LOSE;
         } else if (player.hasWon()) {
@@ -354,16 +361,21 @@ class GameState {
         return passableGrid;
     }
 
+    private boolean enemyCollidesWithPlayer() {
+        for (Enemy e : enemies) {
+            if (e.getXPos() == player.getXPos() && e.getYPos() == player.getYPos()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Moves enemy
      */
     private void updateEnemies() {
         for (Enemy e : enemies) {
             e.move(getPassableGrid(e), player.getXPos(), player.getYPos());
-            if (getEnemyAtLocation(player.getXPos(), player.getYPos())
-                    != null) {
-                player.kill();
-            }
         }
     }
 
