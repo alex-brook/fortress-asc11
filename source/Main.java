@@ -31,11 +31,13 @@ public class Main extends Application {
     private static Scene failScene;
     private static FailController failController;
 
+    private static String currentUser = null;
+    private static Leaderboard lb = new Leaderboard();
+
 
     @Override
     public void start(final Stage stage) throws IOException {
         // database stuff
-        Leaderboard ld = new Leaderboard();
 
         FXMLLoader menuLoader = new FXMLLoader();
         URL url = getClass().getResource(MENU_VIEW_PATH);
@@ -73,6 +75,15 @@ public class Main extends Application {
         stage.setTitle(TITLE);
         stage.show();
 
+    }
+    public static void setUsername(String username){
+        currentUser = username;
+    }
+    public static String getUsername(){
+        return currentUser;
+    }
+    public static Leaderboard getLb(){
+        return lb;
     }
 
     public static MenuController getMenuController() {

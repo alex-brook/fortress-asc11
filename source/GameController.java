@@ -73,12 +73,16 @@ public class GameController {
     private void switchToFail() {
         at.stop();
         stage.setScene(Main.getFailScene());
+        Main.getLb().incrementGamesPlayed(Main.getUsername());
         stage.show();
     }
 
     private void switchToWin() {
         at.stop();
         stage.setScene(Main.getWinScene());
+        Main.getLb().incrementGamesPlayed(Main.getUsername());
+        Main.getLb().updateScore(Main.getUsername(), (gs.getSessionTime()),
+                currentMapName.replaceFirst(".txt",""));
         stage.show();
     }
 

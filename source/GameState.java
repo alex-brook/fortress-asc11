@@ -386,8 +386,7 @@ class GameState {
         StringBuilder sbEnemies = new StringBuilder();
         StringBuilder sbPlayer = new StringBuilder();
         //work out time
-        long timeCurrentSession = (System.currentTimeMillis() - startTime)
-                + timeElapsed;
+        long timeCurrentSession = getSessionTime();
         sbTime.append(timeCurrentSession);
         sbTime.append(System.lineSeparator());
         // get every map tile
@@ -437,6 +436,10 @@ class GameState {
                 + sbEnemies.toString() + PLAYER_DESC_DELIMITER + System.lineSeparator()
                 + sbPlayer.toString();
     }
+    public long getSessionTime(){
+        return (System.currentTimeMillis() - startTime) + timeElapsed;
+    }
+
 
     /**
      *

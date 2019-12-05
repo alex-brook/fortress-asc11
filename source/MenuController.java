@@ -3,8 +3,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -13,10 +13,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Objects;
 
 public class MenuController {
+    private static final String FILE_END = ".txt";
     private static final String MOTD_ERR =
             "Error retrieving message of the day";
     private static final String CS130_WEBSITE_URL =
@@ -30,6 +32,19 @@ public class MenuController {
     private ComboBox<String> mapSelector;
     @FXML
     private Label motdLabel;
+    @FXML
+    private Label loginStatus;
+    @FXML
+    private TableView<UserScoreRecord> leaderBoardTable;
+    @FXML
+    private TableColumn<UserScoreRecord, String> usernameColumn;
+    @FXML
+    private TableColumn<UserScoreRecord, String> timeColumn;
+    @FXML
+    private TextField usernameInput;
+    @FXML
+    private PasswordField passwordInput;
+
     private Stage stage;
 
     @FXML
@@ -40,12 +55,68 @@ public class MenuController {
             motdLabel.setText(MOTD_ERR);
         }
         mapSelector.setItems(getMapNames());
-        mapSelector.setValue(mapSelector.getItems().get(0));
+        String currentMap = mapSelector.getItems().get(0);
+        mapSelector.setValue(currentMap);
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("user"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("score"));
+        Leaderboard dataSet = new Leaderboard();
+        ObservableList<UserScoreRecord> userData =
+                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap+FILE_END)));
+        leaderBoardTable.setItems(userData);
+
+    }
+
+    @FXML
+    public void handleLogout(){
+        Main.setUsername(null);
+        usernameInput.setText(null);
+        passwordInput.setText(null);
+        loginStatus.setText("Logged out");
+    }
+
+    @FXML
+    public void handleCreateProfile(){
+        Leaderboard lb = new Leaderboard();
+        String username = usernameInput.getText();
+        String password = passwordInput.getText();
+        if (!lb.isAccount(username)){
+            lb.newAccount(username, password);
+           loginStatus.setText("New User profile created");
+        } else {
+            loginStatus.setText("This user already exists, please use login");
+        }
+    }
+    @FXML
+    public void handleLogin(){
+        Leaderboard lb = new Leaderboard();
+        String username = usernameInput.getText();
+        String password = passwordInput.getText();
+        if (lb.isAccount(username)){
+            if (password.equals(lb.getUserPassword(username))){
+                loginStatus.setText("Successfully logged in as " + username);
+                Main.setUsername(username);
+            } else {
+                loginStatus.setText("Incorrect password for " + username + ", please try again");
+            }
+        } else {
+            loginStatus.setText("This account does not exist, please create a new account");
+        }
+
+
+    }
+
+    @FXML
+    public void handleDropDownSelect(final ActionEvent e){
+        String currentMap = mapSelector.getValue();
+        Leaderboard dataSet = new Leaderboard();
+        ObservableList<UserScoreRecord> userData =
+                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap+FILE_END)));
+        leaderBoardTable.setItems(userData);
     }
 
     @FXML
     public void handleNewGameButtonAction(final ActionEvent e) {
-        Main.getGameController().loadGame(mapSelector.getValue());
+        Main.getGameController().loadGame(mapSelector.getValue()+FILE_END);
         stage.setScene(Main.getGameScene());
         stage.show();
     }
@@ -109,7 +180,7 @@ public class MenuController {
                 FXCollections.observableList(new LinkedList<>());
         File mapDir = new File(getClass().getResource("./map").getPath());
         for (File f : Objects.requireNonNull(mapDir.listFiles())) {
-            fnames.add(f.getName());
+            fnames.add(f.getName().replaceFirst(".txt",""));
         }
         return fnames;
     }
