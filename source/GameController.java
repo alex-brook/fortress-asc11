@@ -8,9 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class GameController {
     @FXML
@@ -23,6 +21,7 @@ public class GameController {
     private AnimationTimer at;
     private Stage stage;
     private String currentMapName;
+    private final String SAVE_LOCATION = "./saves/";
 
 
     public void setStage(Stage stage) {
@@ -53,10 +52,25 @@ public class GameController {
     private void keyPress(final KeyEvent e) {
         if (e.getCode() == KeyCode.ESCAPE) {
             //testing save functionality
-            gs = new GameState(gs.save());
+            savePlayerLevel(gs.save());
+
         } else {
             gs.update(e.getCode());
             gs.drawRadius(gc, false);
+        }
+    }
+
+    private void savePlayerLevel(String saveGame){
+        try{
+            String path = "./resources/saves/";
+            String filename = Main.getUsername() + "_" + currentMapName;
+            FileWriter fileWriter = new FileWriter(path + filename);
+            BufferedWriter fileSaver = new BufferedWriter(fileWriter);
+            fileSaver.write(saveGame);
+            fileSaver.close();
+        }catch(IOException e){
+            System.out.println("shits fucked plz fix!!!!");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -81,7 +95,7 @@ public class GameController {
         at.stop();
         stage.setScene(Main.getWinScene());
         Main.getLb().incrementGamesPlayed(Main.getUsername());
-        Main.getLb().updateScore(Main.getUsername(), (gs.getSessionTime()),
+        Main.getLb().insertNewScore(Main.getUsername(), (gs.getSessionTime()),
                 currentMapName.replaceFirst(".txt",""));
         stage.show();
     }

@@ -13,6 +13,7 @@ public class WinController {
     @FXML
     public void switchToMenu() {
         stage.setScene(Main.getMenuScene());
+        Main.getMenuController().handleDropDownSelect();
         stage.show();
     }
 
