@@ -404,6 +404,8 @@ class GameState {
                         sbTiles.append(info);
                         sbTiles.append(END_OF_LINE);
                     }
+                } else {
+                    sbMap.append(TileFactory.MapChars.EMPTY_TILE);
                 }
             }
             sbMap.append(END_OF_LINE);
