@@ -1,2 +1,3 @@
 # ignore intellij folder
 .idea
+out
