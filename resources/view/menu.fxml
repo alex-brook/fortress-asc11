@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+<AnchorPane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
    <children>
       <Label fx:id="loginStatus" layoutX="15.0" layoutY="232.0" text="Not Logged In" />
       <PasswordField fx:id="passwordInput" layoutX="90.0" layoutY="118.0" />
@@ -20,7 +20,7 @@
       <Button layoutX="207.0" layoutY="149.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
       <Button layoutX="90.0" layoutY="149.0" mnemonicParsing="false" onAction="#handleCreateProfile" text="Create Profile" />
       <ComboBox fx:id="mapSelector" disable="true" layoutX="295.0" layoutY="87.0" onAction="#handleDropDownSelect" prefHeight="26.0" prefWidth="171.0" promptText="Select Map..." visible="false" />
-      <Button fx:id="continueButton" disable="true" layoutX="295.0" layoutY="118.0" mnemonicParsing="false" text="Continue" visible="false" />
+      <Button fx:id="continueButton" disable="true" layoutX="295.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleContinueButton" text="Continue" visible="false" />
       <Button fx:id="newgameButton" disable="true" layoutX="476.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleNewGameButtonAction" text="New Game" visible="false" />
        <Button layoutX="15.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleQuitButtonAction" text="Quit Game" />
       <TableView fx:id="leaderBoardTable" disable="true" layoutX="295.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0" visible="false">

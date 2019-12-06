@@ -21,7 +21,7 @@ class WallFollowEnemy extends Enemy {
     WallFollowEnemy(final int x, final int y, final char mapChar,
                     final Map<String, Image> img, final Direction dir) {
         super(x, y, mapChar, img);
-        direction = Direction.UP;
+        direction = dir;
     }
 
      /**
@@ -63,6 +63,11 @@ class WallFollowEnemy extends Enemy {
         }
         moveInCurrentDirection();
     }
+
+     @Override
+     public String getAdditionalInfo() {
+         return String.format("%s", direction);
+     }
 
      /**
       *

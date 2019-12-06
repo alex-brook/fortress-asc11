@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -13,10 +15,11 @@ import java.net.URL;
  * @author Stephen Colegrove
  */
 public class Main extends Application {
-    private static final String MENU_VIEW_PATH = "./view/menu.fxml";
-    private static final String GAME_VIEW_PATH = "./view/game.fxml";
-    private static final String FAIL_VIEW_PATH = "./view/levelFail.fxml";
-    private static final String WIN_VIEW_PATH = "./view/levelWin.fxml";
+    private static final String VIEW_PATH = "./resources";
+    private static final String MENU_VIEW_PATH = "/view/menu.fxml";
+    private static final String GAME_VIEW_PATH = "/view/game.fxml";
+    private static final String FAIL_VIEW_PATH = "/view/levelFail.fxml";
+    private static final String WIN_VIEW_PATH = "/view/levelWin.fxml";
     private static final String TITLE = "FORTRESS ASC11";
 
     private static Scene menuScene;
@@ -43,7 +46,7 @@ public class Main extends Application {
 
 
         FXMLLoader menuLoader = new FXMLLoader();
-        URL url = getClass().getResource(MENU_VIEW_PATH);
+        URL url = new File(VIEW_PATH + MENU_VIEW_PATH).toURI().toURL();
         menuLoader.setLocation(url);
         Parent menuRoot = menuLoader.load();
         menuScene = new Scene(menuRoot);
@@ -51,7 +54,7 @@ public class Main extends Application {
         menuController.setStage(stage);
 
         FXMLLoader gameLoader = new FXMLLoader();
-        URL gameUrl = getClass().getResource(GAME_VIEW_PATH);
+        URL gameUrl = new File(VIEW_PATH + GAME_VIEW_PATH).toURI().toURL();
         gameLoader.setLocation(gameUrl);
         Pane gameRoot = gameLoader.load();
         gameScene = new Scene(gameRoot);
@@ -59,7 +62,7 @@ public class Main extends Application {
         gameController.setStage(stage);
 
         FXMLLoader failLoader = new FXMLLoader();
-        URL failUrl = getClass().getResource(FAIL_VIEW_PATH);
+        URL failUrl = new File(VIEW_PATH + FAIL_VIEW_PATH).toURI().toURL();
         failLoader.setLocation(failUrl);
         Pane failRoot = failLoader.load();
         failScene = new Scene(failRoot);
@@ -67,7 +70,7 @@ public class Main extends Application {
         failController.setStage(stage);
 
         FXMLLoader winLoader = new FXMLLoader();
-        URL winUrl = getClass().getResource(WIN_VIEW_PATH);
+        URL winUrl = new File(VIEW_PATH + WIN_VIEW_PATH).toURI().toURL();
         winLoader.setLocation(winUrl);
         Parent winRoot = winLoader.load();
         winScene = new Scene(winRoot);

@@ -13,10 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.*;
 
 public class MenuController {
     private static final String FILE_END = ".txt";
@@ -28,6 +25,8 @@ public class MenuController {
             = "/puzzle";
     private static final String CS130_WEBSITE_SOLUTION_PATH
             = "/message?solution=";
+    public static final String MAP_PATH = "./resources/map";
+    public static final String SAVES_PATH = "./resources/saves";
 
     @FXML
     private ComboBox<String> mapSelector;
@@ -54,6 +53,8 @@ public class MenuController {
     @FXML
     private Button continueButton;
 
+
+    private String currentMap;
     private Stage stage;
 
     @FXML
@@ -64,7 +65,7 @@ public class MenuController {
             motdLabel.setText(MOTD_ERR);
         }
         mapSelector.setItems(getMapNames());
-        String currentMap = mapSelector.getItems().get(0);
+        currentMap = mapSelector.getItems().get(0);
         mapSelector.setValue(currentMap);
         usernameColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("user"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("score"));
@@ -106,6 +107,7 @@ public class MenuController {
                 loginStatus.setText("Successfully logged in as " + username);
                 setVisibleGameControls(true);
                 Main.setUsername(username);
+                toggleContinue();
             } else {
                 loginStatus.setText("Incorrect password for " + username + ", please try again");
             }
@@ -123,25 +125,39 @@ public class MenuController {
         leaderboardLabel.setDisable(!state);
         newgameButton.setVisible(state);
         newgameButton.setDisable(!state);
+        continueButton.setVisible(state);
         logoutButton.setVisible(state);
         logoutButton.setDisable(!state);
     }
 
     @FXML
     public void handleDropDownSelect(){
-        String currentMap = mapSelector.getValue();
+        currentMap = mapSelector.getValue();
         Leaderboard dataSet = new Leaderboard();
         ObservableList<UserScoreRecord> userData =
                 FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap)));
         leaderBoardTable.setItems(userData);
+        toggleContinue();
+    }
+
+    private void toggleContinue() {
+        continueButton.setDisable(!checkForSave());
     }
 
     @FXML
-    public void handleNewGameButtonAction(final ActionEvent e) {
-        Main.getGameController().loadGame(mapSelector.getValue()+FILE_END);
+    public void handleNewGameButtonAction() {
+        Main.getGameController().loadMap(mapSelector.getValue()+FILE_END);
         stage.setScene(Main.getGameScene());
         stage.show();
     }
+
+    @FXML
+    public void handleContinueButton() {
+        Main.getGameController().loadSave(getSavegameFilename()+FILE_END);
+        stage.setScene(Main.getGameScene());
+        stage.show();
+    }
+
 
     @FXML
     public void handleQuitButtonAction(final ActionEvent e) {
@@ -200,7 +216,7 @@ public class MenuController {
     private ObservableList<String> getMapNames() {
         ObservableList<String> fnames =
                 FXCollections.observableList(new LinkedList<>());
-        File mapDir = new File(getClass().getResource("./map").getPath());
+        File mapDir = new File(MAP_PATH);
         for (File f : Objects.requireNonNull(mapDir.listFiles())) {
             fnames.add(f.getName().replaceFirst(".txt",""));
         }
@@ -210,14 +226,18 @@ public class MenuController {
     private ArrayList<String> getSaveFiles() {
         ArrayList<String> fnames =
                 new ArrayList<>();
-        File saveDir = new File(getClass().getResource(".saves").getPath());
+        File saveDir = new File(SAVES_PATH);
         for (File f : Objects.requireNonNull(saveDir.listFiles())) {
             fnames.add(f.getName().replaceFirst(".txt",""));
         }
         return fnames;
     }
 
-    private boolean checkForSave(String name, String map) {
-        return getSaveFiles().contains(name + "_" + map);
+    private String getSavegameFilename() {
+        return String.format("%s_%s",Main.getUsername(),currentMap);
+    }
+
+    private boolean checkForSave() {
+        return getSaveFiles().contains(getSavegameFilename());
     }
 }

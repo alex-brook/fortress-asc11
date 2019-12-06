@@ -21,6 +21,7 @@ import java.util.Map;
 
 class GameState {
     private static final String BACKGROUND_IMG = "background1.png";
+    private static final String IMAGES_PATH = "./resources/assets";
 
     public static final String MAP_DESC_DELIMITER = "MAP";
     public static final String TILE_DESC_DELIMITER = "TILES";
@@ -53,8 +54,7 @@ class GameState {
 
     GameState(final String mapStr) {
         map = mapStr;
-        String path = getClass().getClassLoader().getResource("./assets").getPath();
-        loadImages(path);
+        loadImages(IMAGES_PATH);
         load(map);
         currentState = State.RUNNING;
         discovered = new boolean[grid.length][grid[0].length];

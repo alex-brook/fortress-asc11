@@ -62,26 +62,32 @@ public class GameController {
 
     private void savePlayerLevel(String saveGame){
         try{
-            String path = "./resources/saves/";
+            String path = MenuController.SAVES_PATH;
             String filename = Main.getUsername() + "_" + currentMapName;
-            FileWriter fileWriter = new FileWriter(path + filename);
+            FileWriter fileWriter = new FileWriter(String.format("%s/%s",path,filename));
             BufferedWriter fileSaver = new BufferedWriter(fileWriter);
             fileSaver.write(saveGame);
             fileSaver.close();
         }catch(IOException e){
-            System.out.println("shits fucked plz fix!!!!");
+            System.out.println("IOException when saving game.");
             System.out.println(e.getMessage());
         }
     }
 
-    public void loadGame(final String mapName) {
+    public void loadMap(final String mapName) {
         currentMapName = mapName;
-        gs = new GameState(stringFromMapName(mapName));
+        gs = new GameState(stringFromMapName(mapName, MenuController.MAP_PATH));
+        at.start();
+    }
+
+    public void loadSave(final String mapName) {
+        currentMapName = mapName;
+        gs = new GameState(stringFromMapName(mapName, MenuController.SAVES_PATH));
         at.start();
     }
 
     public void restartGame() {
-        loadGame(currentMapName);
+        loadMap(currentMapName);
     }
 
     private void switchToFail() {
@@ -110,15 +116,16 @@ public class GameController {
         }
     }
 
-    private String stringFromMapName(final String fileName) {
+    private String stringFromMapName(final String fileName, final String dir) {
         try {
-            File file = new File(getClass()
-                    .getResource("./map/" + fileName).getPath());
+            File file = new File(String.format("%s/%s",dir,fileName));
             FileInputStream fis = new FileInputStream(file);
             byte[] data = new byte[(int) file.length()];
             fis.read(data);
             fis.close();
-            return new String(data, "UTF-8");
+            String result = new String(data, "UTF-8");
+            System.out.printf("The map contents: %s",result);
+            return result;
         } catch (IOException e) {
             return null;
         }
