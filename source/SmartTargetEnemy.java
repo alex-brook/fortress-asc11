@@ -99,21 +99,6 @@ class SmartTargetEnemy extends Enemy {
         }
     }
 
-    private Point pointFromDirection(Direction d) {
-        switch (d) {
-            case UP:
-                return new Point(getXPos(), getUpY());
-            case DOWN:
-                return new Point(getXPos(), getDownY());
-            case LEFT:
-                return new Point(getLeftX(), getYPos());
-            case RIGHT:
-                return new Point(getRightX(), getYPos());
-            default:
-                return null;
-        }
-    }
-
     private void moveInRandomValidDirection(boolean[][] passable) {
         List<Direction> valid = new LinkedList<>();
         for (Direction d : Direction.values()) {

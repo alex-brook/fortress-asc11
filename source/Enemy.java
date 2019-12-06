@@ -1,6 +1,7 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.util.Map;
 
 /**
@@ -38,6 +39,26 @@ public abstract class Enemy {
 
     public abstract void move(final boolean[][] passableGrid,
                               final int playerX, final int playerY);
+
+
+
+    protected final Point pointFromDirection(Direction d) {
+        return pointFromDirection(new Point(getXPos(), getYPos()), d);
+    }
+    protected final Point pointFromDirection(Point p, Direction d) {
+        switch (d) {
+            case UP:
+                return new Point(p.x, p.y - 1);
+            case DOWN:
+                return new Point(p.x, p.y + 1);
+            case LEFT:
+                return new Point(p.x - 1, p.y);
+            case RIGHT:
+                return new Point(p.x + 1, p.y);
+            default:
+                return null;
+        }
+    }
 
     /**
      *
@@ -130,6 +151,25 @@ public abstract class Enemy {
     public void moveDown() {
         yPos += 1;
         direction = Direction.DOWN;
+    }
+
+    public void moveInCurrentDirection() {
+        switch (direction) {
+            case UP:
+                moveUp();
+                break;
+            case DOWN:
+                moveDown();
+                break;
+            case LEFT:
+                moveLeft();
+                break;
+            case RIGHT:
+                moveRight();
+                break;
+            default:
+                return;
+        }
     }
 
     /**

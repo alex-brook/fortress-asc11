@@ -67,7 +67,8 @@ public final class EnemyFactory {
                 return new StraightLineEnemy(x, y, MapChars.STRAIGHT_LINE_ENEMY,
                         images, Direction.getDirection(additionalInfo[0]));
             case MapChars.WALL_FOLLOW_ENEMY:
-                return new WallFollowEnemy(x, y, MapChars.WALL_FOLLOW_ENEMY, images);
+                return new WallFollowEnemy(x, y, MapChars.WALL_FOLLOW_ENEMY, images,
+                        Direction.getDirection(additionalInfo[0]));
             default:
                 return null;
         }

@@ -84,6 +84,6 @@ class Ground extends Tile {
      */
     @Override
     public boolean isPassable(final Enemy e) {
-        return true;
+        return hasItem == null;
     }
 }

@@ -1,5 +1,7 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import java.awt.*;
 import java.util.Map;
 
  /**
@@ -15,22 +17,51 @@ class WallFollowEnemy extends Enemy {
     private static String WALL_FOLLOW_3_IMG = "slime_idle_anim_f3.png";
     private static String WALL_FOLLOW_4_IMG = "slime_idle_anim_f4.png";
     private static String WALL_FOLLOW_5_IMG = "slime_idle_anim_f5.png";
-    
-    private String direction;
 
     WallFollowEnemy(final int x, final int y, final char mapChar,
-                    final Map<String, Image> img) {
+                    final Map<String, Image> img, final Direction dir) {
         super(x, y, mapChar, img);
+        direction = Direction.UP;
     }
 
      /**
       *
-      * @param passableGrid
+      * @param passable
       * @param playerX
       * @param playerY
       */
     @Override
-    public void move(boolean[][] passableGrid, int playerX, int playerY) {
+    public void move(boolean[][] passable, int playerX, int playerY) {
+        //System.out.println(String.format("My direction is %s.",direction));
+        Point current = new Point(getXPos(), getYPos());
+        Point cellOnMyLeft = pointFromDirection(current, direction.turnleft());
+        Point cellOnMyRight = pointFromDirection(current, direction.turnright());
+        Point cellForwards = pointFromDirection(current, direction);
+        Point cellBackLeft = pointFromDirection(cellOnMyLeft, direction.turnleft().turnleft());
+
+        boolean leftPassable = passable[cellOnMyLeft.x][cellOnMyLeft.y];
+        boolean forwardsPassable = passable[cellForwards.x][cellForwards.y];
+        boolean rightPassable = passable[cellOnMyRight.x][cellForwards.y];
+        // 'r' corner
+        boolean inRightCorner = !passable[cellOnMyLeft.x][cellOnMyLeft.y]
+                && !passable[cellForwards.x][cellForwards.y]
+                && passable[cellOnMyRight.x][cellOnMyRight.y];
+        boolean inUCorner = !passable[cellOnMyLeft.x][cellOnMyLeft.y]
+                && !passable[cellForwards.x][cellForwards.y]
+                && !passable[cellOnMyRight.x][cellOnMyRight.y];
+        boolean inStraight = !passable[cellOnMyLeft.x][cellOnMyLeft.y]
+                && passable[cellForwards.x][cellForwards.y];
+        boolean inLeftCorner = passable[cellOnMyLeft.x][cellOnMyLeft.y]
+                && !passable[cellBackLeft.x][cellBackLeft.y];
+
+        if (inRightCorner) {
+            direction = direction.turnright();
+        } else if (inUCorner) {
+            direction = direction.opposite();
+        } else if (inLeftCorner) {
+            direction = direction.turnleft();
+        }
+        moveInCurrentDirection();
     }
 
      /**
