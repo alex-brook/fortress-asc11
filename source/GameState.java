@@ -28,7 +28,6 @@ class GameState {
     public static final String PLAYER_DESC_DELIMITER = "PLAYER";
     public static final String ID_DELIMITER = ":";
     public static final String INFO_DELIMITER = ",";
-    public static final String END_OF_LINE = "\n";
 
     public static final double TILE_RES = 32;
     public static final int VIEW_RADIUS = 8;
@@ -121,10 +120,10 @@ class GameState {
      */
     private void loadTiles(final String tileMap, final String tileDesc) {
         TileFactory tf = new TileFactory(img);
-        String[] rows = tileMap.split(END_OF_LINE);
+        String[] rows = tileMap.split(System.lineSeparator());
         grid = new Tile[rows[0].length()][rows.length];
         String[] tiles =
-                tileDesc.split(END_OF_LINE);
+                tileDesc.split(System.lineSeparator());
         int descCounter = 0;
         String[] currentDesc = tiles[descCounter].split(ID_DELIMITER);
         for (int y = 0; y < rows.length; y++) {
@@ -181,7 +180,7 @@ class GameState {
         final int numMandatoryInfo = 3;
         enemies = new LinkedList<>();
         EnemyFactory ef = new EnemyFactory(img);
-        String[] enemyDescriptions = enemyDesc.split(END_OF_LINE);
+        String[] enemyDescriptions = enemyDesc.split(System.lineSeparator());
 
         if (enemyDescriptions[0].length() == 0) {
             return;
@@ -233,10 +232,10 @@ class GameState {
      */
     private String[] getMapComponents(final String map) {
         String splitRegex = String.format("%s%s|%s%s|%s%s|%s%s",
-                MAP_DESC_DELIMITER, END_OF_LINE,
-                TILE_DESC_DELIMITER, END_OF_LINE,
-                ENEMY_DESC_DELIMITER, END_OF_LINE,
-                PLAYER_DESC_DELIMITER, END_OF_LINE
+                MAP_DESC_DELIMITER, System.lineSeparator(),
+                TILE_DESC_DELIMITER, System.lineSeparator(),
+                ENEMY_DESC_DELIMITER, System.lineSeparator(),
+                PLAYER_DESC_DELIMITER, System.lineSeparator()
         );
         String[] parts = map.split(splitRegex);
         for (int i = 0; i < parts.length; i++) {
@@ -251,7 +250,14 @@ class GameState {
      */
     public void update(final KeyCode kc) {
         updatePlayer(kc);
+        if (enemyCollidesWithPlayer()) {
+            player.kill();
+        }
         updateEnemies();
+        if (enemyCollidesWithPlayer()) {
+            player.kill();
+        }
+
         if (player.isDead()) {
             currentState = State.LOSE;
         } else if (player.hasWon()) {
@@ -355,16 +361,21 @@ class GameState {
         return passableGrid;
     }
 
+    private boolean enemyCollidesWithPlayer() {
+        for (Enemy e : enemies) {
+            if (e.getXPos() == player.getXPos() && e.getYPos() == player.getYPos()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Moves enemy
      */
     private void updateEnemies() {
         for (Enemy e : enemies) {
             e.move(getPassableGrid(e), player.getXPos(), player.getYPos());
-            if (getEnemyAtLocation(player.getXPos(), player.getYPos())
-                    != null) {
-                player.kill();
-            }
         }
     }
 
@@ -389,7 +400,7 @@ class GameState {
         //work out time
         long timeCurrentSession = getSessionTime();
         sbTime.append(timeCurrentSession);
-        sbTime.append(END_OF_LINE);
+        sbTime.append(System.lineSeparator());
         // get every map tile
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
@@ -402,11 +413,11 @@ class GameState {
                         sbTiles.append(current);
                         sbTiles.append(ID_DELIMITER);
                         sbTiles.append(info);
-                        sbTiles.append(END_OF_LINE);
+                        sbTiles.append(System.lineSeparator());
                     }
                 }
             }
-            sbMap.append(END_OF_LINE);
+            sbMap.append(System.lineSeparator());
         }
         // get every enemy
         for (Enemy e : enemies) {
@@ -420,7 +431,7 @@ class GameState {
                 sbEnemies.append(INFO_DELIMITER);
                 sbEnemies.append(info);
             }
-            sbEnemies.append(END_OF_LINE);
+            sbEnemies.append(System.lineSeparator());
         }
         sbPlayer.append(player.getMapChar());
         sbPlayer.append(ID_DELIMITER);
@@ -429,12 +440,12 @@ class GameState {
         sbPlayer.append(player.getYPos());
         sbPlayer.append(INFO_DELIMITER);
         sbPlayer.append(player.getAdditionalInfo());
-        sbPlayer.append(END_OF_LINE);
+        sbPlayer.append(System.lineSeparator());
 
-        return sbTime.toString() + MAP_DESC_DELIMITER + END_OF_LINE
-                + sbMap.toString() + TILE_DESC_DELIMITER + END_OF_LINE
-                + sbTiles.toString() + ENEMY_DESC_DELIMITER + END_OF_LINE
-                + sbEnemies.toString() + PLAYER_DESC_DELIMITER + END_OF_LINE
+        return sbTime.toString() + MAP_DESC_DELIMITER + System.lineSeparator()
+                + sbMap.toString() + TILE_DESC_DELIMITER + System.lineSeparator()
+                + sbTiles.toString() + ENEMY_DESC_DELIMITER + System.lineSeparator()
+                + sbEnemies.toString() + PLAYER_DESC_DELIMITER + System.lineSeparator()
                 + sbPlayer.toString();
     }
     public long getSessionTime(){
@@ -589,7 +600,7 @@ class GameState {
                     out.append(' ');
                 }
             }
-            out.append(END_OF_LINE);
+            out.append(System.lineSeparator());
         }
         out.append(player.getAdditionalInfo());
         return out.toString();

@@ -2,8 +2,6 @@ import java.sql.*;
 
 public class Leaderboard {
 
-    private final String LEADERBOARD_SCORE_TABLE = "leaderboardScore";
-    private final String USER_PROFILE_TABLE = "UserProfiles";
 
     public Leaderboard() {
         createNewDatabase();
@@ -18,7 +16,7 @@ public class Leaderboard {
         Connection c = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:resources\\Leaderboard.db");
+            c = DriverManager.getConnection("jdbc:sqlite:resources/Leaderboard.db");
             System.out.println("Database Connected");
         } catch (Exception e) {
             System.out.println(e);
@@ -27,10 +25,10 @@ public class Leaderboard {
 
     private void createUserTable() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = "jdbc:sqlite:resources/Leaderboard.db";
 
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS " + USER_PROFILE_TABLE + " (\n"
+        String sql = "CREATE TABLE IF NOT EXISTS UserProfiles (\n"
                 + "    name text PRIMARY KEY NOT NULL,\n"
                 + "    password text,\n"
                 + "    gamesPlayed real,\n"
@@ -47,18 +45,18 @@ public class Leaderboard {
     }
 
     /**
-     * creates the initial table if none already exists
+     * creates the initial table if none allready exists
      */
     private void createScoreTable() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = "jdbc:sqlite:resources/Leaderboard.db";
 
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS " + LEADERBOARD_SCORE_TABLE +" (\n"
+        String sql = "CREATE TABLE IF NOT EXISTS LeaderBoardScores (\n"
                 + "    name text,\n"
                 + "    score real,\n"
                 + "    map text,\n"
-                + "    PRIMARY KEY(name, map, score)\n"
+                + "    PRIMARY KEY(name, map)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -77,7 +75,7 @@ public class Leaderboard {
      */
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:resources\\Leaderboard.db";
+        String url = "jdbc:sqlite:resources/Leaderboard.db";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -87,8 +85,30 @@ public class Leaderboard {
         return conn;
     }
 
+    /**
+     * @param name  takes in the name of the player to add or update within the database
+     * @param score takes in the score of the player to add or update within the database
+     */
+    public void insertNewScore(String name, int score, String map) {
+        if (getPlayerScore(name, map) == 0) {
+            String sql = "INSERT INTO LeaderboardScores(name,score,map) VALUES(?,?,?)";
+
+            try (Connection conn = this.connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, name);
+                pstmt.setInt(2, score);
+                pstmt.setString(3, map);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (getPlayerScore(name, map) < score) {
+            updateScore(name, score, map);
+        }
+    }
+
     public void newAccount(String name, String password) {
-        String sql = "INSERT INTO " + USER_PROFILE_TABLE +"(name,password,gamesPlayed,highestLevel) VALUES(?,?,0,0)";
+        String sql = "INSERT INTO UserProfiles(name,password,gamesPlayed,highestLevel) VALUES(?,?,0,0)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
@@ -102,7 +122,7 @@ public class Leaderboard {
 
     public boolean isAccount(String name) {
         String sql = "SELECT name "
-                + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
+                + "FROM UserProfiles WHERE name = ?";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -126,7 +146,7 @@ public class Leaderboard {
 
     public String getUserPassword(String name) {
         String sql = "SELECT password "
-                + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
+                + "FROM UserProfiles WHERE name = ?";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -145,7 +165,7 @@ public class Leaderboard {
     }
 
     public String selectAllUsers() {
-        String sql = "SELECT name, password, gamesPlayed, highestLevel FROM " + USER_PROFILE_TABLE + " ORDER BY name ASC";
+        String sql = "SELECT name, password, gamesPlayed, highestLevel FROM UserProfiles ORDER BY name ASC";
         String result = "";
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
@@ -170,7 +190,7 @@ public class Leaderboard {
      * to allow for use in the menu class
      */
     public String selectAllScores() {
-        String sql = "SELECT name, score, map FROM " + LEADERBOARD_SCORE_TABLE + " ORDER BY score ASC";
+        String sql = "SELECT name, score, map FROM LeaderboardScores ORDER BY score ASC";
         String result = "";
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
@@ -191,7 +211,7 @@ public class Leaderboard {
 
     public UserScoreRecord[] selectMapScores(String map) {
         UserScoreRecord[] result = new UserScoreRecord[3];
-        String sql = "SELECT name, score, map FROM " + LEADERBOARD_SCORE_TABLE + " WHERE map = ? ORDER BY score ASC";
+        String sql = "SELECT name, score, map FROM LeaderboardScores WHERE map = ? ORDER BY score ASC";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -222,7 +242,7 @@ public class Leaderboard {
      */
     private int getPlayerScore(String name, String map) {
         String sql = "SELECT score "
-                + "FROM " + LEADERBOARD_SCORE_TABLE + " WHERE name = ? AND map = ?";
+                + "FROM LeaderboardScores WHERE name = ? AND map = ?";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -244,7 +264,7 @@ public class Leaderboard {
 
     public int getPlayedGamesOfPlayer(String name) {
         String sql = "SELECT gamesPlayed "
-                + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
+                + "FROM UserProfiles WHERE name = ?";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -268,32 +288,26 @@ public class Leaderboard {
     }
 
     /**
-     * @param name  takes in the name of the player to add or update within the database
-     * @param score takes in the score of the player to add or update within the database
+     * @param name  takes in the name of the user
+     * @param score takes in the score of the user
+     *              updates an existing record with a new score value
      */
-    public void insertNewScore(String name, long score, String map) {
-        System.out.println("updating " + name + " with score " + score + " on map " + map);
-
-        String sql = "INSERT INTO " + LEADERBOARD_SCORE_TABLE + "(name,score,map) VALUES(?,?,?)";
-
+    public void updateScore(String name, long score, String map) {
+        String sql = "UPDATE LeaderboardScores SET score = ? "
+                + "WHERE name = ? AND map = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setLong(2, score);
+
+            // set the corresponding param
+            pstmt.setString(2, name);
+            pstmt.setLong(1, score);
             pstmt.setString(3, map);
+            // update
             pstmt.executeUpdate();
-            updatehighestLevel(name, map);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    /**
-     * @param name  takes in the name of the user
-     */
-    public void updatehighestLevel(String name, String map) {
-
-        String sql = "UPDATE " + USER_PROFILE_TABLE + " SET highestLevel = ? "
+        sql = "UPDATE UserProfiles SET highestLevel = ? "
                 + "WHERE name = ?";
         if(Integer.parseInt(map) > getHighestMap(name)) {
 
@@ -314,7 +328,7 @@ public class Leaderboard {
 
     private int getHighestMap(String name) {
         String sql = "SELECT highestLevel "
-                + "FROM " +  USER_PROFILE_TABLE + " WHERE name = ?";
+                + "FROM UserProfiles WHERE name = ?";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -333,7 +347,7 @@ public class Leaderboard {
     }
 
     public void incrementGamesPlayed(String name) {
-        String sql = "UPDATE " + USER_PROFILE_TABLE + " SET gamesPlayed = " + (getPlayedGamesOfPlayer(name) + 1)
+        String sql = "UPDATE userProfiles SET gamesPlayed = " + (getPlayedGamesOfPlayer(name) + 1)
                 + " WHERE name = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

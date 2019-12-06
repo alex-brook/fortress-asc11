@@ -35,8 +35,6 @@ public class MenuController {
     @FXML
     private Label loginStatus;
     @FXML
-    private Label leaderboardLabel;
-    @FXML
     private TableView<UserScoreRecord> leaderBoardTable;
     @FXML
     private TableColumn<UserScoreRecord, String> usernameColumn;
@@ -46,12 +44,6 @@ public class MenuController {
     private TextField usernameInput;
     @FXML
     private PasswordField passwordInput;
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private Button newgameButton;
-    @FXML
-    private Button continueButton;
 
     private Stage stage;
 
@@ -69,7 +61,7 @@ public class MenuController {
         timeColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("score"));
         Leaderboard dataSet = new Leaderboard();
         ObservableList<UserScoreRecord> userData =
-                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap)));
+                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap+FILE_END)));
         leaderBoardTable.setItems(userData);
 
     }
@@ -79,7 +71,6 @@ public class MenuController {
         Main.setUsername(null);
         usernameInput.setText(null);
         passwordInput.setText(null);
-        setVisibleGameControls(false);
         loginStatus.setText("Logged out");
     }
 
@@ -103,7 +94,6 @@ public class MenuController {
         if (lb.isAccount(username)){
             if (password.equals(lb.getUserPassword(username))){
                 loginStatus.setText("Successfully logged in as " + username);
-                setVisibleGameControls(true);
                 Main.setUsername(username);
             } else {
                 loginStatus.setText("Incorrect password for " + username + ", please try again");
@@ -111,27 +101,16 @@ public class MenuController {
         } else {
             loginStatus.setText("This account does not exist, please create a new account");
         }
-    }
-    
-    private void setVisibleGameControls(boolean state){
-        mapSelector.setVisible(state);
-        mapSelector.setDisable(!state);
-        leaderBoardTable.setVisible(state);
-        leaderBoardTable.setDisable(!state);
-        leaderboardLabel.setVisible(state);
-        leaderboardLabel.setDisable(!state);
-        newgameButton.setVisible(state);
-        newgameButton.setDisable(!state);
-        logoutButton.setVisible(state);
-        logoutButton.setDisable(!state);
+
+
     }
 
     @FXML
-    public void handleDropDownSelect(){
+    public void handleDropDownSelect(final ActionEvent e){
         String currentMap = mapSelector.getValue();
         Leaderboard dataSet = new Leaderboard();
         ObservableList<UserScoreRecord> userData =
-                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap)));
+                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap+FILE_END)));
         leaderBoardTable.setItems(userData);
     }
 

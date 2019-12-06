@@ -24,7 +24,6 @@ public class FailController {
     @FXML
     public void switchToMenu() {
         stage.setScene(Main.getMenuScene());
-        Main.getMenuController().handleDropDownSelect();
         stage.show();
     }
 
