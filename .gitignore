@@ -1,3 +1,4 @@
 # ignore intellij folder
 .idea
 out
+out/production/fortress-asc11/Leaderboard.db

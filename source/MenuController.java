@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -204,5 +205,19 @@ public class MenuController {
             fnames.add(f.getName().replaceFirst(".txt",""));
         }
         return fnames;
+    }
+
+    private ArrayList<String> getSaveFiles() {
+        ArrayList<String> fnames =
+                new ArrayList<>();
+        File saveDir = new File(getClass().getResource(".saves").getPath());
+        for (File f : Objects.requireNonNull(saveDir.listFiles())) {
+            fnames.add(f.getName().replaceFirst(".txt",""));
+        }
+        return fnames;
+    }
+
+    private boolean checkForSave(String name, String map) {
+        return getSaveFiles().contains(name + "_" + map);
     }
 }
