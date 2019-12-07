@@ -23,6 +23,7 @@ public class GameController {
     private AnimationTimer at;
     private Stage stage;
     private String currentMapName;
+    private boolean continuedGame;
 
 
     public void setStage(Stage stage) {
@@ -78,12 +79,14 @@ public class GameController {
     public void loadMap(final String mapName) {
         currentMapName = mapName;
         gs = new GameState(stringFromMapName(mapName, MenuController.MAP_PATH));
+        continuedGame = false;
         at.start();
     }
 
     public void loadSave(final String mapName) {
         currentMapName = mapName;
         gs = new GameState(stringFromMapName(mapName, MenuController.SAVES_PATH));
+        continuedGame = true;
         at.start();
     }
 
@@ -101,10 +104,13 @@ public class GameController {
 
     private void switchToWin() {
         at.stop();
+        String mapName = continuedGame
+                ? currentMapName.replaceAll("[^\\d]","")
+                : currentMapName;
         stage.setScene(Main.getWinScene());
         Main.getLb().incrementGamesPlayed(Main.getUsername());
         Main.getLb().insertNewScore(Main.getUsername(), (gs.getSessionTime()),
-                currentMapName.replaceFirst(".txt",""));
+                mapName.replaceFirst(".txt",""));
         stage.show();
     }
 
