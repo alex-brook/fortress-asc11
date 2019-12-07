@@ -1,4 +1,6 @@
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,11 +41,19 @@ public class MenuController {
     @FXML
     private Label selectMapLabel;
     @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
     private TableView<UserScoreRecord> leaderBoardTable;
     @FXML
     private TableColumn<UserScoreRecord, String> usernameColumn;
     @FXML
     private TableColumn<UserScoreRecord, String> timeColumn;
+    @FXML
+    private TableView<String> profilesTable;
+    @FXML
+    private TableColumn<String, String> profileNameColumn;
     @FXML
     private TextField usernameInput;
     @FXML
@@ -54,10 +64,15 @@ public class MenuController {
     private Button newgameButton;
     @FXML
     private Button continueButton;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button createProfileButton;
 
 
     private String currentMap;
     private Stage stage;
+    private Leaderboard ld;
 
     @FXML
     public void initialize() {
@@ -69,13 +84,25 @@ public class MenuController {
         mapSelector.setItems(getMapNames());
         currentMap = mapSelector.getItems().get(0);
         mapSelector.setValue(currentMap);
+        ld = new Leaderboard();
         usernameColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("user"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("score"));
-        Leaderboard dataSet = new Leaderboard();
-        ObservableList<UserScoreRecord> userData =
-                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap)));
+        profileNameColumn.setCellValueFactory(field -> new ReadOnlyStringWrapper(field.getValue()));
+        ObservableList<UserScoreRecord> userData = getUserScoreData();
+        ObservableList<String> profileNames = getUsernamesData();
         leaderBoardTable.setItems(userData);
+        profilesTable.setItems(profileNames);
+        setVisibleGameControls(false);
+        setVisibleLoginControls(true);
 
+    }
+
+    private ObservableList<UserScoreRecord> getUserScoreData() {
+        return FXCollections.observableList(Arrays.asList(ld.selectMapScores(currentMap)));
+    }
+
+    private ObservableList<String> getUsernamesData() {
+        return FXCollections.observableList(ld.selectAllUsernames());
     }
 
     @FXML
@@ -84,6 +111,7 @@ public class MenuController {
         usernameInput.setText(null);
         passwordInput.setText(null);
         setVisibleGameControls(false);
+        setVisibleLoginControls(true);
         loginStatus.setText("Logged out");
     }
 
@@ -94,7 +122,8 @@ public class MenuController {
         String password = passwordInput.getText();
         if (!lb.isAccount(username)){
             lb.newAccount(username, password);
-           loginStatus.setText("New User profile created");
+            profilesTable.setItems(getUsernamesData());
+            loginStatus.setText("New User profile created");
         } else {
             loginStatus.setText("This user already exists, please use login");
         }
@@ -108,6 +137,7 @@ public class MenuController {
             if (password.equals(lb.getUserPassword(username))){
                 loginStatus.setText("Successfully logged in as " + username);
                 setVisibleGameControls(true);
+                setVisibleLoginControls(false);
                 Main.setUsername(username);
                 toggleContinue();
             } else {
@@ -132,12 +162,28 @@ public class MenuController {
         logoutButton.setDisable(!state);
     }
 
+    private void setVisibleLoginControls(boolean state) {
+        usernameInput.setVisible(state);
+        usernameInput.setDisable(!state);
+        passwordInput.setVisible(state);
+        passwordInput.setDisable(!state);
+        usernameLabel.setVisible(state);
+        usernameLabel.setDisable(!state);
+        passwordLabel.setVisible(state);
+        passwordLabel.setDisable(!state);
+        createProfileButton.setVisible(state);
+        createProfileButton.setDisable(!state);
+        loginButton.setVisible(state);
+        loginButton.setDisable(!state);
+        profilesTable.setVisible(state);
+        profilesTable.setDisable(!state);
+    }
+
     @FXML
     public void handleDropDownSelect(){
         currentMap = mapSelector.getValue();
         Leaderboard dataSet = new Leaderboard();
-        ObservableList<UserScoreRecord> userData =
-                FXCollections.observableList(Arrays.asList(dataSet.selectMapScores(currentMap)));
+        ObservableList<UserScoreRecord> userData = getUserScoreData();
         leaderBoardTable.setItems(userData);
         toggleContinue();
     }

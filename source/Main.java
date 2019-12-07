@@ -44,11 +44,6 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage stage) throws IOException {
-        // database stuff
-        Leaderboard ld = new Leaderboard();
-        System.out.println(ld.selectAllUsers());
-
-
         FXMLLoader menuLoader = new FXMLLoader();
         URL url = new File(VIEW_PATH + MENU_VIEW_PATH).toURI().toURL();
         menuLoader.setLocation(url);
