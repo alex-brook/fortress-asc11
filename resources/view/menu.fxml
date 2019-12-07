@@ -10,20 +10,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+<AnchorPane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
    <children>
-      <Label fx:id="loginStatus" layoutX="15.0" layoutY="232.0" text="Not Logged In" />
-      <PasswordField fx:id="passwordInput" layoutX="90.0" layoutY="118.0" />
-      <TextField fx:id="usernameInput" layoutX="90.0" layoutY="89.0" />
-      <Label layoutX="14.0" layoutY="94.0" text="Username: " />
-      <Label layoutX="14.0" layoutY="123.0" text="Password:" />
-      <Button layoutX="207.0" layoutY="149.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-      <Button layoutX="90.0" layoutY="149.0" mnemonicParsing="false" onAction="#handleCreateProfile" text="Create Profile" />
-      <ComboBox fx:id="mapSelector" disable="true" layoutX="295.0" layoutY="87.0" onAction="#handleDropDownSelect" prefHeight="26.0" prefWidth="171.0" promptText="Select Map..." visible="false" />
-      <Button fx:id="continueButton" disable="true" layoutX="295.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleContinueButton" text="Continue" visible="false" />
-      <Button fx:id="newgameButton" disable="true" layoutX="476.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleNewGameButtonAction" text="New Game" visible="false" />
-       <Button layoutX="15.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleQuitButtonAction" text="Quit Game" />
-      <TableView fx:id="leaderBoardTable" disable="true" layoutX="295.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <Label fx:id="motdLabel" layoutX="6.0" layoutY="309.0" prefHeight="85.0" prefWidth="589.0" text="Message of the Day" wrapText="true">
+         <font>
+            <Font size="12.0" />
+         </font></Label>
+      <Label fx:id="loginStatus" layoutX="9.0" layoutY="175.0" text="Not Logged In" />
+      <PasswordField fx:id="passwordInput" layoutX="9.0" layoutY="108.0" />
+      <TextField fx:id="usernameInput" layoutX="10.0" layoutY="45.0" />
+      <Label layoutX="10.0" layoutY="18.0" text="Username: " />
+      <Label layoutX="9.0" layoutY="84.0" text="Password:" />
+      <Button layoutX="126.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
+      <Button layoutX="9.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleCreateProfile" prefHeight="26.0" prefWidth="116.0" text="Create Profile" />
+      <ComboBox fx:id="mapSelector" disable="true" layoutX="242.0" layoutY="71.0" onAction="#handleDropDownSelect" prefHeight="26.0" prefWidth="116.0" promptText="Select Map..." visible="false" />
+      <Button fx:id="continueButton" disable="true" layoutX="244.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleContinueButton" prefHeight="26.0" prefWidth="86.0" text="Continue" visible="false" />
+      <Button fx:id="newgameButton" disable="true" layoutX="242.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleNewGameButtonAction" text="New Game" visible="false" />
+      <TableView fx:id="leaderBoardTable" disable="true" layoutX="390.0" layoutY="72.0" prefHeight="99.0" prefWidth="171.0" visible="false">
         <columns>
           <TableColumn fx:id="usernameColumn" prefWidth="71.0" text="Username" />
           <TableColumn fx:id="timeColumn" prefWidth="79.0" text="Time" />
@@ -32,11 +35,8 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label fx:id="leaderboardLabel" layoutX="296.0" layoutY="162.0" text="Leaderboard for this map:" visible="false" />
-      <Label fx:id="motdLabel" layoutX="15.0" layoutY="10.0" prefHeight="50.0" prefWidth="500.0" text="Message of the Day" wrapText="true">
-         <font>
-            <Font size="12.0" />
-         </font></Label>
-      <Button fx:id="logoutButton" disable="true" layoutX="104.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="25.0" prefWidth="60.0" text="Logout" visible="false" />
+      <Label fx:id="leaderboardLabel" layoutX="385.0" layoutY="45.0" prefHeight="26.0" prefWidth="180.0" text="Leaderboard" visible="false" wrapText="true" />
+      <Button fx:id="logoutButton" disable="true" layoutX="10.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="26.0" prefWidth="63.0" text="Logout" visible="false" />
+      <Label fx:id="selectMapLabel" layoutX="243.0" layoutY="49.0" text="Selected Map" visible="false" />
    </children>
 </AnchorPane>

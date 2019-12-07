@@ -1,0 +1,14 @@
+.root {
+    -fx-background-image: url("minotaur.jpg");
+    -fx-background-size: cover;
+}
+.label {
+        -fx-background-color: saddlebrown;
+        -fx-background-radius: 5px;
+        -fx-background-size: cover;
+        -fx-text-fill: white;
+        -fx-font-size: 16px;
+        -fx-font-family: "Times New Roman";
+        -fx-font-weight: bold;
+        -fx-opacity: 0.85;
+}

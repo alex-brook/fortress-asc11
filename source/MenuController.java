@@ -37,6 +37,8 @@ public class MenuController {
     @FXML
     private Label leaderboardLabel;
     @FXML
+    private Label selectMapLabel;
+    @FXML
     private TableView<UserScoreRecord> leaderBoardTable;
     @FXML
     private TableColumn<UserScoreRecord, String> usernameColumn;
@@ -122,7 +124,7 @@ public class MenuController {
         leaderBoardTable.setVisible(state);
         leaderBoardTable.setDisable(!state);
         leaderboardLabel.setVisible(state);
-        leaderboardLabel.setDisable(!state);
+        selectMapLabel.setVisible(state);
         newgameButton.setVisible(state);
         newgameButton.setDisable(!state);
         continueButton.setVisible(state);
