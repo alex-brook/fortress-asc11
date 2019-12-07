@@ -13,6 +13,7 @@ public abstract class Tile {
     protected static final String GROUND_IMG = "ground.png";
 
     private char mapChar;
+    private String sound;
 
     private Map<String, Image> images;
 
@@ -114,6 +115,16 @@ public abstract class Tile {
      */
     public Tile getRightNeighbour() {
         return rightNeighbour;
+    }
+
+    protected void setSound(String snd) {
+        sound = snd;
+    }
+
+    public String consumeSound() {
+        String snd = sound;
+        setSound(null);
+        return snd;
     }
 
     /**

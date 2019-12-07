@@ -23,6 +23,11 @@ class Player {
     public static final String PLAYER_4_IMG = "knight_idle_anim_f4.png";
     public static final String PLAYER_5_IMG = "knight_idle_anim_f5.png";
 
+    private static final String FOOTSTEP_SOUND = "walk.wav";
+    private static final String DEATH_SOUND = "death.wav";
+    private static final String TOKEN_SOUND = "coin.wav";
+    private static final String ITEM_SOUND = "metal-ringing.wav";
+
 
     private Map<String, Image> img;
 
@@ -36,10 +41,12 @@ class Player {
 
     private boolean won;
     private boolean dead;
+    private String sound;
 
     Player(final int x, final int y, final String[] addInfo,
            final Map<String, Image> image) {
         this(x, y, Integer.parseInt(addInfo[0]), inventoryFromInfo(addInfo), image);
+        sound = null;
     }
 
     private Player(final int x, final int y, final int tokens, final Item[] inv,
@@ -72,6 +79,7 @@ class Player {
      */
     public void giveItem(final Item item) {
         inventory.add(item);
+        sound = ITEM_SOUND;
     }
 
     /**
@@ -96,6 +104,7 @@ class Player {
      */
     public void giveToken() {
         tokenCount++;
+        sound = TOKEN_SOUND;
     }
 
     /**
@@ -139,6 +148,7 @@ class Player {
         xPos -= 1;
         direction = Direction.LEFT;
         lookingRight = false;
+        sound = FOOTSTEP_SOUND;
     }
 
     /**
@@ -148,6 +158,7 @@ class Player {
         xPos += 1;
         direction = Direction.RIGHT;
         lookingRight = true;
+        sound = FOOTSTEP_SOUND;
     }
 
     /**
@@ -164,6 +175,7 @@ class Player {
     public void moveUp() {
         yPos -= 1;
         direction = Direction.UP;
+        sound = FOOTSTEP_SOUND;
     }
 
     /**
@@ -172,6 +184,7 @@ class Player {
     public void moveDown() {
         yPos += 1;
         direction = Direction.DOWN;
+        sound = FOOTSTEP_SOUND;
     }
 
     /**
@@ -195,6 +208,7 @@ class Player {
      */
     public void kill() {
         dead = true;
+        sound = DEATH_SOUND;
     }
 
     /**
@@ -210,6 +224,12 @@ class Player {
      */
     public void win() {
         won = true;
+    }
+
+    public String consumeSound() {
+        String snd = sound;
+        sound = null;
+        return snd;
     }
 
     /**

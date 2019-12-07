@@ -252,6 +252,7 @@ class GameState {
     public void update(final KeyCode kc) {
         updatePlayer(kc);
         updateEnemies();
+        updateSounds();
         if (player.isDead()) {
             currentState = State.LOSE;
         } else if (player.hasWon()) {
@@ -299,6 +300,33 @@ class GameState {
                 System.err.println("[GameState] Invalid key " + kc.getName());
         }
         updateDiscovered();
+    }
+
+    private void updateSounds() {
+        String sound = null;
+
+        //find tile sound
+        boolean foundTileWithSound = false;
+        String tileSound = null;
+        for (int y = 0; y < grid[0].length && !foundTileWithSound; y++) {
+            for (int x = 0; x < grid.length && !foundTileWithSound; x++) {
+                if (grid[x][y] != null) {
+                    tileSound = grid[x][y].consumeSound();
+                    foundTileWithSound = tileSound != null;
+                }
+            }
+        }
+        //find player sound
+        String playerSound = player.consumeSound();
+
+        if (tileSound != null) {
+            sound = tileSound;
+        } else if (playerSound != null) {
+            sound = playerSound;
+        }
+        if (sound != null) {
+            Main.playSound(sound);
+        }
     }
 
     private void updateDiscovered() {

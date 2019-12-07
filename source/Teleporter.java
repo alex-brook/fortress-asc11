@@ -10,6 +10,7 @@ import java.util.Map;
  */
 class Teleporter extends Tile {
     private static final String TELEPORTER_IMG = "potion_green.png";
+    private static final String TELEPORT_SOUND = "teleport.wav";
 
     private int linkedX;
     private int linkedY;
@@ -55,6 +56,7 @@ class Teleporter extends Tile {
                 p.teleportTo(linkedX + 1, linkedY);
                 break;
         }
+        setSound(TELEPORT_SOUND);
     }
 
     /**

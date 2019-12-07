@@ -4,10 +4,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -20,6 +23,7 @@ public class Main extends Application {
     private static final String GAME_VIEW_PATH = "/view/game.fxml";
     private static final String FAIL_VIEW_PATH = "/view/levelFail.fxml";
     private static final String WIN_VIEW_PATH = "/view/levelWin.fxml";
+    private static final String SOUNDS_PATH = "./resources/sounds/";
     private static final String TITLE = "FORTRESS ASC11";
 
     private static Scene menuScene;
@@ -124,6 +128,18 @@ public class Main extends Application {
         return failScene;
     }
 
+    public static void playSound(String sound) {
+        try {
+            File f = new File(SOUNDS_PATH + sound);
+            URL url = f.toURI().toURL();
+            final Media media = new Media(url.toString());
+            final MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
+        } catch (MalformedURLException e){
+            System.err.println("Failed to play sound!");
+            System.err.println(e);
+        }
+    }
 
     public static void main(final String[] args) {
         launch(args);

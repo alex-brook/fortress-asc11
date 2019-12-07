@@ -24,6 +24,8 @@ public abstract class Door extends Tile {
     private static final String DOOR_UP_1_IMG = "door_top_1.png";
     private static final String DOOR_UP_3_IMG = "door_top_3.png";
 
+    private static final String UNLOCK_SOUND = "door.wav";
+
 
     static boolean drewLeftDoor = false;
     private boolean locked;
@@ -52,6 +54,7 @@ public abstract class Door extends Tile {
     protected final void unlock() {
         locked = false;
         setMapChar(TileFactory.MapChars.GROUND);
+        setSound(UNLOCK_SOUND);
     }
 
     /**

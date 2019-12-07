@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class GameController {
+    //private final String SAVE_LOCATION = "./saves/";
+
     @FXML
     private Canvas gameCanvas;
     @FXML
@@ -21,7 +23,6 @@ public class GameController {
     private AnimationTimer at;
     private Stage stage;
     private String currentMapName;
-    private final String SAVE_LOCATION = "./saves/";
 
 
     public void setStage(Stage stage) {
@@ -87,7 +88,8 @@ public class GameController {
     }
 
     public void restartGame() {
-        loadMap(currentMapName);
+        gs.restart();
+        at.start();
     }
 
     private void switchToFail() {
