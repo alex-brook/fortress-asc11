@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.*;
 
 public class MenuController {
-    private static final String FILE_END = ".txt";
+    public static final String FILE_END = ".txt";
     private static final String MOTD_ERR =
             "Error retrieving message of the day";
     private static final String CS130_WEBSITE_URL =

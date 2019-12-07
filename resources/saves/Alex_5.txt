@@ -1,4 +1,4 @@
-2935
+4936
 MAP
 #######...#########
 #     #   #   O   #
@@ -10,7 +10,7 @@ MAP
 TILES
 $:0
 ENEMIES
-s:3,2,left
-W:5,4,down
+s:1,2,left
+W:8,3,right
 PLAYER
-P:1,5,0
+P:13,3,0,b

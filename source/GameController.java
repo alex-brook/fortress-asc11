@@ -65,8 +65,14 @@ public class GameController {
     private void savePlayerLevel(String saveGame){
         try{
             String path = MenuController.SAVES_PATH;
-            String filename = Main.getUsername() + "_" + currentMapName;
-            FileWriter fileWriter = new FileWriter(String.format("%s/%s",path,filename));
+
+            String filename = currentMapName;
+            if (!continuedGame) {
+                filename = Main.getUsername() + "_" + currentMapName;
+            }
+            String filepath = String.format("%s/%s",path,filename);
+            System.out.println(filepath);
+            FileWriter fileWriter = new FileWriter(filepath);
             BufferedWriter fileSaver = new BufferedWriter(fileWriter);
             fileSaver.write(saveGame);
             fileSaver.close();
@@ -74,6 +80,10 @@ public class GameController {
             System.out.println("IOException when saving game.");
             System.out.println(e.getMessage());
         }
+    }
+
+    private String getOriginalMapName(String str) {
+        return currentMapName.replaceFirst(Main.getUsername() + "_", "");
     }
 
     public void loadMap(final String mapName) {
@@ -105,12 +115,12 @@ public class GameController {
     private void switchToWin() {
         at.stop();
         String mapName = continuedGame
-                ? currentMapName.replaceAll("[^\\d]","")
+                ? getOriginalMapName(currentMapName)
                 : currentMapName;
         stage.setScene(Main.getWinScene());
         Main.getLb().incrementGamesPlayed(Main.getUsername());
         Main.getLb().insertNewScore(Main.getUsername(), (gs.getSessionTime()),
-                mapName.replaceFirst(".txt",""));
+                mapName.replaceFirst(MenuController.FILE_END,""));
         stage.show();
     }
 
