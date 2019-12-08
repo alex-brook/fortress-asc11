@@ -329,6 +329,27 @@ public class Leaderboard {
         }
     }
 
+    public int getHighestPlayedLevel(String name) {
+        String sql = "SELECT highestLevel "
+                + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // set the value
+            pstmt.setString(1, name);
+            //
+            ResultSet rs = pstmt.executeQuery();
+
+            // loop through the result set
+
+            return (rs.getInt("highestLevel"));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
+
     /**
      *
      * @param name

@@ -171,6 +171,9 @@ public class MenuController {
                 setVisibleLoginControls(false);
                 Main.setUsername(username);
                 toggleContinue();
+                if(Main.getLb().getHighestPlayedLevel(username) + 1 < Integer.parseInt(mapSelector.getValue())) {
+                    newgameButton.setDisable(true);
+                }
             } else {
                 loginStatus.setText("Incorrect password for " + username + ", please try again");
             }
@@ -237,6 +240,11 @@ public class MenuController {
         Leaderboard dataSet = new Leaderboard();
         ObservableList<UserScoreRecord> userData = getUserScoreData();
         leaderBoardTable.setItems(userData);
+        if(Main.getLb().getHighestPlayedLevel(Main.getUsername()) + 1 < Integer.parseInt(mapSelector.getValue())) {
+            newgameButton.setDisable(true);
+        } else {
+            newgameButton.setDisable(false);
+        }
         toggleContinue();
     }
 
