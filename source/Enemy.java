@@ -6,8 +6,10 @@ import java.util.Map;
 
 /**
  * Contains the inherited behaviours of the various types of enemy
+ * Javadoc comments added by Stephen
  *
- * @author Alex and Irfaan
+ * @author Alex
+ * @author Irfaan
  */
 
 public abstract class Enemy {
@@ -29,22 +31,40 @@ public abstract class Enemy {
     }
 
     /**
-     *
-     * @param name
-     * @return
+     * Getter for the image graphic of the enemy
+     * @param name name of the enemy image as a string
+     * @return image file with the requested name
      */
     public Image getImage(final String name) {
         return images.get(name);
     }
 
+    /**
+     * Abstract move function for enemy types to override
+     * @param passableGrid 2D array of booleans that show if each tile is
+     *                     passable by an instace of enemy or not
+     * @param playerX player instance's x coordinate
+     * @param playerY player instance's y coordinate
+     */
     public abstract void move(final boolean[][] passableGrid,
                               final int playerX, final int playerY);
 
 
-
+    /**
+     *
+     * @param
+     * @return
+     */
     protected final Point pointFromDirection(Direction d) {
         return pointFromDirection(new Point(getXPos(), getYPos()), d);
     }
+
+    /**
+     *
+     * @param p
+     * @param d
+     * @return
+     */
     protected final Point pointFromDirection(Point p, Direction d) {
         switch (d) {
             case UP:
@@ -61,43 +81,43 @@ public abstract class Enemy {
     }
 
     /**
-     *
-     * @return
+     * Getter for instances x coordinate
+     * @return x coordinate
      */
     public final int getXPos() {
         return xPos;
     }
 
     /**
-     *
-     * @return
+     * Getter for instances y coordinate
+     * @return y coordinate
      */
     public final int getYPos() {
         return yPos;
     }
 
     /**
-     *
-     * @return
+     * Getter for enemy save file character
+     * @return map character
      */
     public final char getMapChar() {
         return mapChar;
     }
 
     /**
-     *
-     * @return
+     * Getter for any additional information on save file
+     * @return additional information
      */
     public String getAdditionalInfo() {
         return null;
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Default draw method for enemy
+     * @param gc drawable feature of canvas
+     * @param x x coordinate of tile
+     * @param y y coordinate of tile
+     * @param animationTick runtime of animation
      */
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -120,7 +140,7 @@ public abstract class Enemy {
     }
 
     /**
-     *
+     * Moves instance of enemy one tile to the left
      */
     public void moveLeft() {
         xPos -= 1;
@@ -129,7 +149,7 @@ public abstract class Enemy {
     }
 
     /**
-     *
+     * Moves an instance of enemy one tile to the right
      */
     public void moveRight() {
         xPos += 1;
@@ -138,7 +158,7 @@ public abstract class Enemy {
     }
 
     /**
-     *
+     * Moves an instance of enemy one tile upwards
      */
     public void moveUp() {
         yPos -= 1;
@@ -146,13 +166,16 @@ public abstract class Enemy {
     }
 
     /**
-     *
+     * Moves an instance of enemy one tile downwards
      */
     public void moveDown() {
         yPos += 1;
         direction = Direction.DOWN;
     }
 
+    /**
+     *
+     */
     public void moveInCurrentDirection() {
         switch (direction) {
             case UP:
@@ -173,32 +196,32 @@ public abstract class Enemy {
     }
 
     /**
-     *
-     * @return
+     * Getter for y coordinate change when moving upwards
+     * @return y coordinate change
      */
     public int getUpY() {
         return yPos - 1;
     }
 
     /**
-     *
-     * @return
+     * Getter for x coordinate change when moving to the right
+     * @return x coordinate change
      */
     public int getRightX() {
         return xPos + 1;
     }
 
     /**
-     *
-     * @return
+     * Getter for y coordinate change when moving downwards
+     * @return y coordinate change
      */
     public int getDownY() {
         return yPos + 1;
     }
 
     /**
-     *
-     * @return
+     * Getter for x coordinate change when moving to the left
+     * @return x coordinate change
      */
     public int getLeftX() {
         return xPos - 1;

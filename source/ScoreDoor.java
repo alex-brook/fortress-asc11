@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  * Type of door tile that is openable by the player if they have the correct
  * number of points
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -26,9 +27,10 @@ class ScoreDoor extends Door {
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * Dictates if the tile is passable by an instance of player (door is
+     * unlocked or not)
+     * @param p instance of player
+     * @return passable or not
      */
     @Override
     public boolean isPassable(final Player p) {
@@ -39,8 +41,9 @@ class ScoreDoor extends Door {
     }
 
     /**
-     *
-     * @param p
+     * Unlocks the door when the player comes into contact with the door if
+     * they have enough tokens
+     * @param p instance of player
      */
     @Override
     public void playerContact(final Player p) {
@@ -51,11 +54,11 @@ class ScoreDoor extends Door {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphics for a score door in the scene
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x,
@@ -76,8 +79,8 @@ class ScoreDoor extends Door {
     }
 
     /**
-     *
-     * @return
+     * Getter for additional information in a save file
+     * @return tokens need to unlock the instance of score door
      */
     @Override
     public String getAdditionalInfo() {

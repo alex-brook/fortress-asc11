@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * Type of tile that is impassable by both the player and enemies
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -215,6 +216,10 @@ class Wall extends Tile {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Color getMinimapColor() {
         return Color.GREY;

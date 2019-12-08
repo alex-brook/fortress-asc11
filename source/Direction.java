@@ -1,6 +1,7 @@
 /**
  * Collection of directions, used to change the sprite of the player and enemy
  * depending on the direction they are "facing"
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -71,10 +72,11 @@ public enum Direction {
     public abstract Direction opposite();
     public abstract Direction turnleft();
     public abstract Direction turnright();
+
     /**
-     * Returns correct direction for input
-     * @param str
-     * @return
+     * Returns correct if enum direction from given string input
+     * @param str input direction as string
+     * @return respective enum of input
      */
     public static Direction getDirection(final String str) {
         for (Direction d : values()) {

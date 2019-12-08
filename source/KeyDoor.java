@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * Type of door tile that is openable by the player if they have the correct
  * colour key
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -38,8 +39,8 @@ class KeyDoor extends Door {
     }
 
     /**
-     *
-     * @param p
+     * Dictates if the tile is passable by an instance of player
+     * @param p instance of player
      * @return
      */
     @Override
@@ -51,8 +52,8 @@ class KeyDoor extends Door {
     }
 
     /**
-     *
-     * @param p
+     * Unlocks the door on contact if the player has the correct key item
+     * @param p instance of player
      */
     @Override
     public void playerContact(final Player p) {
@@ -63,8 +64,8 @@ class KeyDoor extends Door {
     }
 
     /**
-     *
-     * @return
+     * Getter for additional information in a save file
+     * @return key item to unlock for an instance of door
      */
     @Override
     public String getAdditionalInfo() {
@@ -75,10 +76,10 @@ class KeyDoor extends Door {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
+     * Draws the graphics of a lock on a door
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
      */
     private void drawLock(final GraphicsContext gc, final double x,
                           final double y) {
@@ -130,11 +131,11 @@ class KeyDoor extends Door {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphic for an instance of key door
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,

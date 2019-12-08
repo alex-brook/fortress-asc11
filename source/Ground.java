@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * Tile that is walkable by player and enemy, can contain items
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -23,8 +24,9 @@ class Ground extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Changes the properties of an instance of ground when a player picks up
+     * its item
+     * @return item picked up from tile
      */
     public Item pickupItem() {
         Item item = hasItem;
@@ -34,25 +36,29 @@ class Ground extends Tile {
     }
 
     /**
-     *
-     * @param item
+     * Setter for item in an instance of ground
+     * @param item item in ground tile
      */
     public void setItem(final Item item) {
         this.hasItem = item;
     }
 
 
+    /**
+     * Gets the minimap tile colour for an instance of ground
+     * @return colour of tile on mimimap
+     */
     @Override
     public Color getMinimapColor() {
         return hasItem == null ? super.getMinimapColor() : Color.GOLD;
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the ground graphic with/ without relevant item
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
@@ -64,8 +70,9 @@ class Ground extends Tile {
     }
 
     /**
-     *
-     * @param p
+     * Overrides the default contact method for an instance of player to pickup
+     * an item if the instance of tile contains one
+     * @param p instance of player
      */
     @Override
     public void playerContact(final Player p) {
@@ -78,9 +85,11 @@ class Ground extends Tile {
     }
 
     /**
-     *
-     * @param e
-     * @return
+     * Boolean that shows if an instance of ground is passable by an instance
+     * of enemy
+     * @param e instance of enemy
+     * @return boolean that dictates if an instance of enemy can walk on the
+     * tile
      */
     @Override
     public boolean isPassable(final Enemy e) {

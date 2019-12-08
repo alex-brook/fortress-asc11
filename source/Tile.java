@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * Contains the inherited behaviors of various types of tile
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -117,10 +118,18 @@ public abstract class Tile {
         return rightNeighbour;
     }
 
+    /**
+     *
+     * @param snd
+     */
     protected void setSound(String snd) {
         sound = snd;
     }
 
+    /**
+     *
+     * @return
+     */
     public String consumeSound() {
         String snd = sound;
         setSound(null);
@@ -172,6 +181,10 @@ public abstract class Tile {
         return images.get(name);
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getMinimapColor() {
         return Color.DARKSLATEGREY;
     }

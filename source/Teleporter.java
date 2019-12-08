@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * Type of tile that moves the player to a predesignated position
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */

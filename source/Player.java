@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * Contains the behaviors of the player character and its interactions
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -61,9 +62,9 @@ class Player {
     }
 
     /**
-     *
-     * @param info
-     * @return
+     * Player's inventory from additional information ina  save file
+     * @param info additional information
+     * @return players inventory
      */
     private static Item[] inventoryFromInfo(final String[] info) {
         Item[] inv = new Item[info.length - 1];
@@ -74,8 +75,8 @@ class Player {
     }
 
     /**
-     *
-     * @param item
+     * Gives an item to the player
+     * @param item item to be given to the player
      */
     public void giveItem(final Item item) {
         inventory.add(item);
@@ -83,24 +84,24 @@ class Player {
     }
 
     /**
-     *
-     * @param item
+     * Tkaes the requested item form the player
+     * @param item item to be removed from the player
      */
     public void takeItem(final Item item) {
         inventory.remove(item);
     }
 
     /**
-     *
-     * @param item
-     * @return
+     * Checks if the player has the item requested
+     * @param item item to be checked for
+     * @return if player has the item or not
      */
     public boolean hasItem(final Item item) {
         return inventory.contains(item);
     }
 
     /**
-     *
+     * Increases the players number of tokens by one
      */
     public void giveToken() {
         tokenCount++;
@@ -108,33 +109,33 @@ class Player {
     }
 
     /**
-     *
-     * @param count
+     * Removes a number of tokens from the player
+     * @param count number of tokens to be removed
      */
     public void takeTokens(final int count) {
         tokenCount -= count;
     }
 
     /**
-     *
-     * @return
+     * Getter for number of tokens player has
+     * @return number of tokens
      */
     public int getTokenCount() {
         return tokenCount;
     }
 
     /**
-     *
-     * @return
+     * Getter for the direction player is facing in
+     * @return direction
      */
     public Direction getDirection() {
         return direction;
     }
 
     /**
-     *
-     * @param newX
-     * @param newY
+     * Moves the player to new position
+     * @param newX new x coordinate
+     * @param newY new y coordinate
      */
     public void teleportTo(final int newX, final int newY) {
         xPos = newX;
@@ -142,7 +143,7 @@ class Player {
     }
 
     /**
-     *
+     * Moves the instance of player to the left one space
      */
     public void moveLeft() {
         xPos -= 1;
@@ -152,7 +153,7 @@ class Player {
     }
 
     /**
-     *
+     * Moves the instance of player to the right one space
      */
     public void moveRight() {
         xPos += 1;
@@ -162,15 +163,15 @@ class Player {
     }
 
     /**
-     *
-     * @return
+     * Getter for player's x coordinate
+     * @return x coordinate
      */
     public int getXPos() {
         return xPos;
     }
 
     /**
-     *
+     * Moves the instance of player up one space
      */
     public void moveUp() {
         yPos -= 1;
@@ -179,7 +180,7 @@ class Player {
     }
 
     /**
-     *
+     * Moves the instance of player down one space
      */
     public void moveDown() {
         yPos += 1;
@@ -188,23 +189,23 @@ class Player {
     }
 
     /**
-     *
-     * @return
+     * Getter for players y coordinate
+     * @return y coordinate
      */
     public int getYPos() {
         return yPos;
     }
 
     /**
-     *
-     * @return
+     * Returns if the player is dead or not
+     * @return dead boolean
      */
     public boolean isDead() {
         return dead;
     }
 
     /**
-     *
+     * Kills the player
      */
     public void kill() {
         dead = true;
@@ -212,20 +213,24 @@ class Player {
     }
 
     /**
-     *
-     * @return
+     * Returns if the player has won or not
+     * @return won boolean
      */
     public boolean hasWon() {
         return won;
     }
 
     /**
-     *
+     * Sets won to true
      */
     public void win() {
         won = true;
     }
 
+    /**
+     *
+     * @return name of sound
+     */
     public String consumeSound() {
         String snd = sound;
         sound = null;
@@ -233,15 +238,16 @@ class Player {
     }
 
     /**
-     *
-     * @return
+     * Getter for player's character in a save file
+     * @return player
      */
     public final char getMapChar() {
         return PLAYER;
     }
 
     /**
-     *
+     * Getter for additional information for an instance of player from
+     * save file
      * @return
      */
     public final String getAdditionalInfo() {
@@ -255,10 +261,10 @@ class Player {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
+     * Draws the graphics for the player's inventory one screen
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
      */
     public double drawInventory(final GraphicsContext gc, final double x,
                               final double y) {
@@ -301,11 +307,11 @@ class Player {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphics for an instance of player
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -367,8 +373,8 @@ class Player {
     }
 
     /**
-     * 
-     * @return
+     * Generic toString override
+     * @return correct output
      */
     @Override
     public String toString() {

@@ -17,6 +17,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Controls the fxml code for the main menu scene
+ * Javadoc comments added by Stephen
+ *
+ * @author Stephen
+ * @author Alex
+ */
 public class MenuController {
     public static final String FILE_END = ".txt";
     private static final String MOTD_ERR =
@@ -74,6 +81,9 @@ public class MenuController {
     private Stage stage;
     private Leaderboard ld;
 
+    /**
+     * Runs on code startup, displays main menu
+     */
     @FXML
     public void initialize() {
         try {
@@ -97,14 +107,25 @@ public class MenuController {
 
     }
 
+    /**
+     * Getter for all saved scores for current selected level
+     * @return
+     */
     private ObservableList<UserScoreRecord> getUserScoreData() {
         return FXCollections.observableList(Arrays.asList(ld.selectMapScores(currentMap)));
     }
 
+    /**
+     * Getter for username's of profiles
+     * @return username's of profiles
+     */
     private ObservableList<String> getUsernamesData() {
         return FXCollections.observableList(ld.selectAllUsernames());
     }
 
+    /**
+     * Logs out current profile
+     */
     @FXML
     public void handleLogout(){
         Main.setUsername(null);
@@ -115,6 +136,9 @@ public class MenuController {
         loginStatus.setText("Logged out");
     }
 
+    /**
+     * Creates a new profile from user inputs
+     */
     @FXML
     public void handleCreateProfile(){
         Leaderboard lb = new Leaderboard();
@@ -128,6 +152,10 @@ public class MenuController {
             loginStatus.setText("This user already exists, please use login");
         }
     }
+
+    /**
+     * Logs into profile using user inputs
+     */
     @FXML
     public void handleLogin(){
         Leaderboard lb = new Leaderboard();
@@ -147,7 +175,11 @@ public class MenuController {
             loginStatus.setText("This account does not exist, please create a new account");
         }
     }
-    
+
+    /**
+     *
+     * @param state
+     */
     private void setVisibleGameControls(boolean state){
         mapSelector.setVisible(state);
         mapSelector.setDisable(!state);
@@ -162,6 +194,10 @@ public class MenuController {
         logoutButton.setDisable(!state);
     }
 
+    /**
+     *
+     * @param state
+     */
     private void setVisibleLoginControls(boolean state) {
         usernameInput.setVisible(state);
         usernameInput.setDisable(!state);
@@ -179,6 +215,9 @@ public class MenuController {
         profilesTable.setDisable(!state);
     }
 
+    /**
+     * Handles use of drop down menu
+     */
     @FXML
     public void handleDropDownSelect(){
         currentMap = mapSelector.getValue();
@@ -188,10 +227,16 @@ public class MenuController {
         toggleContinue();
     }
 
+    /**
+     * Disables continue button if profile has no save file
+     */
     private void toggleContinue() {
         continueButton.setDisable(!checkForSave());
     }
 
+    /**
+     * Loads original map file for selected level
+     */
     @FXML
     public void handleNewGameButtonAction() {
         Main.getGameController().loadMap(mapSelector.getValue()+FILE_END);
@@ -199,6 +244,9 @@ public class MenuController {
         stage.show();
     }
 
+    /**
+     * Loads profile's save file for selected level
+     */
     @FXML
     public void handleContinueButton() {
         Main.getGameController().loadSave(getSavegameFilename()+FILE_END);
@@ -206,22 +254,40 @@ public class MenuController {
         stage.show();
     }
 
-
+    /**
+     * Closes the game
+     * @param e clicking the button in menu
+     */
     @FXML
     public void handleQuitButtonAction(final ActionEvent e) {
         Platform.exit();
     }
 
+    /**
+     * Setter for stage
+     * @param stage current stage
+     */
     public void setStage(final Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     private String getMOTD() throws IOException {
         String puzzleUrlString = CS130_WEBSITE_URL + CS130_WEBSITE_PUZZLE_PATH;
         return stringFromGET(CS130_WEBSITE_URL + CS130_WEBSITE_SOLUTION_PATH
                 + solvePuzzle(stringFromGET(puzzleUrlString)));
     }
 
+    /**
+     *
+     * @param urlString
+     * @return
+     * @throws IOException
+     */
     private String stringFromGET(final String urlString) throws IOException {
         StringBuilder sb = new StringBuilder();
         URL url = new URL(urlString);
@@ -240,6 +306,11 @@ public class MenuController {
         return sb.toString();
     }
 
+    /**
+     *
+     * @param puz
+     * @return
+     */
     private String solvePuzzle(final String puz) {
         StringBuilder solution = new StringBuilder();
         char[] puzzleChars = puz.toCharArray();
@@ -261,6 +332,10 @@ public class MenuController {
         return solution.toString();
     }
 
+    /**
+     * Getter for name of all maps
+     * @return list of all map names
+     */
     private ObservableList<String> getMapNames() {
         ObservableList<String> fnames =
                 FXCollections.observableList(new LinkedList<>());
@@ -271,6 +346,10 @@ public class MenuController {
         return fnames;
     }
 
+    /**
+     * Getter for all save files
+     * @return list of all save files
+     */
     private ArrayList<String> getSaveFiles() {
         ArrayList<String> fnames =
                 new ArrayList<>();
@@ -281,10 +360,18 @@ public class MenuController {
         return fnames;
     }
 
+    /**
+     * Getter for name of save file
+     * @return name of save file
+     */
     private String getSavegameFilename() {
         return String.format("%s_%s",Main.getUsername(),currentMap);
     }
 
+    /**
+     * Checks if current profile has a save file
+     * @return true if they have a save file
+     */
     private boolean checkForSave() {
         return getSaveFiles().contains(getSavegameFilename());
     }

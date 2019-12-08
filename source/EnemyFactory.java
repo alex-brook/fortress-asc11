@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * Creates instances of the various types of enemy from characters in the save
  * file along with any additional information
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -24,23 +25,23 @@ public final class EnemyFactory {
     }
 
     /**
-     *
-     * @param c
-     * @param x
-     * @param y
-     * @return
+     * Getter for an instance of enemy
+     * @param c character in a save file
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return enemy
      */
     public Enemy getEnemy(final char c, final int x, final int y) {
         return getEnemy(c, x, y, new String[0]);
     }
 
     /**
-     *
-     * @param c
-     * @param x
-     * @param y
-     * @param additionalInfo
-     * @return
+     * Getter for an instance of enemy taking in additional information from save file
+     * @param c character in a save file
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param additionalInfo additional information for instance of enemy
+     * @return enemy
      */
     public Enemy getEnemy(final char c, final int x, final int y,
                           final String additionalInfo) {
@@ -49,12 +50,12 @@ public final class EnemyFactory {
     }
 
     /**
-     *
-     * @param c
-     * @param x
-     * @param y
-     * @param additionalInfo
-     * @return
+     * Getter for instance of enemy with type
+     * @param c character in a save file
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param additionalInfo additional information for instance of enemy
+     * @return enemy
      */
     public Enemy getEnemy(final char c, final int x, final int y,
                           final String[] additionalInfo) {

@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * Type of enemy that walks in a straight line until it reaches an impassable
  * tile, where it turns and moves in the opposite direction
+ * Javadoc comments added by Stephen
  *
  * @author Irfaan
  */
@@ -23,10 +24,10 @@ class StraightLineEnemy extends Enemy {
     }
 
     /**
-     *
-     * @param passable
-     * @param playerX
-     * @param playerY
+     * Moves the enemy
+     * @param passable passable by enemy or not
+     * @param playerX instance of player's x coordinate
+     * @param playerY instance of player's y coordinate
      */
     @Override
     public void move(final boolean[][] passable, final int playerX,
@@ -64,11 +65,11 @@ class StraightLineEnemy extends Enemy {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the enemy graphic to the scene
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
@@ -94,8 +95,8 @@ class StraightLineEnemy extends Enemy {
     }
 
     /**
-     *
-     * @return
+     * Getter for additional information from the save file
+     * @return direction enemy moves in at start
      */
     @Override
     public String getAdditionalInfo() {

@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  * Door is a tile that acts as a wall unless the player has the correct
  * condition to open it
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -33,7 +34,7 @@ public abstract class Door extends Tile {
     /**
      * Creates a locked door
      * @param mapChar character from save file
-     * @param img
+     * @param img image to be drawn
      */
     public Door(final char mapChar, final Map<String, Image> img) {
         super(mapChar,  img);
@@ -58,8 +59,8 @@ public abstract class Door extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Boolean that represents if the door graphic should be facing left or not
+     * @return boolean related to direction the door is facing in game
      */
     protected final boolean isLeft() {
         Tile up = getUpNeighbour();
@@ -74,8 +75,8 @@ public abstract class Door extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Boolean that represents if the door graphic should be facing right or not
+     * @return boolean related to direction the door is facing in game
      */
     protected final boolean isRight() {
         Tile up = getUpNeighbour();
@@ -90,8 +91,8 @@ public abstract class Door extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Boolean that represents if the door graphic should be facing up or not
+     * @return boolean related to direction the door is facing in game
      */
     protected final boolean isUp() {
         Tile left = getLeftNeighbour();
@@ -106,8 +107,8 @@ public abstract class Door extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Boolean that represents if the door graphic should be facing down or not
+     * @return boolean related to direction the door is facing in game
      */
     protected final boolean isDown() {
         Tile left = getLeftNeighbour();
@@ -122,9 +123,9 @@ public abstract class Door extends Tile {
     }
 
     /**
-     *
-     * @param e
-     * @return
+     * Boolean that checks if the tile is walkable by an instance of enemy or not
+     * @param e instance of enemy
+     * @return boolean walkable or not
      */
     public boolean isPassable(final Enemy e) {
         if (isLocked() == true) {
@@ -134,17 +135,21 @@ public abstract class Door extends Tile {
         }
     }
 
+    /**
+     * Gets the minimap colour for a door
+     * @return colour graphic for the instance of door
+     */
     @Override
     public Color getMinimapColor() {
         return isLocked() ? Color.BROWN : super.getMinimapColor();
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphic for an instance door
+     * @param gc drawable feature of teh canavas
+     * @param x x coordinate of tile
+     * @param y y coordinate of tile
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,

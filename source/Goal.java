@@ -4,6 +4,7 @@ import java.util.Map;
 
 /**
  * Tile that ends the level when the player comes into contact with it
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -16,11 +17,11 @@ class Goal extends Tile {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the goal tile
+     * @param gc drawable feature of canvas
+     * @param x x coordinate of tile
+     * @param y y coordinate of tile
+     * @param animationTick runtime of animation
      */
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -28,8 +29,8 @@ class Goal extends Tile {
     }
 
     /**
-     *
-     * @param p
+     * Make the player win when the walk on an instance of goal
+     * @param p instance of player
      */
     @Override
     public void playerContact(final Player p) {

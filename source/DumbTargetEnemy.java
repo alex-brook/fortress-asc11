@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * An enemy type which follows the player taking an unoptimised route
+ * Javadoc comments added by Stephen
  *
  * @author Irfaan
  */
@@ -25,10 +26,10 @@ class DumbTargetEnemy extends Enemy {
     }
 
     /**
-     *
-     * @param passableGrid
-     * @param playerX
-     * @param playerY
+     * Moves the enemy in the direction of the player
+     * @param passableGrid collection of booleans which show if a tile is passable by an enemy or not
+     * @param playerX player's x coordinates
+     * @param playerY player's y coordinates
      */
     @Override
     public void move(boolean[][] passableGrid, int playerX, int playerY) {
@@ -83,27 +84,27 @@ class DumbTargetEnemy extends Enemy {
     }
 
     /**
-     *
-     * @param playerX
+     * Difference in player's x coordinate and the instance of enemies x coordinate
+     * @param playerX player's x coordinate
      */
     public void compareX(int playerX) {
         xDiff =  playerX - getXPos();
     }
 
     /**
-     *
-     * @param playerY
+     * Difference in player's y coordinate and the instance of enemies y coordinate
+     * @param playerY player's y coordinate
      */
     public void compareY(int playerY) {
         yDiff = playerY - getYPos();
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphic for an instance of this enemy type
+     * @param gc drawable feature of canvas
+     * @param x x coordinate of tile
+     * @param y y coordinate of tile
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,

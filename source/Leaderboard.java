@@ -2,6 +2,12 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Controls the leader board
+ * Javadoc comments added by Stephen
+ *
+ * @author
+ */
 public class Leaderboard {
 
     private static final String LEADERBOARD_SCORE_TABLE = "leaderboardScore";
@@ -15,7 +21,7 @@ public class Leaderboard {
     }
 
     /**
-     * creates the new database
+     * Creates the new database
      */
     public void createNewDatabase() {
         Connection c = null;
@@ -28,6 +34,9 @@ public class Leaderboard {
         }
     }
 
+    /**
+     *
+     */
     private void createUserTable() {
         // SQLite connection string
         String url = "jdbc:sqlite:resources\\Leaderboard.db";
@@ -50,7 +59,7 @@ public class Leaderboard {
     }
 
     /**
-     * creates the initial table if none already exists
+     * Creates the initial table if none already exists
      */
     private void createScoreTable() {
         // SQLite connection string
@@ -74,7 +83,7 @@ public class Leaderboard {
     }
 
     /**
-     * how connecting to the database is handled
+     * How connecting to the database is handled
      *
      * @return the connect object used by all other methods
      */
@@ -90,6 +99,11 @@ public class Leaderboard {
         return conn;
     }
 
+    /**
+     *
+     * @param name
+     * @param password
+     */
     public void newAccount(String name, String password) {
         String sql = "INSERT INTO " + USER_PROFILE_TABLE + "(name,password,gamesPlayed,highestLevel) VALUES(?,?,0,0)";
         try (Connection conn = this.getConnection();
@@ -103,6 +117,11 @@ public class Leaderboard {
         }
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public boolean isAccount(String name) {
         String sql = "SELECT name "
                 + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
@@ -127,6 +146,11 @@ public class Leaderboard {
         }
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public String getUserPassword(String name) {
         String sql = "SELECT password "
                 + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
@@ -147,6 +171,10 @@ public class Leaderboard {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String selectAllUsers() {
         String sql = "SELECT name, password, gamesPlayed, highestLevel FROM " + USER_PROFILE_TABLE + " ORDER BY name ASC";
         String result = "";
@@ -166,6 +194,11 @@ public class Leaderboard {
         }
         return result;
     }
+
+    /**
+     *
+     * @return
+     */
     public List<String> selectAllUsernames() {
         String sql = "SELECT name FROM " + USER_PROFILE_TABLE + " ORDER BY name ASC";
         List<String> result = new LinkedList<>();
@@ -186,7 +219,7 @@ public class Leaderboard {
 
 
     /**
-     * outputs all data as a string sorted by score, this will need to be modified
+     * Outputs all data as a string sorted by score, this will need to be modified
      * to allow for use in the menu class
      */
     public String selectAllScores() {
@@ -209,6 +242,11 @@ public class Leaderboard {
         return result;
     }
 
+    /**
+     *
+     * @param map
+     * @return
+     */
     public UserScoreRecord[] selectMapScores(String map) {
         UserScoreRecord[] result = new UserScoreRecord[3];
         String sql = "SELECT name, score, map FROM " + LEADERBOARD_SCORE_TABLE + " WHERE map = ? ORDER BY score ASC";
@@ -238,7 +276,10 @@ public class Leaderboard {
     }
 
     /**
-     * @param name takes in the name to find the corresponding score
+     *
+     * @param name
+     * @param map
+     * @return
      */
     private int getPlayerScore(String name, String map) {
         String sql = "SELECT score "
@@ -262,6 +303,11 @@ public class Leaderboard {
         }
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public int getPlayedGamesOfPlayer(String name) {
         String sql = "SELECT gamesPlayed "
                 + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
@@ -283,13 +329,22 @@ public class Leaderboard {
         }
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public boolean isNewPlayer(String name) {
         return (getPlayedGamesOfPlayer(name) == 0);
     }
 
     /**
-     * @param name  takes in the name of the player to add or update within the database
-     * @param score takes in the score of the player to add or update within the database
+     *
+     * @param name takes in the name of the player to add or update within the
+     *             database
+     * @param score takes in the score of the player to add or update within
+     *              the database
+     * @param map
      */
     public void insertNewScore(String name, long score, String map) {
         System.out.println("updating " + name + " with score " + score + " on map " + map);
@@ -309,6 +364,7 @@ public class Leaderboard {
     }
 
     /**
+     *
      * @param name takes in the name of the user
      */
     public void updatehighestLevel(String name, String map) {
@@ -332,6 +388,11 @@ public class Leaderboard {
 
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     private int getHighestMap(String name) {
         String sql = "SELECT highestLevel "
                 + "FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
@@ -352,6 +413,10 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * 
+     * @param name
+     */
     public void incrementGamesPlayed(String name) {
         String sql = "UPDATE " + USER_PROFILE_TABLE + " SET gamesPlayed = " + (getPlayedGamesOfPlayer(name) + 1)
                 + " WHERE name = ?";

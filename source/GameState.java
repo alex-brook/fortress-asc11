@@ -15,6 +15,8 @@ import java.util.Map;
  * Reads in data from a save file uses that to create the level layout, then
  * controls and coordinates all of the game elements while the game is
  * being run. Saves the current level layout to a separate file
+ * Javadoc comments added by Stephen
+ * Edited by Stephen and Alex to work with menu system
  *
  * @author Alex
  */
@@ -302,6 +304,9 @@ class GameState {
         updateDiscovered();
     }
 
+    /**
+     * Gives sounds to relevant tiles
+     */
     private void updateSounds() {
         String sound = null;
 
@@ -329,6 +334,9 @@ class GameState {
         }
     }
 
+    /**
+     * Changes the discovered tiles in minimap
+     */
     private void updateDiscovered() {
         for (int x = player.getXPos() - VIEW_RADIUS; x < player.getXPos() + VIEW_RADIUS; x++) {
             for (int y = player.getYPos() - VIEW_RADIUS; y < player.getYPos() + VIEW_RADIUS; y++) {
@@ -467,13 +475,18 @@ class GameState {
                 + sbEnemies.toString() + PLAYER_DESC_DELIMITER + END_OF_LINE
                 + sbPlayer.toString();
     }
+
+    /**
+     * Getter for time spent playing current level
+     * @return time spent playing level
+     */
     public long getSessionTime(){
         return (System.currentTimeMillis() - startTime) + timeElapsed;
     }
 
 
     /**
-     *
+     * Restarts the level scene
      */
     public void restart() {
         load(map);
@@ -481,9 +494,9 @@ class GameState {
     }
 
     /**
-     *
-     * @param gc
-     * @param tick
+     * Draws the level
+     * @param gc drawable feature of canvas
+     * @param tick current tick of level for animations
      */
     public void drawRadius(final GraphicsContext gc, final boolean tick) {
         final double viewOffset = VIEW_RADIUS * TILE_RES;
@@ -563,6 +576,12 @@ class GameState {
         }
     }
 
+    /**
+     * Draws the minimap
+     * @param gc drawable feature of canvas
+     * @param xOrigin Top left of minimap
+     * @param yOrigin Top right of minimap
+     */
     private void drawMinimap(final GraphicsContext gc,
                              final double xOrigin, final double yOrigin) {
         gc.setFill(Color.BLACK);

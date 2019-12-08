@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Type of enemy that follows the player taking an optimised route
+ * Javadoc comments added by Stephen
  *
  * @author Irfaan
  */
@@ -29,6 +30,7 @@ class SmartTargetEnemy extends Enemy {
      *
      * @param passable
      * @param goal
+     * @return
      */
     private Map<Point, Point> BFS(final boolean[][] passable, final Point goal) {
         Queue<Point> considering = new LinkedList<>();
@@ -99,6 +101,10 @@ class SmartTargetEnemy extends Enemy {
         }
     }
 
+    /**
+     *
+     * @param passable
+     */
     private void moveInRandomValidDirection(boolean[][] passable) {
         List<Direction> valid = new LinkedList<>();
         for (Direction d : Direction.values()) {
@@ -130,12 +136,13 @@ class SmartTargetEnemy extends Enemy {
             default:
         }
     }
+
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphics for a smart target enemy in the scene
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,

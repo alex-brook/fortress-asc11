@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * Tile that if the player comes into contact with loses them the game, unless
  * they have the required safe item
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -43,11 +44,11 @@ class Hazard extends Tile {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws graphic on scene for an instance of  a hazard tile
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
@@ -132,8 +133,8 @@ class Hazard extends Tile {
     }
 
     /**
-     *
-     * @param p
+     * Kills the player when they come into contact with a hazard instance
+     * @param p instance of player
      */
     @Override
     public void playerContact(final Player p) {

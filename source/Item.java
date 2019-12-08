@@ -1,5 +1,6 @@
 /**
  * Definitions for items
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
@@ -29,25 +30,25 @@ public enum Item{
     }
 
     /**
-     *
-     * @return
+     * Getter for the name of an image file for an item
+     * @return image file
      */
     public String getImageName() {
         return imageFile;
     }
 
     /**
-     *
-     * @return
+     * Getter for item's character in a save file
+     * @return map character for item
      */
     public char getMapChar() {
         return mapChar;
     }
 
     /**
-     *
-     * @param c
-     * @return
+     * Getter for item
+     * @param c character on save file
+     * @return item
      */
     public static Item getItem(final char c) {
         for (Item i : values()) {

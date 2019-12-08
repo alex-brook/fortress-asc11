@@ -6,10 +6,10 @@ import java.util.Map;
 
  /**
  * Type of enemy that moves by following alongside wall tiles
- *
+ * Javadoc comments added by Stephen
+  *
  * @author Irfaan
  */
-
 class WallFollowEnemy extends Enemy {
     private static String WALL_FOLLOW_0_IMG = "slime_idle_anim_f0.png";
     private static String WALL_FOLLOW_1_IMG = "slime_idle_anim_f1.png";
@@ -64,17 +64,21 @@ class WallFollowEnemy extends Enemy {
         moveInCurrentDirection();
     }
 
+     /**
+      *
+      * @return
+      */
      @Override
      public String getAdditionalInfo() {
          return String.format("%s", direction);
      }
 
      /**
-      *
-      * @param gc
-      * @param x
-      * @param y
-      * @param animationTick
+      * Draws the graphics for a wall follow enenmy in the scene
+      * @param gc drawable feature of canvas
+      * @param x x coordinate
+      * @param y y coordinate
+      * @param animationTick runtime of animation
       */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,

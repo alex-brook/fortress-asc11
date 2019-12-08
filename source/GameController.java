@@ -10,6 +10,13 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
+/**
+ * Controls the fxml code for the game scene
+ * Javadoc comments added by Stephen
+ *
+ * @author Stephen
+ * @author Alex
+ */
 public class GameController {
     //private final String SAVE_LOCATION = "./saves/";
 
@@ -25,11 +32,17 @@ public class GameController {
     private String currentMapName;
     private boolean continuedGame;
 
-
+    /**
+     * Setter for stage
+     * @param stage javafx stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * Runs code on game scene startup , controls canvas and checks game state every tick
+     */
     @FXML
     public void initialize() {
         gameCanvas.setFocusTraversable(true);
@@ -50,6 +63,10 @@ public class GameController {
         };
     }
 
+    /**
+     * Saves game when esc is pressed otherwise redraws scene after action
+     * @param e
+     */
     @FXML
     private void keyPress(final KeyEvent e) {
         if (e.getCode() == KeyCode.ESCAPE) {
@@ -62,6 +79,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Saves the current game scene to selected profile's save file
+     * @param saveGame name of map save file
+     */
     private void savePlayerLevel(String saveGame){
         try{
             String path = MenuController.SAVES_PATH;
@@ -82,10 +103,19 @@ public class GameController {
         }
     }
 
+    /**
+     * Returns the original name of a level map
+     * @param str name of profile save file
+     * @return original file name
+     */
     private String getOriginalMapName(String str) {
         return currentMapName.replaceFirst(Main.getUsername() + "_", "");
     }
 
+    /**
+     * Builds the game scene using information from input map
+     * @param mapName name of map save file
+     */
     public void loadMap(final String mapName) {
         currentMapName = mapName;
         gs = new GameState(stringFromMapName(mapName, MenuController.MAP_PATH));
@@ -93,6 +123,10 @@ public class GameController {
         at.start();
     }
 
+    /**
+     * Builds the game scene using information from save file
+     * @param mapName
+     */
     public void loadSave(final String mapName) {
         currentMapName = mapName;
         gs = new GameState(stringFromMapName(mapName, MenuController.SAVES_PATH));
@@ -100,11 +134,17 @@ public class GameController {
         at.start();
     }
 
+    /**
+     * Rebuilds game scene from beginning of level
+     */
     public void restartGame() {
         gs.restart();
         at.start();
     }
 
+    /**
+     * Switches current scene to level failed menu
+     */
     private void switchToFail() {
         at.stop();
         stage.setScene(Main.getFailScene());
@@ -112,6 +152,9 @@ public class GameController {
         stage.show();
     }
 
+    /**
+     * Switches current game scene to level won menu
+     */
     private void switchToWin() {
         at.stop();
         String mapName = continuedGame
@@ -124,6 +167,9 @@ public class GameController {
         stage.show();
     }
 
+    /**
+     * Checks if the game is running and if the game is failed or won
+     */
     private void stateCheck() {
         if (gs.getCurrentState() == GameState.State.RUNNING) {
             gs.drawRadius(gc, true);
@@ -134,6 +180,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Finds location of map file
+     * @param fileName name of the map file
+     * @return file path for map
+     */
     private String stringFromMapName(final String fileName, final String dir) {
         try {
             File file = new File(String.format("%s/%s",dir,fileName));

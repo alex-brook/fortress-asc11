@@ -14,6 +14,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
+ * The Main
+ * Javadoc comments added by Stephen
+ *
  * @author Alex
  * @author Stephen Colegrove
  */
@@ -41,7 +44,11 @@ public class Main extends Application {
     private static String currentUser = null;
     private static Leaderboard lb = new Leaderboard();
 
-
+    /**
+     * Prepares each scene of the game
+     * @param stage primary stage for project
+     * @throws IOException No file found
+     */
     @Override
     public void start(final Stage stage) throws IOException {
         FXMLLoader menuLoader = new FXMLLoader();
@@ -81,48 +88,99 @@ public class Main extends Application {
         stage.show();
 
     }
+
+    /**
+     * Setter for profile username
+     * @param username username to be set
+     */
     public static void setUsername(String username){
         currentUser = username;
     }
+
+    /**
+     * Getter for profile username
+     * @return profile username
+     */
     public static String getUsername(){
         return currentUser;
     }
+
+    /**
+     * Getter for leader board
+     * @return leader board
+     */
     public static Leaderboard getLb(){
         return lb;
     }
 
+    /**
+     * Getter for main menu controller
+     * @return main menu controller
+     */
     public static MenuController getMenuController() {
         return menuController;
     }
 
+    /**
+     * Getter for game level scene controller
+     * @return game scene controller
+     */
     public static GameController getGameController() {
         return gameController;
     }
 
+    /**
+     * Getter for win menu controller
+     * @return win menu scene controller
+     */
     public static WinController getWinController() {
         return winController;
     }
 
+    /**
+     * Getter for fail menu controller
+     * @return fail menu scene controller
+     */
     public static FailController getFailController() {
         return failController;
     }
 
+    /**
+     * Getter for main menu
+     * @return main menu scene
+     */
     public static Scene getMenuScene() {
         return menuScene;
     }
 
+    /**
+     * Getter for game level scene
+     * @return game level scene
+     */
     public static Scene getGameScene() {
         return gameScene;
     }
 
+    /**
+     * Getter for level won menu
+     * @return win menu scene
+     */
     public static Scene getWinScene() {
         return winScene;
     }
 
+    /**
+     * Getter for level failed menu
+     * @return fail menu scene
+     */
     public static Scene getFailScene() {
         return failScene;
     }
 
+    /**
+     * Plays sound file with given name
+     * @param sound Name of sound file
+     */
     public static void playSound(String sound) {
         try {
             File f = new File(SOUNDS_PATH + sound);

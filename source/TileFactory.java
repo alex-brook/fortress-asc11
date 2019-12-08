@@ -4,6 +4,7 @@ import java.util.Map;
 /**
  * Creates instances of the various types of tile from characters in the save
  * file along with any additional information
+ * Javadoc comments added by Stephen
  *
  * @author Alex
  */
