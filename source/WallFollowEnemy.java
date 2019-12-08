@@ -4,19 +4,19 @@ import javafx.scene.image.Image;
 import java.awt.*;
 import java.util.Map;
 
- /**
- * Type of enemy that moves by following alongside wall tiles
- * Javadoc comments added by Stephen
-  *
+/**
+ * Type of enemy that moves by following alongside wall tiles.
+ *
  * @author Irfaan
+ * @author Stephen
  */
 class WallFollowEnemy extends Enemy {
-    private static String WALL_FOLLOW_0_IMG = "slime_idle_anim_f0.png";
-    private static String WALL_FOLLOW_1_IMG = "slime_idle_anim_f1.png";
-    private static String WALL_FOLLOW_2_IMG = "slime_idle_anim_f2.png";
-    private static String WALL_FOLLOW_3_IMG = "slime_idle_anim_f3.png";
-    private static String WALL_FOLLOW_4_IMG = "slime_idle_anim_f4.png";
-    private static String WALL_FOLLOW_5_IMG = "slime_idle_anim_f5.png";
+    private static final String WALL_FOLLOW_0_IMG = "slime_idle_anim_f0.png";
+    private static final String WALL_FOLLOW_1_IMG = "slime_idle_anim_f1.png";
+    private static final String WALL_FOLLOW_2_IMG = "slime_idle_anim_f2.png";
+    private static final String WALL_FOLLOW_3_IMG = "slime_idle_anim_f3.png";
+    private static final String WALL_FOLLOW_4_IMG = "slime_idle_anim_f4.png";
+    private static final String WALL_FOLLOW_5_IMG = "slime_idle_anim_f5.png";
 
     WallFollowEnemy(final int x, final int y, final char mapChar,
                     final Map<String, Image> img, final Direction dir) {
@@ -25,19 +25,22 @@ class WallFollowEnemy extends Enemy {
     }
 
      /**
-      *
-      * @param passable
-      * @param playerX
-      * @param playerY
+      * Moves the enemy.
+      * @param passable grid that shows tiles passable by enemy
+      * @param playerX player's x coordinate
+      * @param playerY player's y coordinate
       */
     @Override
-    public void move(boolean[][] passable, int playerX, int playerY) {
+    public void move(final boolean[][] passable, final int playerX,
+                     final int playerY) {
         //System.out.println(String.format("My direction is %s.",direction));
         Point current = new Point(getXPos(), getYPos());
         Point cellOnMyLeft = pointFromDirection(current, direction.turnleft());
-        Point cellOnMyRight = pointFromDirection(current, direction.turnright());
+        Point cellOnMyRight = pointFromDirection(current,
+                direction.turnright());
         Point cellForwards = pointFromDirection(current, direction);
-        Point cellBackLeft = pointFromDirection(cellOnMyLeft, direction.turnleft().turnleft());
+        Point cellBackLeft = pointFromDirection(cellOnMyLeft,
+                direction.turnleft().turnleft());
 
         boolean leftPassable = passable[cellOnMyLeft.x][cellOnMyLeft.y];
         boolean forwardsPassable = passable[cellForwards.x][cellForwards.y];
@@ -74,7 +77,7 @@ class WallFollowEnemy extends Enemy {
      }
 
      /**
-      * Draws the graphics for a wall follow enenmy in the scene
+      * Draws the graphics for a wall follow enemy in the scene.
       * @param gc drawable feature of canvas
       * @param x x coordinate
       * @param y y coordinate
@@ -103,6 +106,8 @@ class WallFollowEnemy extends Enemy {
                 break;
             case 5:
                 gc.drawImage(getImage(WALL_FOLLOW_5_IMG), x, y);
+                break;
+            default:
                 break;
         }
         gc.restore();

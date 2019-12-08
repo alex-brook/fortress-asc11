@@ -5,11 +5,11 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 /**
- * Type of door tile that is openable by the player if they have the correct
+ * Type of door tile that is openable by the player if they have the correct.
  * number of points
- * Javadoc comments added by Stephen
  *
  * @author Alex
+ * @author Stephen
  */
 
 class ScoreDoor extends Door {
@@ -21,14 +21,15 @@ class ScoreDoor extends Door {
 
     private int tokensNeeded;
 
-    ScoreDoor(final char mapChar, final Map<String, Image> img, final int tokens) {
+    ScoreDoor(final char mapChar, final Map<String, Image> img,
+              final int tokens) {
         super(mapChar, img);
         tokensNeeded = tokens;
     }
 
     /**
      * Dictates if the tile is passable by an instance of player (door is
-     * unlocked or not)
+     * unlocked or not).
      * @param p instance of player
      * @return passable or not
      */
@@ -42,7 +43,7 @@ class ScoreDoor extends Door {
 
     /**
      * Unlocks the door when the player comes into contact with the door if
-     * they have enough tokens
+     * they have enough tokens.
      * @param p instance of player
      */
     @Override
@@ -54,7 +55,7 @@ class ScoreDoor extends Door {
     }
 
     /**
-     * Draws the graphics for a score door in the scene
+     * Draws the graphics for a score door in the scene.
      * @param gc drawable feature of canvas
      * @param x x coordinate
      * @param y y coordinate
@@ -79,7 +80,7 @@ class ScoreDoor extends Door {
     }
 
     /**
-     * Getter for additional information in a save file
+     * Getter for additional information in a save file.
      * @return tokens need to unlock the instance of score door
      */
     @Override

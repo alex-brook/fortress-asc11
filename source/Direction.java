@@ -1,9 +1,9 @@
 /**
  * Collection of directions, used to change the sprite of the player and enemy
- * depending on the direction they are "facing"
- * Javadoc comments added by Stephen
+ * depending on the direction they are "facing".
  *
  * @author Alex
+ * @author Stephen
  */
 public enum Direction {
     UP("up") {
@@ -65,7 +65,7 @@ public enum Direction {
 
     private String mapStr;
 
-    private Direction(final String dirStr) {
+    Direction(final String dirStr) {
         mapStr = dirStr;
     }
 
@@ -74,7 +74,7 @@ public enum Direction {
     public abstract Direction turnright();
 
     /**
-     * Returns correct if enum direction from given string input
+     * Returns correct if enum direction from given string input.
      * @param str input direction as string
      * @return respective enum of input
      */
@@ -88,7 +88,7 @@ public enum Direction {
     }
 
     /**
-     * Generic toString override
+     * Generic toString override.
      * @return wanted toString output
      */
     @Override

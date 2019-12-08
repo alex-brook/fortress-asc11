@@ -5,10 +5,10 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 /**
- * Tile that is walkable by player and enemy, can contain items
- * Javadoc comments added by Stephen
+ * Tile that is walkable by player and enemy, can contain items.
  *
  * @author Alex
+ * @author Stephen
  */
 
 class Ground extends Tile {
@@ -24,7 +24,7 @@ class Ground extends Tile {
     }
 
     /**
-     * Changes the properties of an instance of ground when a player picks up
+     * Changes the properties of an instance of ground when a player picks up.
      * its item
      * @return item picked up from tile
      */
@@ -36,7 +36,7 @@ class Ground extends Tile {
     }
 
     /**
-     * Setter for item in an instance of ground
+     * Setter for item in an instance of ground.
      * @param item item in ground tile
      */
     public void setItem(final Item item) {
@@ -45,7 +45,7 @@ class Ground extends Tile {
 
 
     /**
-     * Gets the minimap tile colour for an instance of ground
+     * Gets the minimap tile colour for an instance of ground.
      * @return colour of tile on mimimap
      */
     @Override
@@ -54,7 +54,7 @@ class Ground extends Tile {
     }
 
     /**
-     * Draws the ground graphic with/ without relevant item
+     * Draws the ground graphic with/ without relevant item.
      * @param gc drawable feature of canvas
      * @param x x coordinate
      * @param y y coordinate
@@ -70,7 +70,8 @@ class Ground extends Tile {
     }
 
     /**
-     * Overrides the default contact method for an instance of player to pickup
+     * Overrides the default contact method for an instance of player to
+     * pickup.
      * an item if the instance of tile contains one
      * @param p instance of player
      */
@@ -85,7 +86,7 @@ class Ground extends Tile {
     }
 
     /**
-     * Boolean that shows if an instance of ground is passable by an instance
+     * Boolean that shows if an instance of ground is passable by an instance.
      * of enemy
      * @param e instance of enemy
      * @return boolean that dictates if an instance of enemy can walk on the

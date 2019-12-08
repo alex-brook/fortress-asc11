@@ -4,10 +4,10 @@ import javafx.scene.image.Image;
 import java.util.Map;
 
 /**
- * An enemy type which follows the player taking an unoptimised route
- * Javadoc comments added by Stephen
+ * An enemy type which follows the player taking an unoptimised route.
  *
  * @author Irfaan
+ * @author Stephen
  */
 
 class DumbTargetEnemy extends Enemy {
@@ -16,7 +16,6 @@ class DumbTargetEnemy extends Enemy {
     private static final String DUMB_2_IMG = "red_goblin_idle_anim_f2.png";
     private static final String DUMB_3_IMG = "red_goblin_idle_anim_f3.png";
     private static final String DUMB_4_IMG = "red_goblin_idle_anim_f4.png";
-    
     private double xDiff;
     private double yDiff;
 
@@ -26,8 +25,9 @@ class DumbTargetEnemy extends Enemy {
     }
 
     /**
-     * Moves the enemy in the direction of the player
-     * @param passableGrid collection of booleans which show if a tile is passable by an enemy or not
+     * Moves the enemy in the direction of the player.
+     * @param passableGrid collection of booleans which show if a tile
+     *                     is passable by an enemy or not
      * @param playerX player's x coordinates
      * @param playerY player's y coordinates
      */
@@ -84,7 +84,8 @@ class DumbTargetEnemy extends Enemy {
     }
 
     /**
-     * Difference in player's x coordinate and the instance of enemies x coordinate
+     * Difference in player's x coordinate and the instance of enemies x
+     * coordinate.
      * @param playerX player's x coordinate
      */
     public void compareX(int playerX) {
@@ -92,7 +93,8 @@ class DumbTargetEnemy extends Enemy {
     }
 
     /**
-     * Difference in player's y coordinate and the instance of enemies y coordinate
+     * Difference in player's y coordinate and the instance of enemies y
+     * coordinate.
      * @param playerY player's y coordinate
      */
     public void compareY(int playerY) {
@@ -100,7 +102,7 @@ class DumbTargetEnemy extends Enemy {
     }
 
     /**
-     * Draws the graphic for an instance of this enemy type
+     * Draws the graphic for an instance of this enemy type.
      * @param gc drawable feature of canvas
      * @param x x coordinate of tile
      * @param y y coordinate of tile
@@ -126,6 +128,9 @@ class DumbTargetEnemy extends Enemy {
                 break;
             case 4:
                 gc.drawImage(getImage(DUMB_4_IMG), x, y);
+                break;
+            default:
+                gc.drawImage(getImage(DUMB_0_IMG), x, y);
                 break;
         }
         gc.restore();

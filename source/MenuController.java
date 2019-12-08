@@ -1,5 +1,4 @@
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,8 +17,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Controls the fxml code for the main menu scene
- * Javadoc comments added by Stephen
+ * Controls the fxml code for the main menu scene.
  *
  * @author Stephen
  * @author Alex
@@ -84,7 +82,7 @@ public class MenuController {
     private Leaderboard ld;
 
     /**
-     * Runs on code startup, displays main menu
+     * Runs on code startup, displays main menu.
      */
     @FXML
     public void initialize() {
@@ -97,9 +95,12 @@ public class MenuController {
         currentMap = mapSelector.getItems().get(0);
         mapSelector.setValue(currentMap);
         ld = new Leaderboard();
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("user"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<UserScoreRecord, String>("score"));
-        profileNameColumn.setCellValueFactory(field -> new ReadOnlyStringWrapper(field.getValue()));
+        usernameColumn.setCellValueFactory(
+                new PropertyValueFactory<UserScoreRecord, String>("user"));
+        timeColumn.setCellValueFactory(
+                new PropertyValueFactory<UserScoreRecord, String>("score"));
+        profileNameColumn.setCellValueFactory(
+                field -> new ReadOnlyStringWrapper(field.getValue()));
         ObservableList<UserScoreRecord> userData = getUserScoreData();
         ObservableList<String> profileNames = getUsernamesData();
         leaderBoardTable.setItems(userData);
@@ -110,16 +111,17 @@ public class MenuController {
     }
 
     /**
-     * Getter for all saved scores for current selected level
-     * @return
+     * Getter for all saved scores for current selected level.
+     * @return scores
      */
     private ObservableList<UserScoreRecord> getUserScoreData() {
-        return FXCollections.observableList(Arrays.asList(ld.selectMapScores(currentMap)));
+        return FXCollections.observableList(Arrays.asList(
+                ld.selectMapScores(currentMap)));
     }
 
 
     /**
-     * Getter for username's of profiles
+     * Getter for username's of profiles.
      * @return username's of profiles
      */
     private ObservableList<String> getUsernamesData() {
@@ -127,10 +129,10 @@ public class MenuController {
     }
 
     /**
-     * Logs out current profile
+     * Logs out current profile.
      */
     @FXML
-    public void handleLogout(){
+    public void handleLogout() {
         Main.setUsername(null);
         usernameInput.setText(null);
         passwordInput.setText(null);
@@ -140,14 +142,14 @@ public class MenuController {
     }
 
     /**
-     * Creates a new profile from user inputs
+     * Creates a new profile from user inputs.
      */
     @FXML
-    public void handleCreateProfile(){
+    public void handleCreateProfile() {
         Leaderboard lb = new Leaderboard();
         String username = usernameInput.getText();
         String password = passwordInput.getText();
-        if (!lb.isAccount(username)){
+        if (!lb.isAccount(username)) {
             lb.newAccount(username, password);
             profilesTable.setItems(getUsernamesData());
             loginStatus.setText("New User profile created");
@@ -157,30 +159,37 @@ public class MenuController {
     }
 
     /**
-     * Logs into profile using user inputs
+     * Logs into profile using user inputs.
      */
     @FXML
-    public void handleLogin(){
+    public void handleLogin() {
         Leaderboard lb = new Leaderboard();
         String username = usernameInput.getText();
         String password = passwordInput.getText();
-        if (lb.isAccount(username)){
-            if (password.equals(lb.getUserPassword(username))){
+        if (lb.isAccount(username)) {
+            if (password.equals(lb.getUserPassword(username))) {
                 loginStatus.setText("Successfully logged in as " + username);
                 setVisibleGameControls(true);
                 setVisibleLoginControls(false);
                 Main.setUsername(username);
                 toggleContinue();
-                if(Main.getLb().getHighestPlayedLevel(username) + 1 < Integer.parseInt(mapSelector.getValue())) {
+                if (Main.getLb().getHighestPlayedLevel(username) + 1
+                        < Integer.parseInt(mapSelector.getValue())) {
                     newgameButton.setDisable(true);
                 }
             } else {
-                loginStatus.setText("Incorrect password for " + username + ", please try again");
+                loginStatus.setText("Incorrect password for " + username
+                        + ", please try again");
             }
         } else {
-            loginStatus.setText("This account does not exist, please create a new account");
+            loginStatus.setText("This account does not exist,"
+                    + "please create a new account");
         }
     }
+
+    /**
+     * Handles the event trigger for deleting a profile.
+     */
     @FXML
     private void handleDeleteProfileAction() {
         Main.getLb().deleteUserProfile(Main.getUsername());
@@ -191,10 +200,10 @@ public class MenuController {
     }
 
     /**
-     *
-     * @param state
+     * Changes states for game scene.
+     * @param state active or not
      */
-    private void setVisibleGameControls(boolean state){
+    private void setVisibleGameControls(final boolean state) {
         mapSelector.setVisible(state);
         mapSelector.setDisable(!state);
         leaderBoardTable.setVisible(state);
@@ -211,10 +220,10 @@ public class MenuController {
     }
 
     /**
-     *
-     * @param state
+     * Changes states for menu scene.
+     * @param state active or not
      */
-    private void setVisibleLoginControls(boolean state) {
+    private void setVisibleLoginControls(final boolean state) {
         usernameInput.setVisible(state);
         usernameInput.setDisable(!state);
         passwordInput.setVisible(state);
@@ -232,15 +241,16 @@ public class MenuController {
     }
 
     /**
-     * Handles use of drop down menu
+     * Handles use of drop down menu.
      */
     @FXML
-    public void handleDropDownSelect(){
+    public void handleDropDownSelect() {
         currentMap = mapSelector.getValue();
         Leaderboard dataSet = new Leaderboard();
         ObservableList<UserScoreRecord> userData = getUserScoreData();
         leaderBoardTable.setItems(userData);
-        if(Main.getLb().getHighestPlayedLevel(Main.getUsername()) + 1 < Integer.parseInt(mapSelector.getValue())) {
+        if (Main.getLb().getHighestPlayedLevel(Main.getUsername()) + 1
+                < Integer.parseInt(mapSelector.getValue())) {
             newgameButton.setDisable(true);
         } else {
             newgameButton.setDisable(false);
@@ -249,34 +259,34 @@ public class MenuController {
     }
 
     /**
-     * Disables continue button if profile has no save file
+     * Disables continue button if profile has no save file.
      */
     private void toggleContinue() {
         continueButton.setDisable(!checkForSave());
     }
 
     /**
-     * Loads original map file for selected level
+     * Loads original map file for selected level.
      */
     @FXML
     public void handleNewGameButtonAction() {
-        Main.getGameController().loadMap(mapSelector.getValue()+FILE_END);
+        Main.getGameController().loadMap(mapSelector.getValue() + FILE_END);
         stage.setScene(Main.getGameScene());
         stage.show();
     }
 
     /**
-     * Loads profile's save file for selected level
+     * Loads profile's save file for selected level.
      */
     @FXML
     public void handleContinueButton() {
-        Main.getGameController().loadSave(getSavegameFilename()+FILE_END);
+        Main.getGameController().loadSave(getSavegameFilename() + FILE_END);
         stage.setScene(Main.getGameScene());
         stage.show();
     }
 
     /**
-     * Closes the game
+     * Closes the game.
      * @param e clicking the button in menu
      */
     @FXML
@@ -285,17 +295,17 @@ public class MenuController {
     }
 
     /**
-     * Setter for stage
-     * @param stage current stage
+     * Setter for stage.
+     * @param currStage current stage
      */
-    public void setStage(final Stage stage) {
-        this.stage = stage;
+    public void setStage(final Stage currStage) {
+        this.stage = currStage;
     }
 
     /**
-     *
-     * @return
-     * @throws IOException
+     * Getter for message of the day.
+     * @return message of the day
+     * @throws IOException nothing found
      */
     private String getMOTD() throws IOException {
         String puzzleUrlString = CS130_WEBSITE_URL + CS130_WEBSITE_PUZZLE_PATH;
@@ -304,10 +314,10 @@ public class MenuController {
     }
 
     /**
-     *
-     * @param urlString
-     * @return
-     * @throws IOException
+     * Reads in string from url.
+     * @param urlString url
+     * @return Built string
+     * @throws IOException nothing found
      */
     private String stringFromGET(final String urlString) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -328,9 +338,9 @@ public class MenuController {
     }
 
     /**
-     *
-     * @param puz
-     * @return
+     * Solves message of the day encryption.
+     * @param puz string from website
+     * @return fixed message of the day
      */
     private String solvePuzzle(final String puz) {
         StringBuilder solution = new StringBuilder();
@@ -354,7 +364,7 @@ public class MenuController {
     }
 
     /**
-     * Getter for name of all maps
+     * Getter for name of all maps.
      * @return list of all map names
      */
     private ObservableList<String> getMapNames() {
@@ -362,13 +372,13 @@ public class MenuController {
                 FXCollections.observableList(new LinkedList<>());
         File mapDir = new File(MAP_PATH);
         for (File f : Objects.requireNonNull(mapDir.listFiles())) {
-            fnames.add(f.getName().replaceFirst(".txt",""));
+            fnames.add(f.getName().replaceFirst(".txt", ""));
         }
         return fnames;
     }
 
     /**
-     * Getter for all save files
+     * Getter for all save files.
      * @return list of all save files
      */
     private ArrayList<String> getSaveFiles() {
@@ -376,21 +386,21 @@ public class MenuController {
                 new ArrayList<>();
         File saveDir = new File(SAVES_PATH);
         for (File f : Objects.requireNonNull(saveDir.listFiles())) {
-            fnames.add(f.getName().replaceFirst(".txt",""));
+            fnames.add(f.getName().replaceFirst(".txt", ""));
         }
         return fnames;
     }
 
     /**
-     * Getter for name of save file
+     * Getter for name of save file.
      * @return name of save file
      */
     private String getSavegameFilename() {
-        return String.format("%s_%s",Main.getUsername(),currentMap);
+        return String.format("%s_%s", Main.getUsername(), currentMap);
     }
 
     /**
-     * Checks if current profile has a save file
+     * Checks if current profile has a save file.
      * @return true if they have a save file
      */
     private boolean checkForSave() {

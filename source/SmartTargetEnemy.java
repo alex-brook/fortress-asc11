@@ -6,10 +6,10 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Type of enemy that follows the player taking an optimised route
- * Javadoc comments added by Stephen
+ * Type of enemy that follows the player taking an optimised route.
  *
  * @author Irfaan
+ * @author Stephen
  */
 class SmartTargetEnemy extends Enemy {
     private static final String SMART_0_IMG = "goblin_idle_anim_f0.png";
@@ -27,12 +27,13 @@ class SmartTargetEnemy extends Enemy {
     }
 
     /**
-     *
-     * @param passable
-     * @param goal
-     * @return
+     * Searches for best path to player.
+     * @param passable grid of passable tiles
+     * @param goal player
+     * @return move enemy will make
      */
-    private Map<Point, Point> BFS(final boolean[][] passable, final Point goal) {
+    private Map<Point, Point> BFS(final boolean[][] passable,
+                                  final Point goal) {
         Queue<Point> considering = new LinkedList<>();
         HashSet<Point> discovered = new HashSet<>();
         Map<Point, Point> parent = new HashMap<>();
@@ -65,47 +66,49 @@ class SmartTargetEnemy extends Enemy {
     }
 
     /**
-     *
-     * @param passable
-     * @param playerX
-     * @param playerY
+     * Moves the enemy.
+     * @param passable grid of passable tiles
+     * @param playerX player's x coordinate
+     * @param playerY player's y coordinate
      */
     @Override
-    public void move(boolean[][] passable, int playerX, int playerY) {
+    public void move(final boolean[][] passable, final int playerX,
+                     final int playerY) {
         Point goal = new Point(playerX, playerY);
         Point current = new Point(getXPos(), getYPos());
-		Map<Point, Point> parent = BFS(passable, goal);
+        Map<Point, Point> parent = BFS(passable, goal);
 
-		if (current.equals(goal)) {
+        if (current.equals(goal)) {
 		    // the player walked into us
-		    return;
-        }
-		if (parent == null) {
-		    // pick random valid direction
-		    moveInRandomValidDirection(passable);
-		    return;
-		}
-
-		while (!parent.get(goal).equals(current)) {
-		    goal = parent.get(goal);
+            return;
         }
 
-		if (pointFromDirection(Direction.UP).equals(goal)) {
-		    moveUp();
+        if (parent == null) {
+            // pick random valid direction
+            moveInRandomValidDirection(passable);
+            return;
+        }
+
+        while (!parent.get(goal).equals(current)) {
+            goal = parent.get(goal);
+        }
+
+        if (pointFromDirection(Direction.UP).equals(goal)) {
+            moveUp();
         } else if (pointFromDirection(Direction.DOWN).equals(goal)) {
-		    moveDown();
+            moveDown();
         } else if (pointFromDirection(Direction.LEFT).equals(goal)) {
-		    moveLeft();
+            moveLeft();
         } else if (pointFromDirection(Direction.RIGHT).equals(goal)) {
-		    moveRight();
+            moveRight();
         }
     }
 
     /**
-     *
-     * @param passable
+     * Moves enemy randomly if player isn't reachable.
+     * @param passable grid of passable tiles
      */
-    private void moveInRandomValidDirection(boolean[][] passable) {
+    private void moveInRandomValidDirection(final boolean[][] passable) {
         List<Direction> valid = new LinkedList<>();
         for (Direction d : Direction.values()) {
             Point p = pointFromDirection(d);
@@ -138,7 +141,7 @@ class SmartTargetEnemy extends Enemy {
     }
 
     /**
-     * Draws the graphics for a smart target enemy in the scene
+     * Draws the graphics for a smart target enemy in the scene.
      * @param gc drawable feature of canvas
      * @param x x coordinate
      * @param y y coordinate
@@ -164,6 +167,8 @@ class SmartTargetEnemy extends Enemy {
                 break;
             case 4:
                 gc.drawImage(getImage(SMART_4_IMG), x, y);
+                break;
+            default:
                 break;
         }
         gc.restore();

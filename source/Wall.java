@@ -5,22 +5,33 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 /**
- * Type of tile that is impassable by both the player and enemies
- * Javadoc comments added by Stephen
+ * Type of tile that is impassable by both the player and enemies. Graphic
+ * drawn is dependent on what type of wall it is. This is decided based
+ * on where the wall is drawn in relation to other wall tiles around it.
  *
  * @author Alex
+ * @author Stephen
  */
 class Wall extends Tile {
     private static final String WALL_BOTTOM_MID_IMG = "wall_bottom_mid.png";
-    private static final String WALL_CONCAVE_BOTTOM_LEFT_IMG = "wall_concave_bottom_left.png";
-    private static final String WALL_CONCAVE_BOTTOM_RIGHT_IMG = "wall_concave_bottom_right.png";
-    private static final String WALL_CONCAVE_TOP_LEFT_IMG = "wall_concave_top_left.png";
-    private static final String WALL_CONCAVE_TOP_RIGHT_IMG = "wall_concave_top_right.png";
-    private static final String WALL_CONVEX_BOTTOM_LEFT_IMG = "wall_convex_bottom_left.png";
-    private static final String WALL_CONVEX_BOTTOM_RIGHT_IMG = "wall_convex_bottom_right.png";
-    private static final String WALL_CONVEX_TOP_LEFT_IMG = "wall_convex_top_left.png";
-    private static final String WALL_CONVEX_TOP_RIGHT_IMG = "wall_convex_top_right.png";
-    private static final String WALL_LEFT_MID_IMG = "wall_left_mid.png";
+    private static final String WALL_CONCAVE_BOTTOM_LEFT_IMG =
+            "wall_concave_bottom_left.png";
+    private static final String WALL_CONCAVE_BOTTOM_RIGHT_IMG =
+            "wall_concave_bottom_right.png";
+    private static final String WALL_CONCAVE_TOP_LEFT_IMG =
+            "wall_concave_top_left.png";
+    private static final String WALL_CONCAVE_TOP_RIGHT_IMG =
+            "wall_concave_top_right.png";
+    private static final String WALL_CONVEX_BOTTOM_LEFT_IMG =
+            "wall_convex_bottom_left.png";
+    private static final String WALL_CONVEX_BOTTOM_RIGHT_IMG =
+            "wall_convex_bottom_right.png";
+    private static final String WALL_CONVEX_TOP_LEFT_IMG =
+            "wall_convex_top_left.png";
+    private static final String WALL_CONVEX_TOP_RIGHT_IMG =
+            "wall_convex_top_right.png";
+    private static final String WALL_LEFT_MID_IMG =
+            "wall_left_mid.png";
     private static final String WALL_RIGHT_MID_IMG = "wall_right_mid.png";
     private static final String WALL_TOP_MID_IMG = "wall_top_mid.png";
     private static final String WALL_BLOCK = "block.png";
@@ -29,11 +40,10 @@ class Wall extends Tile {
         super(mapChar, img);
     }
 
-    // there is loads of dope duplication in the draw logic
-    // should be refactored at some point
     /**
-     *
-     * @return
+     * Checks if a wall is an internal wall (surrounded by other
+     * walls).
+     * @return true if it is an internal wall
      */
     public boolean isInternal() {
         return getLeftNeighbour() != null
@@ -47,8 +57,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is in the bottom middle of a wall structure.
+     * @return true if it is
      */
     public boolean isBottomMid() {
         return getDownNeighbour() == null
@@ -59,8 +69,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is in the top middle of a wall structure.
+     * @return true if it is
      */
     public boolean isTopMid() {
         return getUpNeighbour() == null
@@ -71,8 +81,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is in the left middle of a wall structure.
+     * @return true if it is
      */
     public boolean isLeftMid() {
         return getLeftNeighbour() == null
@@ -83,8 +93,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is in the right middle of a wall structure.
+     * @return true if it is
      */
     public boolean isRightMid() {
         return getRightNeighbour() == null
@@ -95,8 +105,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is concave and in the bottom left of a wall structure.
+     * @return true if it is
      */
     public boolean isConcaveBottomLeft() {
         return getLeftNeighbour() == null
@@ -108,8 +118,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is concave and in the bottom right of a wall structure.
+     * @return true if it is
      */
     public boolean isConcaveBottomRight() {
         return getRightNeighbour() == null
@@ -121,8 +131,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is concave and in the top left of a wall structure.
+     * @return true if it is
      */
     public boolean isConcaveTopLeft() {
         return getLeftNeighbour() == null
@@ -134,8 +144,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is concave and in the top right of a wall structure.
+     * @return true if it is
      */
     public boolean isConcaveTopRight() {
         return getRightNeighbour() == null
@@ -147,8 +157,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is convex and in the top right of a wall structure.
+     * @return true if it is
      */
     public boolean isConvexTopRight() {
         return !isInternal()
@@ -162,8 +172,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is convex and in the bottom right of a wall structure.
+     * @return true if it is
      */
     public boolean isConvexBottomRight() {
         return !isInternal()
@@ -177,8 +187,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is convex and in the bottom left of a wall structure.
+     * @return true if it is
      */
     public boolean isConvexBottomLeft() {
         return !isInternal()
@@ -192,8 +202,8 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @return
+     * Checks if a wall is convex and in the top left of a wall structure.
+     * @return true if it is
      */
     public boolean isConvexTopLeft() {
         return !isInternal()
@@ -207,9 +217,9 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * Dictates if the tile is passable by the player.
+     * @param p instance of player
+     * @return true if the player can walk on teh tile
      */
     @Override
     public boolean isPassable(final Player p) {
@@ -217,7 +227,7 @@ class Wall extends Tile {
     }
 
     /**
-     *
+     * Getter for the tile colour on the minimap.
      * @return
      */
     @Override
@@ -226,11 +236,11 @@ class Wall extends Tile {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphics for a wall tile in the scene.
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,

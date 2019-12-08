@@ -1,11 +1,10 @@
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Controls the fxml code for the level won menu
- * Javadoc comments added by Stephen
+ * Controls the fxml code for the level won menu.
  *
  * @author Stephen
  * @author Alex
@@ -18,7 +17,7 @@ public class WinController {
     private Stage stage;
 
     /**
-     *
+     * Switches current scene to main menu.
      */
     @FXML
     public void switchToMenu() {
@@ -28,26 +27,26 @@ public class WinController {
     }
 
     /**
-     *
-     * @param stage
+     * Setter for stage.
+     * @param currStage current stage
      */
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setStage(final Stage currStage) {
+        this.stage = currStage;
     }
 
     /**
-     *
-     * @param scene
+     * Setter for main menu scene.
+     * @param scene main menu scene
      */
-    public void setMenuScene(Scene scene) {
+    public void setMenuScene(final Scene scene) {
         this.menuScene = scene;
     }
 
     /**
-     * 
-     * @param scene
+     * Setter for game scene.
+     * @param scene game scene
      */
-    public void setGameScene(Scene scene) {
+    public void setGameScene(final Scene scene) {
         this.gameScene = scene;
     }
 }

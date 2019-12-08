@@ -5,70 +5,79 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Saves player's time on a level to their profile
- * Javadoc comments added by Stephen
+ * Saves player's time on a level to their profile.
  *
- * @author
+ * @author Tom
+ * @author Stephen
  */
 public class UserScoreRecord {
     private String user;
     private String score;
-    public UserScoreRecord(String user, String score){
+
+    /**
+     * UserScoreRecord constructor.
+     * @param user username of profile
+     * @param score score from level
+     */
+    public UserScoreRecord(final String user, final String score) {
         this.user = user;
         this.score = msToTime(Long.parseLong(score));
     }
 
     /**
-     *
-     * @param score
-     * @return
+     * Converts level play time from milliseconds to more easily read format.
+     * @param score time spent playing level
+     * @return time in preferred format
      */
-    private String msToTime(Long score){
-        Instant instant = Instant.ofEpochMilli (score);
-        ZonedDateTime zdt = ZonedDateTime.ofInstant ( instant , ZoneOffset.UTC );
+    private String msToTime(final Long score) {
+        Instant instant = Instant.ofEpochMilli(score);
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(instant,
+                ZoneOffset.UTC);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern ( "mm:ss:SSS" );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+                "mm:ss:SSS");
         String output = formatter.format(zdt);
         return output;
     }
 
     /**
-     *
-     * @return
+     * Getter for score.
+     * @return level score
      */
-    public String getScore(){
+    public String getScore() {
         return this.score;
     }
 
     /**
-     *
-     * @return
+     * Getter for profile username.
+     * @return profile username
      */
-    public String getUser(){
+    public String getUser() {
         return this.user;
     }
 
     /**
-     *
-     * @param user
+     * Setter for profile username.
+     * @param user profile username
      */
-    public void setUser(String user){
+    public void setUser(final String user) {
         this.user = user;
     }
 
     /**
-     *
-     * @param score
+     * Setter for level score.
+     * @param score level score
      */
-    public void setScore(String score){
+    public void setScore(final String score) {
         this.score = score;
     }
 
     /**
-     *
-     * @return
+     * Generic toString.
+     * @return preferred toString format
      */
-    public String toString(){
+    @Override
+    public String toString() {
         return getUser() + " " + getScore();
     }
 }

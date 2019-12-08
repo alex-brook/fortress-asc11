@@ -11,8 +11,7 @@ import javafx.stage.Stage;
 import java.io.*;
 
 /**
- * Controls the fxml code for the game scene
- * Javadoc comments added by Stephen
+ * Controls the fxml code for the game scene.
  *
  * @author Stephen
  * @author Alex
@@ -33,15 +32,16 @@ public class GameController {
     private boolean continuedGame;
 
     /**
-     * Setter for stage
-     * @param stage javafx stage
+     * Setter for stage.
+     * @param currStage javafx stage
      */
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setStage(final Stage currStage) {
+        this.stage = currStage;
     }
 
     /**
-     * Runs code on game scene startup , controls canvas and checks game state every tick
+     * Runs code on game scene startup , controls canvas and checks game
+     * state every tick.
      */
     @FXML
     public void initialize() {
@@ -53,7 +53,7 @@ public class GameController {
             private long frame = 0;
 
             @Override
-            public void handle(long now) {
+            public void handle(final long now) {
                 if (frame == 8) {
                     stateCheck();
                     frame = 0;
@@ -64,8 +64,8 @@ public class GameController {
     }
 
     /**
-     * Saves game when esc is pressed otherwise redraws scene after action
-     * @param e
+     * Saves game when esc is pressed otherwise redraws scene after action.
+     * @param e Key pressed event
      */
     @FXML
     private void keyPress(final KeyEvent e) {
@@ -80,40 +80,40 @@ public class GameController {
     }
 
     /**
-     * Saves the current game scene to selected profile's save file
+     * Saves the current game scene to selected profile's save file.
      * @param saveGame name of map save file
      */
-    private void savePlayerLevel(String saveGame){
-        try{
+    private void savePlayerLevel(final String saveGame) {
+        try {
             String path = MenuController.SAVES_PATH;
 
             String filename = currentMapName;
             if (!continuedGame) {
                 filename = Main.getUsername() + "_" + currentMapName;
             }
-            String filepath = String.format("%s/%s",path,filename);
+            String filepath = String.format("%s/%s", path, filename);
             System.out.println(filepath);
             FileWriter fileWriter = new FileWriter(filepath);
             BufferedWriter fileSaver = new BufferedWriter(fileWriter);
             fileSaver.write(saveGame);
             fileSaver.close();
-        }catch(IOException e){
+        } catch (IOException e) {
             System.out.println("IOException when saving game.");
             System.out.println(e.getMessage());
         }
     }
 
     /**
-     * Returns the original name of a level map
+     * Returns the original name of a level map.
      * @param str name of profile save file
      * @return original file name
      */
-    private String getOriginalMapName(String str) {
+    private String getOriginalMapName(final String str) {
         return currentMapName.replaceFirst(Main.getUsername() + "_", "");
     }
 
     /**
-     * Builds the game scene using information from input map
+     * Builds the game scene using information from input map.
      * @param mapName name of map save file
      */
     public void loadMap(final String mapName) {
@@ -124,18 +124,19 @@ public class GameController {
     }
 
     /**
-     * Builds the game scene using information from save file
-     * @param mapName
+     * Builds the game scene using information from save file.
+     * @param mapName name of map save file
      */
     public void loadSave(final String mapName) {
         currentMapName = mapName;
-        gs = new GameState(stringFromMapName(mapName, MenuController.SAVES_PATH));
+        gs = new GameState(stringFromMapName(mapName,
+                MenuController.SAVES_PATH));
         continuedGame = true;
         at.start();
     }
 
     /**
-     * Rebuilds game scene from beginning of level
+     * Rebuilds game scene from beginning of level.
      */
     public void restartGame() {
         gs.restart();
@@ -143,7 +144,7 @@ public class GameController {
     }
 
     /**
-     * Switches current scene to level failed menu
+     * Switches current scene to level failed menu.
      */
     private void switchToFail() {
         at.stop();
@@ -153,7 +154,7 @@ public class GameController {
     }
 
     /**
-     * Switches current game scene to level won menu
+     * Switches current game scene to level won menu.
      */
     private void switchToWin() {
         at.stop();
@@ -163,12 +164,12 @@ public class GameController {
         stage.setScene(Main.getWinScene());
         Main.getLb().incrementGamesPlayed(Main.getUsername());
         Main.getLb().insertNewScore(Main.getUsername(), (gs.getSessionTime()),
-                mapName.replaceFirst(MenuController.FILE_END,""));
+                mapName.replaceFirst(MenuController.FILE_END, ""));
         stage.show();
     }
 
     /**
-     * Checks if the game is running and if the game is failed or won
+     * Checks if the game is running and if the game is failed or won.
      */
     private void stateCheck() {
         if (gs.getCurrentState() == GameState.State.RUNNING) {
@@ -181,19 +182,20 @@ public class GameController {
     }
 
     /**
-     * Finds location of map file
+     * Finds location of map file.
      * @param fileName name of the map file
+     * @param dir directory path
      * @return file path for map
      */
     private String stringFromMapName(final String fileName, final String dir) {
         try {
-            File file = new File(String.format("%s/%s",dir,fileName));
+            File file = new File(String.format("%s/%s", dir, fileName));
             FileInputStream fis = new FileInputStream(file);
             byte[] data = new byte[(int) file.length()];
             fis.read(data);
             fis.close();
             String result = new String(data, "UTF-8");
-            System.out.printf("The map contents: %s",result);
+            System.out.printf("The map contents: %s", result);
             return result;
         } catch (IOException e) {
             return null;

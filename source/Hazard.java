@@ -5,10 +5,10 @@ import java.util.Map;
 
 /**
  * Tile that if the player comes into contact with loses them the game, unless
- * they have the required safe item
- * Javadoc comments added by Stephen
+ * they have the required safe item.
  *
  * @author Alex
+ * @author Stephen
  */
 class Hazard extends Tile {
     private static final String LAVA_0_IMG = "l0.png";
@@ -38,13 +38,19 @@ class Hazard extends Tile {
 
     private Item requiredItem;
 
+    /**
+     * Hazard constructor.
+     * @param mapChar character in save fil
+     * @param img image when drawn to scene
+     * @param item item needed to be save for player to walk on tile
+     */
     Hazard(final char mapChar, final Map<String, Image> img, final Item item) {
         super(mapChar, img);
         requiredItem = item;
     }
 
     /**
-     * Draws graphic on scene for an instance of  a hazard tile
+     * Draws graphic on scene for an instance of  a hazard tile.
      * @param gc drawable feature of canvas
      * @param x x coordinate
      * @param y y coordinate
@@ -133,7 +139,7 @@ class Hazard extends Tile {
     }
 
     /**
-     * Kills the player when they come into contact with a hazard instance
+     * Kills the player when they come into contact with a hazard instance.
      * @param p instance of player
      */
     @Override

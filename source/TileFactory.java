@@ -3,10 +3,10 @@ import java.util.Map;
 
 /**
  * Creates instances of the various types of tile from characters in the save
- * file along with any additional information
- * Javadoc comments added by Stephen
+ * file along with any additional information.
  *
  * @author Alex
+ * @author Stephen
  */
 
 public final class TileFactory {
@@ -33,34 +33,39 @@ public final class TileFactory {
         public static final char EMPTY_TILE = '.';
     }
 
+    /**
+     * TileFactory contructor.
+     * @param img image when drawn
+     */
     public TileFactory(final Map<String, Image> img) {
         images = img;
     }
 
     /**
-     *
-     * @param c
-     * @return
+     * Getter for tile.
+     * @param c character in save file
+     * @return instance of tile
      */
     public Tile getTile(final char c) {
         return getTile(c, new String[0]);
     }
 
     /**
-     *
-     * @param c
-     * @param additionalInfo
-     * @return
+     * Getter for a tile and its additional information.
+     * @param c character in save file
+     * @param additionalInfo additional information in save file
+     * @return instance of tile and any additional information
      */
     public Tile getTile(final char c, final String additionalInfo) {
         return getTile(c, additionalInfo.split(GameState.INFO_DELIMITER));
     }
 
     /**
-     *
-     * @param c
-     * @param additionalInfo
-     * @return
+     * Getter for tile with characteristics processed from additional
+     * information.
+     * @param c character in save file
+     * @param additionalInfo additional information from save file
+     * @return type of tile
      */
     public Tile getTile(final char c, final String[] additionalInfo) {
         switch (c) {
@@ -75,11 +80,14 @@ public final class TileFactory {
             case MapChars.GOAL:
                 return new Goal(c, images);
             case MapChars.KEY_DOOR:
-                return new KeyDoor(c, images, keyFromChar(additionalInfo[0].charAt(0)));
+                return new KeyDoor(c, images, keyFromChar(
+                        additionalInfo[0].charAt(0)));
             case MapChars.SCORE_DOOR:
-                return new ScoreDoor(c, images, Integer.parseInt(additionalInfo[0]));
+                return new ScoreDoor(c, images, Integer.parseInt(
+                        additionalInfo[0]));
             case MapChars.TELEPORTER:
-                return new Teleporter(c, images, Integer.parseInt(additionalInfo[0]),
+                return new Teleporter(c, images, Integer.parseInt(
+                        additionalInfo[0]),
                         Integer.parseInt(additionalInfo[1]));
             case MapChars.TOKEN:
                 return new Ground(c, images, Item.TOKEN);
@@ -101,9 +109,9 @@ public final class TileFactory {
     }
 
     /**
-     *
-     * @param c
-     * @return
+     * Key type required to open instance of key door generated.
+     * @param c character in save file
+     * @return key type
      */
     private Item keyFromChar(final char c) {
         switch (c) {

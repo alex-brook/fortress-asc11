@@ -1,10 +1,10 @@
 /**
- * Definitions for items
- * Javadoc comments added by Stephen
+ * Definitions for items.
  *
  * @author Alex
+ * @author Stephen
  */
-public enum Item{
+public enum Item {
     FIRE_BOOTS(TileFactory.MapChars.FIRE_BOOTS),
     FLIPPERS(TileFactory.MapChars.FLIPPERS),
     TOKEN(TileFactory.MapChars.TOKEN),
@@ -25,12 +25,12 @@ public enum Item{
 
     private final char mapChar;
 
-    private Item(final char mapc) {
+    Item(final char mapc) {
         this.mapChar = mapc;
     }
 
     /**
-     * Getter for the name of an image file for an item
+     * Getter for the name of an image file for an item.
      * @return image file
      */
     public String getImageName() {
@@ -38,7 +38,7 @@ public enum Item{
     }
 
     /**
-     * Getter for item's character in a save file
+     * Getter for item's character in a save file.
      * @return map character for item
      */
     public char getMapChar() {
@@ -46,7 +46,7 @@ public enum Item{
     }
 
     /**
-     * Getter for item
+     * Getter for item.
      * @param c character on save file
      * @return item
      */

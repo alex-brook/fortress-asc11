@@ -4,10 +4,10 @@ import java.util.Map;
 
 /**
  * Creates instances of the various types of enemy from characters in the save
- * file along with any additional information
- * Javadoc comments added by Stephen
+ * file along with any additional information.
  *
  * @author Alex
+ * @author Stephen
  */
 
 public final class EnemyFactory {
@@ -20,12 +20,16 @@ public final class EnemyFactory {
 
     private Map<String, Image> images;
 
+    /**
+     * EnemyFactory constructor.
+     * @param img image when drawn to scene
+     */
     public EnemyFactory(final Map<String, Image> img) {
         this.images = img;
     }
 
     /**
-     * Getter for an instance of enemy
+     * Getter for an instance of enemy.
      * @param c character in a save file
      * @param x x coordinate
      * @param y y coordinate
@@ -36,7 +40,8 @@ public final class EnemyFactory {
     }
 
     /**
-     * Getter for an instance of enemy taking in additional information from save file
+     * Getter for an instance of enemy taking in additional information from
+     * save file.
      * @param c character in a save file
      * @param x x coordinate
      * @param y y coordinate
@@ -50,7 +55,7 @@ public final class EnemyFactory {
     }
 
     /**
-     * Getter for instance of enemy with type
+     * Getter for instance of enemy with type.
      * @param c character in a save file
      * @param x x coordinate
      * @param y y coordinate
@@ -61,15 +66,17 @@ public final class EnemyFactory {
                           final String[] additionalInfo) {
         switch (c) {
             case MapChars.DUMB_TARGET_ENEMY:
-                return new DumbTargetEnemy(x, y, MapChars.DUMB_TARGET_ENEMY, images);
+                return new DumbTargetEnemy(x, y, MapChars.DUMB_TARGET_ENEMY,
+                        images);
             case MapChars.SMART_TARGET_ENEMY:
-                return new SmartTargetEnemy(x, y, MapChars.SMART_TARGET_ENEMY, images);
+                return new SmartTargetEnemy(x, y, MapChars.SMART_TARGET_ENEMY,
+                        images);
             case MapChars.STRAIGHT_LINE_ENEMY:
                 return new StraightLineEnemy(x, y, MapChars.STRAIGHT_LINE_ENEMY,
                         images, Direction.getDirection(additionalInfo[0]));
             case MapChars.WALL_FOLLOW_ENEMY:
-                return new WallFollowEnemy(x, y, MapChars.WALL_FOLLOW_ENEMY, images,
-                        Direction.getDirection(additionalInfo[0]));
+                return new WallFollowEnemy(x, y, MapChars.WALL_FOLLOW_ENEMY,
+                        images, Direction.getDirection(additionalInfo[0]));
             default:
                 return null;
         }

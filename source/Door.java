@@ -6,10 +6,10 @@ import java.util.Map;
 
 /**
  * Door is a tile that acts as a wall unless the player has the correct
- * condition to open it
- * Javadoc comments added by Stephen
+ * condition to open it.
  *
  * @author Alex
+ * @author Stephen
  */
 public abstract class Door extends Tile {
     private static final String DOOR_DOWN_2_IMG = "door_bottom_2.png";
@@ -32,7 +32,7 @@ public abstract class Door extends Tile {
     private boolean locked;
 
     /**
-     * Creates a locked door
+     * Creates a locked door.
      * @param mapChar character from save file
      * @param img image to be drawn
      */
@@ -42,7 +42,7 @@ public abstract class Door extends Tile {
     }
 
     /**
-     * Getter for locked
+     * Getter for locked.
      * @return locked boolean
      */
     protected final boolean isLocked() {
@@ -50,7 +50,7 @@ public abstract class Door extends Tile {
     }
 
     /**
-     * Unlocked setter for locked boolean
+     * Unlocked setter for locked boolean.
      */
     protected final void unlock() {
         locked = false;
@@ -59,7 +59,7 @@ public abstract class Door extends Tile {
     }
 
     /**
-     * Boolean that represents if the door graphic should be facing left or not
+     * Boolean that represents if the door graphic should be facing left or not.
      * @return boolean related to direction the door is facing in game
      */
     protected final boolean isLeft() {
@@ -69,13 +69,16 @@ public abstract class Door extends Tile {
         return up != null && up.getMapChar() == TileFactory.MapChars.WALL
                 && (((Wall) up).isTopMid() || ((Wall) up).isConvexTopLeft()
                     || ((Wall) up).isInternal())
-                && down != null && down.getMapChar() == TileFactory.MapChars.WALL
-                && (((Wall) down).isBottomMid() || ((Wall) down).isConvexBottomLeft()
+                && down != null && down.getMapChar()
+                == TileFactory.MapChars.WALL
+                && (((Wall) down).isBottomMid()
+                || ((Wall) down).isConvexBottomLeft()
                     || ((Wall) down).isInternal());
     }
 
     /**
-     * Boolean that represents if the door graphic should be facing right or not
+     * Boolean that represents if the door graphic should be facing right
+     * or not.
      * @return boolean related to direction the door is facing in game
      */
     protected final boolean isRight() {
@@ -85,13 +88,15 @@ public abstract class Door extends Tile {
         return up != null && up.getMapChar() == TileFactory.MapChars.WALL
                 && (((Wall) up).isTopMid() || ((Wall) up).isConvexTopRight()
                     || ((Wall) up).isInternal())
-                && down != null && down.getMapChar() == TileFactory.MapChars.WALL
-                && (((Wall) down).isBottomMid() || ((Wall) down).isConvexBottomRight()
+                && down != null && down.getMapChar()
+                == TileFactory.MapChars.WALL
+                && (((Wall) down).isBottomMid()
+                || ((Wall) down).isConvexBottomRight()
                     || ((Wall) down).isInternal());
     }
 
     /**
-     * Boolean that represents if the door graphic should be facing up or not
+     * Boolean that represents if the door graphic should be facing up or not.
      * @return boolean related to direction the door is facing in game
      */
     protected final boolean isUp() {
@@ -99,44 +104,53 @@ public abstract class Door extends Tile {
         Tile right = getRightNeighbour();
 
         return left != null && left.getMapChar() == TileFactory.MapChars.WALL
-                && (((Wall) left).isLeftMid() || ((Wall) left).isConvexTopLeft()
+                && (((Wall) left).isLeftMid()
+                || ((Wall) left).isConvexTopLeft()
                     || ((Wall) left).isInternal())
-                && right != null && right.getMapChar() == TileFactory.MapChars.WALL
-                && (((Wall) right).isRightMid() || ((Wall) right).isConvexTopRight()
+                && right != null && right.getMapChar()
+                == TileFactory.MapChars.WALL
+                && (((Wall) right).isRightMid()
+                || ((Wall) right).isConvexTopRight()
                     || ((Wall) right).isInternal());
     }
 
     /**
-     * Boolean that represents if the door graphic should be facing down or not
+     * Boolean that represents if the door graphic should be facing down or
+     * not.
      * @return boolean related to direction the door is facing in game
      */
     protected final boolean isDown() {
         Tile left = getLeftNeighbour();
         Tile right = getRightNeighbour();
 
-        return left != null && left.getMapChar() == TileFactory.MapChars.WALL
-                && (((Wall) left).isLeftMid() || ((Wall) left).isConvexBottomLeft()
+        return left != null && left.getMapChar()
+                == TileFactory.MapChars.WALL
+                && (((Wall) left).isLeftMid()
+                || ((Wall) left).isConvexBottomLeft()
                     || ((Wall) left).isInternal())
-                && right != null && right.getMapChar() == TileFactory.MapChars.WALL
-                && (((Wall) right).isRightMid() || ((Wall) right).isConvexBottomRight()
+                && right != null && right.getMapChar()
+                == TileFactory.MapChars.WALL
+                && (((Wall) right).isRightMid()
+                || ((Wall) right).isConvexBottomRight()
                     || ((Wall) right).isInternal());
     }
 
     /**
-     * Boolean that checks if the tile is walkable by an instance of enemy or not
+     * Boolean that checks if the tile is walkable by an instance of enemy or
+     * not.
      * @param e instance of enemy
      * @return boolean walkable or not
      */
     public boolean isPassable(final Enemy e) {
-        if (isLocked() == true) {
+        if (isLocked()) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
     /**
-     * Gets the minimap colour for a door
+     * Gets the minimap colour for a door.
      * @return colour graphic for the instance of door
      */
     @Override
@@ -145,7 +159,7 @@ public abstract class Door extends Tile {
     }
 
     /**
-     * Draws the graphic for an instance door
+     * Draws the graphic for an instance door.
      * @param gc drawable feature of teh canavas
      * @param x x coordinate of tile
      * @param y y coordinate of tile

@@ -2,7 +2,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -14,8 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * The Main
- * Javadoc comments added by Stephen
+ * The Main.
  *
  * @author Alex
  * @author Stephen Colegrove
@@ -45,7 +43,7 @@ public class Main extends Application {
     private static Leaderboard lb = new Leaderboard();
 
     /**
-     * Prepares each scene of the game
+     * Prepares each scene of the game.
      * @param stage primary stage for project
      * @throws IOException No file found
      */
@@ -90,31 +88,31 @@ public class Main extends Application {
     }
 
     /**
-     * Setter for profile username
+     * Setter for profile username.
      * @param username username to be set
      */
-    public static void setUsername(String username){
+    public static void setUsername(final String username) {
         currentUser = username;
     }
 
     /**
-     * Getter for profile username
+     * Getter for profile username.
      * @return profile username
      */
-    public static String getUsername(){
+    public static String getUsername() {
         return currentUser;
     }
 
     /**
-     * Getter for leader board
+     * Getter for leader board.
      * @return leader board
      */
-    public static Leaderboard getLb(){
+    public static Leaderboard getLb() {
         return lb;
     }
 
     /**
-     * Getter for main menu controller
+     * Getter for main menu controller.
      * @return main menu controller
      */
     public static MenuController getMenuController() {
@@ -122,7 +120,7 @@ public class Main extends Application {
     }
 
     /**
-     * Getter for game level scene controller
+     * Getter for game level scene controller.
      * @return game scene controller
      */
     public static GameController getGameController() {
@@ -130,7 +128,7 @@ public class Main extends Application {
     }
 
     /**
-     * Getter for win menu controller
+     * Getter for win menu controller.
      * @return win menu scene controller
      */
     public static WinController getWinController() {
@@ -138,7 +136,7 @@ public class Main extends Application {
     }
 
     /**
-     * Getter for fail menu controller
+     * Getter for fail menu controller.
      * @return fail menu scene controller
      */
     public static FailController getFailController() {
@@ -146,7 +144,7 @@ public class Main extends Application {
     }
 
     /**
-     * Getter for main menu
+     * Getter for main menu.
      * @return main menu scene
      */
     public static Scene getMenuScene() {
@@ -154,7 +152,7 @@ public class Main extends Application {
     }
 
     /**
-     * Getter for game level scene
+     * Getter for game level scene.
      * @return game level scene
      */
     public static Scene getGameScene() {
@@ -162,7 +160,7 @@ public class Main extends Application {
     }
 
     /**
-     * Getter for level won menu
+     * Getter for level won menu.
      * @return win menu scene
      */
     public static Scene getWinScene() {
@@ -170,7 +168,7 @@ public class Main extends Application {
     }
 
     /**
-     * Getter for level failed menu
+     * Getter for level failed menu.
      * @return fail menu scene
      */
     public static Scene getFailScene() {
@@ -178,22 +176,26 @@ public class Main extends Application {
     }
 
     /**
-     * Plays sound file with given name
+     * Plays sound file with given name.
      * @param sound Name of sound file
      */
-    public static void playSound(String sound) {
+    public static void playSound(final String sound) {
         try {
             File f = new File(SOUNDS_PATH + sound);
             URL url = f.toURI().toURL();
             final Media media = new Media(url.toString());
             final MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
-        } catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             System.err.println("Failed to play sound!");
             System.err.println(e);
         }
     }
 
+    /**
+     * Its a P.S.V.M. Yay.
+     * @param args you know what this does
+     */
     public static void main(final String[] args) {
         launch(args);
     }

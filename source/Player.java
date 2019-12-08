@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Contains the behaviors of the player character and its interactions
- * Javadoc comments added by Stephen
+ * Contains the behaviors of the player character and its interactions.
  *
  * @author Alex
+ * @author Stephen
  */
 
 class Player {
@@ -46,7 +46,8 @@ class Player {
 
     Player(final int x, final int y, final String[] addInfo,
            final Map<String, Image> image) {
-        this(x, y, Integer.parseInt(addInfo[0]), inventoryFromInfo(addInfo), image);
+        this(x, y, Integer.parseInt(addInfo[0]), inventoryFromInfo(addInfo),
+                image);
         sound = null;
     }
 
@@ -62,7 +63,7 @@ class Player {
     }
 
     /**
-     * Player's inventory from additional information ina  save file
+     * Player's inventory from additional information ina  save file.
      * @param info additional information
      * @return players inventory
      */
@@ -75,7 +76,7 @@ class Player {
     }
 
     /**
-     * Gives an item to the player
+     * Gives an item to the player.
      * @param item item to be given to the player
      */
     public void giveItem(final Item item) {
@@ -84,7 +85,7 @@ class Player {
     }
 
     /**
-     * Tkaes the requested item form the player
+     * Tkaes the requested item form the player.
      * @param item item to be removed from the player
      */
     public void takeItem(final Item item) {
@@ -92,7 +93,7 @@ class Player {
     }
 
     /**
-     * Checks if the player has the item requested
+     * Checks if the player has the item requested.
      * @param item item to be checked for
      * @return if player has the item or not
      */
@@ -101,7 +102,7 @@ class Player {
     }
 
     /**
-     * Increases the players number of tokens by one
+     * Increases the players number of tokens by one.
      */
     public void giveToken() {
         tokenCount++;
@@ -109,7 +110,7 @@ class Player {
     }
 
     /**
-     * Removes a number of tokens from the player
+     * Removes a number of tokens from the player.
      * @param count number of tokens to be removed
      */
     public void takeTokens(final int count) {
@@ -117,7 +118,7 @@ class Player {
     }
 
     /**
-     * Getter for number of tokens player has
+     * Getter for number of tokens player has.
      * @return number of tokens
      */
     public int getTokenCount() {
@@ -125,7 +126,7 @@ class Player {
     }
 
     /**
-     * Getter for the direction player is facing in
+     * Getter for the direction player is facing in.
      * @return direction
      */
     public Direction getDirection() {
@@ -133,7 +134,7 @@ class Player {
     }
 
     /**
-     * Moves the player to new position
+     * Moves the player to new position.
      * @param newX new x coordinate
      * @param newY new y coordinate
      */
@@ -143,7 +144,7 @@ class Player {
     }
 
     /**
-     * Moves the instance of player to the left one space
+     * Moves the instance of player to the left one space.
      */
     public void moveLeft() {
         xPos -= 1;
@@ -153,7 +154,7 @@ class Player {
     }
 
     /**
-     * Moves the instance of player to the right one space
+     * Moves the instance of player to the right one space.
      */
     public void moveRight() {
         xPos += 1;
@@ -163,7 +164,7 @@ class Player {
     }
 
     /**
-     * Getter for player's x coordinate
+     * Getter for player's x coordinate.
      * @return x coordinate
      */
     public int getXPos() {
@@ -171,7 +172,7 @@ class Player {
     }
 
     /**
-     * Moves the instance of player up one space
+     * Moves the instance of player up one space.
      */
     public void moveUp() {
         yPos -= 1;
@@ -180,7 +181,7 @@ class Player {
     }
 
     /**
-     * Moves the instance of player down one space
+     * Moves the instance of player down one space.
      */
     public void moveDown() {
         yPos += 1;
@@ -189,7 +190,7 @@ class Player {
     }
 
     /**
-     * Getter for players y coordinate
+     * Getter for players y coordinate.
      * @return y coordinate
      */
     public int getYPos() {
@@ -197,7 +198,7 @@ class Player {
     }
 
     /**
-     * Returns if the player is dead or not
+     * Returns if the player is dead or not.
      * @return dead boolean
      */
     public boolean isDead() {
@@ -205,7 +206,7 @@ class Player {
     }
 
     /**
-     * Kills the player
+     * Kills the player.
      */
     public void kill() {
         dead = true;
@@ -213,7 +214,7 @@ class Player {
     }
 
     /**
-     * Returns if the player has won or not
+     * Returns if the player has won or not.
      * @return won boolean
      */
     public boolean hasWon() {
@@ -221,15 +222,15 @@ class Player {
     }
 
     /**
-     * Sets won to true
+     * Sets won to true.
      */
     public void win() {
         won = true;
     }
 
     /**
-     *
-     * @return name of sound
+     * Returns current sound file name sets it to null so no repeats.
+     * @return name of sound file
      */
     public String consumeSound() {
         String snd = sound;
@@ -238,7 +239,7 @@ class Player {
     }
 
     /**
-     * Getter for player's character in a save file
+     * Getter for player's character in a save file.
      * @return player
      */
     public final char getMapChar() {
@@ -247,8 +248,8 @@ class Player {
 
     /**
      * Getter for additional information for an instance of player from
-     * save file
-     * @return
+     * save file.
+     * @return additonal information for instance of player from save file
      */
     public final String getAdditionalInfo() {
         StringBuilder sb = new StringBuilder();
@@ -261,10 +262,11 @@ class Player {
     }
 
     /**
-     * Draws the graphics for the player's inventory one screen
+     * Draws the graphics for the player's inventory one screen.
      * @param gc drawable feature of canvas
      * @param x x coordinate
      * @param y y coordinate
+     * @return player's inventory
      */
     public double drawInventory(final GraphicsContext gc, final double x,
                               final double y) {
@@ -277,7 +279,8 @@ class Player {
         final double textOffset = 0.6;
         gc.save();
         gc.setFill(Color.DARKSLATEGREY);
-        gc.fillRoundRect(x, y, Math.max(inventory.size(), 2) * GameState.TILE_RES,
+        gc.fillRoundRect(x, y, Math.max(inventory.size(), 2)
+                        * GameState.TILE_RES,
                 rows * GameState.TILE_RES, arcWidth, arcHeight);
         gc.setFill(Color.WHITE);
         String playerText = isDead() ? "x 0" : "x 1";
@@ -307,7 +310,7 @@ class Player {
     }
 
     /**
-     * Draws the graphics for an instance of player
+     * Draws the graphics for an instance of player.
      * @param gc drawable feature of canvas
      * @param x x coordinate
      * @param y y coordinate
@@ -373,7 +376,7 @@ class Player {
     }
 
     /**
-     * Generic toString override
+     * Generic toString override.
      * @return correct output
      */
     @Override

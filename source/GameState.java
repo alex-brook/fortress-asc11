@@ -1,11 +1,9 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.io.File;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,11 +12,10 @@ import java.util.Map;
 /**
  * Reads in data from a save file uses that to create the level layout, then
  * controls and coordinates all of the game elements while the game is
- * being run. Saves the current level layout to a separate file
- * Javadoc comments added by Stephen
- * Edited by Stephen and Alex to work with menu system
+ * being run. Saves the current level layout to a separate file.
  *
  * @author Alex
+ * @author Stephen
  */
 
 class GameState {
@@ -64,7 +61,7 @@ class GameState {
     }
 
     /**
-     * Puts all .png files at designated filepath into a hash map
+     * Puts all .png files at designated filepath into a hash map.
      * @param path filepath
      */
     private void loadImages(final String path) {
@@ -76,7 +73,8 @@ class GameState {
         for (final File f : directory.listFiles()) {
             if (f.isDirectory()) {
                 loadImages(f.getPath());
-            } else if (f.getName().contains(extension) && !f.getName().equals(BACKGROUND_IMG)) {
+            } else if (f.getName().contains(extension)
+                    && !f.getName().equals(BACKGROUND_IMG)) {
                 Image image = new Image(f.toURI().toString(),
                         TILE_RES, TILE_RES, false, false);
                 img.put(f.getName(), image);
@@ -89,7 +87,7 @@ class GameState {
     }
 
     /**
-     * Creates a level from designated map
+     * Creates a level from designated map.
      * @param map name of the map file to be drawn
      */
     private void load(final String map) {
@@ -107,7 +105,7 @@ class GameState {
     }
 
     /**
-     * Creates framework to save time spent on level
+     * Creates framework to save time spent on level.
      * @param time milliseconds spent on the level
      */
     private void loadTime(final String time) {
@@ -117,7 +115,7 @@ class GameState {
     }
 
     /**
-     * Creates and loads the tiles into the level scene from a save file
+     * Creates and loads the tiles into the level scene from a save file.
      * @param tileMap map file text
      * @param tileDesc extra info for certain tiles
      */
@@ -176,7 +174,7 @@ class GameState {
     }
 
     /**
-     * Creates and loads the enemies into the level scene
+     * Creates and loads the enemies into the level scene.
      * @param enemyDesc extra info for certain enemy types
      */
     private void loadEnemies(final String enemyDesc) {
@@ -210,7 +208,7 @@ class GameState {
     }
 
     /**
-     * Creates and loads the player into the level scene
+     * Creates and loads the player into the level scene.
      * @param desc Extra info for player
      */
     private void loadPlayer(final String desc) {
@@ -229,7 +227,7 @@ class GameState {
     }
 
     /**
-     * Returns the components of a level map from the save file
+     * Returns the components of a level map from the save file.
      * @param map map filename
      * @return Array of logical components of the map file
      */
@@ -248,7 +246,7 @@ class GameState {
     }
 
     /**
-     * Changes the current game state from running to lose or win
+     * Changes the current game state from running to lose or win.
      * @param kc key pressed
      */
     public void update(final KeyCode kc) {
@@ -263,7 +261,7 @@ class GameState {
     }
 
     /**
-     * Moves the player in the designated direction from player input
+     * Moves the player in the designated direction from player input.
      * @param kc key pressed
      */
     private void updatePlayer(final KeyCode kc) {
@@ -305,7 +303,7 @@ class GameState {
     }
 
     /**
-     * Gives sounds to relevant tiles
+     * Gives sounds to relevant tiles.
      */
     private void updateSounds() {
         String sound = null;
@@ -335,12 +333,15 @@ class GameState {
     }
 
     /**
-     * Changes the discovered tiles in minimap
+     * Changes the discovered tiles in minimap.
      */
     private void updateDiscovered() {
-        for (int x = player.getXPos() - VIEW_RADIUS; x < player.getXPos() + VIEW_RADIUS; x++) {
-            for (int y = player.getYPos() - VIEW_RADIUS; y < player.getYPos() + VIEW_RADIUS; y++) {
-                if (x >= 0 && y >= 0 && x < grid.length && y < grid[0].length) {
+        for (int x = player.getXPos() - VIEW_RADIUS; x < player.getXPos()
+                + VIEW_RADIUS; x++) {
+            for (int y = player.getYPos() - VIEW_RADIUS; y < player.getYPos()
+                    + VIEW_RADIUS; y++) {
+                if (x >= 0 && y >= 0 && x < grid.length && y
+                        < grid[0].length) {
                     discovered[x][y] = true;
                 }
             }
@@ -348,7 +349,7 @@ class GameState {
     }
 
     /**
-     * returns the tile at the player's current x,y coordinates
+     * Returns the tile at the player's current x,y coordinates.
      * @param p player instance to be used
      * @return tile at current player position
      */
@@ -357,7 +358,7 @@ class GameState {
     }
 
     /**
-     * Checks specified coordinates for an instance of enemy
+     * Checks specified coordinates for an instance of enemy.
      * @param x x coordinate being checked
      * @param y y coordinate being checked
      * @return enemy at specified coordinates or null
@@ -372,9 +373,11 @@ class GameState {
     }
 
     /**
-     * Checks every tile in the scene for if the instance of enemy can move there
+     * Checks every tile in the scene for if the instance of enemy can move
+     * there.
      * @param e instance of enemy
-     * @return 2D array of booleans that dictate if the enemy can move there or not
+     * @return 2D array of booleans that dictate if the enemy can move there
+     * or not
      */
     private boolean[][] getPassableGrid(final Enemy e) {
         boolean[][] passableGrid = new boolean[grid.length][grid[0].length];
@@ -392,7 +395,7 @@ class GameState {
     }
 
     /**
-     * Moves enemy
+     * Moves the enemy(s).
      */
     private void updateEnemies() {
         for (Enemy e : enemies) {
@@ -405,7 +408,7 @@ class GameState {
     }
 
     /**
-     * Gets the current state of the level (running, lose, win)
+     * Gets the current state of the level (running, lose, win).
      * @return current state of the level
      */
     public State getCurrentState() {
@@ -413,7 +416,7 @@ class GameState {
     }
 
     /**
-     * Converts the current game state to a string
+     * Converts the current game state to a string.
      * @return game state as a string
      */
     public String save() {
@@ -477,16 +480,16 @@ class GameState {
     }
 
     /**
-     * Getter for time spent playing current level
+     * Getter for time spent playing current level.
      * @return time spent playing level
      */
-    public long getSessionTime(){
+    public long getSessionTime() {
         return (System.currentTimeMillis() - startTime) + timeElapsed;
     }
 
 
     /**
-     * Restarts the level scene
+     * Restarts the level scene.
      */
     public void restart() {
         load(map);
@@ -494,7 +497,7 @@ class GameState {
     }
 
     /**
-     * Draws the level
+     * Draws the level.
      * @param gc drawable feature of canvas
      * @param tick current tick of level for animations
      */
@@ -532,7 +535,7 @@ class GameState {
             }
         }
         gc.restore();
-        player.drawInventory(gc, 0, (VIEW_RADIUS * TILE_RES) * 2 );
+        player.drawInventory(gc, 0, (VIEW_RADIUS * TILE_RES) * 2);
         drawMinimap(gc, 0, 0);
         if (tick) {
             animationTick++;
@@ -540,7 +543,7 @@ class GameState {
     }
 
     /**
-     * Draws all components of a level
+     * Draws all components of a level.
      * @param gc canvas it draws on
      * @param tick flag for if you want to update the animation
      */
@@ -552,20 +555,25 @@ class GameState {
         for (y = 0; y < grid[0].length; y++) {
             // only draw walls
             for (x = 0; x < grid.length; x++) {
-                if (grid[x][y] != null && grid[x][y].getMapChar() == TileFactory.MapChars.WALL) {
-                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
+                if (grid[x][y] != null && grid[x][y].getMapChar()
+                        == TileFactory.MapChars.WALL) {
+                    grid[x][y].draw(gc, x * TILE_RES, y
+                            * TILE_RES, animationTick);
                 }
             }
             // draw everything apart from walls
             for (x = 0; x < grid.length; x++) {
-                if (grid[x][y] != null && grid[x][y].getMapChar() != TileFactory.MapChars.WALL) {
-                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES, animationTick);
+                if (grid[x][y] != null && grid[x][y].getMapChar()
+                        != TileFactory.MapChars.WALL) {
+                    grid[x][y].draw(gc, x * TILE_RES, y * TILE_RES,
+                            animationTick);
                 }
             }
         }
         //enemies
         for (Enemy e : enemies) {
-            e.draw(gc, e.getXPos() * TILE_RES, e.getYPos() * TILE_RES, animationTick);
+            e.draw(gc, e.getXPos() * TILE_RES, e.getYPos() * TILE_RES,
+                    animationTick);
         }
         //player
         player.draw(gc, player.getXPos() * TILE_RES,
@@ -577,7 +585,7 @@ class GameState {
     }
 
     /**
-     * Draws the minimap
+     * Draws the minimap.
      * @param gc drawable feature of canvas
      * @param xOrigin Top left of minimap
      * @param yOrigin Top right of minimap
@@ -593,27 +601,27 @@ class GameState {
                 if (discovered[x][y]
                         && player.getXPos() == x && player.getYPos() == y) {
                     gc.setFill(Color.WHITE);
-                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
-                            , yOrigin + (y * MINIMAP_PIXEL_SIZE)
-                            , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
+                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE),
+                            yOrigin + (y * MINIMAP_PIXEL_SIZE),
+                            MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
                 } else if (discovered[x][y]
                         && getEnemyAtLocation(x, y) != null) {
                     gc.setFill(Color.RED);
-                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
-                            , yOrigin + (y * MINIMAP_PIXEL_SIZE)
-                            , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
+                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE),
+                            yOrigin + (y * MINIMAP_PIXEL_SIZE),
+                            MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
                 } else if (discovered[x][y] && grid[x][y] != null) {
                     gc.setFill(grid[x][y].getMinimapColor());
-                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE)
-                            , yOrigin + (y * MINIMAP_PIXEL_SIZE)
-                            , MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
+                    gc.fillRect(xOrigin + (x * MINIMAP_PIXEL_SIZE),
+                            yOrigin + (y * MINIMAP_PIXEL_SIZE),
+                            MINIMAP_PIXEL_SIZE, MINIMAP_PIXEL_SIZE);
                 }
             }
         }
     }
 
     /**
-     * Standard toString override
+     * Standard toString override.
      * @return new toString override
      */
     @Override

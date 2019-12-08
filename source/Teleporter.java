@@ -4,10 +4,10 @@ import javafx.scene.image.Image;
 import java.util.Map;
 
 /**
- * Type of tile that moves the player to a predesignated position
- * Javadoc comments added by Stephen
+ * Type of tile that moves the player to a predesignated position.
  *
  * @author Alex
+ * @author Stephen
  */
 class Teleporter extends Tile {
     private static final String TELEPORTER_IMG = "potion_green.png";
@@ -24,11 +24,11 @@ class Teleporter extends Tile {
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphics for a teleporter tile in the scene.
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     @Override
     public void draw(final GraphicsContext gc, final double x, final double y,
@@ -38,8 +38,9 @@ class Teleporter extends Tile {
     }
 
     /**
-     *
-     * @param p
+     * When player moves onto an instance of teleporter, they are moved to the
+     * appropriate tile adjacent to the linked teleporter.
+     * @param p instance of player
      */
     @Override
     public void playerContact(final Player p) {
@@ -56,13 +57,15 @@ class Teleporter extends Tile {
             case RIGHT:
                 p.teleportTo(linkedX + 1, linkedY);
                 break;
+            default:
+                break;
         }
         setSound(TELEPORT_SOUND);
     }
 
     /**
-     *
-     * @return
+     * Getter for additional information from save file.
+     * @return additional information
      */
     @Override
     public String getAdditionalInfo() {

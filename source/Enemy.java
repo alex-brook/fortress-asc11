@@ -5,11 +5,11 @@ import java.awt.*;
 import java.util.Map;
 
 /**
- * Contains the inherited behaviours of the various types of enemy
- * Javadoc comments added by Stephen
+ * Contains the inherited behaviours of the various types of enemy.
  *
  * @author Alex
  * @author Irfaan
+ * @author Stephen
  */
 
 public abstract class Enemy {
@@ -21,6 +21,13 @@ public abstract class Enemy {
 
     private Map<String, Image> images;
 
+    /**
+     * Enemy Constructor.
+     * @param x x coordinate of enemy
+     * @param y y coordinate of enemy
+     * @param mapc character in save file
+     * @param img img when drawn to scene
+     */
     public Enemy(final int x, final int y, final char mapc,
                  final Map<String, Image> img) {
         images = img;
@@ -31,7 +38,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for the image graphic of the enemy
+     * Getter for the image graphic of the enemy.
      * @param name name of the enemy image as a string
      * @return image file with the requested name
      */
@@ -40,32 +47,34 @@ public abstract class Enemy {
     }
 
     /**
-     * Abstract move function for enemy types to override
+     * Abstract move function for enemy types to override.
      * @param passableGrid 2D array of booleans that show if each tile is
      *                     passable by an instace of enemy or not
      * @param playerX player instance's x coordinate
      * @param playerY player instance's y coordinate
      */
-    public abstract void move(final boolean[][] passableGrid,
-                              final int playerX, final int playerY);
+    public abstract void move(boolean[][] passableGrid,
+                              int playerX, int playerY);
 
 
     /**
-     *
-     * @param
-     * @return
+     * Gets the coordinates of the adjacent tile in the specified direction
+     * of the player.
+     * @param d direction from the player
+     * @return coordinates in the adjacent tile
      */
-    protected final Point pointFromDirection(Direction d) {
+    protected final Point pointFromDirection(final Direction d) {
         return pointFromDirection(new Point(getXPos(), getYPos()), d);
     }
 
     /**
-     *
-     * @param p
-     * @param d
-     * @return
+     * Gets the coordinates of the adjacent tile in a specified direction of
+     * the point.
+     * @param p point looking at
+     * @param d direction from the point
+     * @return coordinates of the adjacent tile
      */
-    protected final Point pointFromDirection(Point p, Direction d) {
+    protected final Point pointFromDirection(final Point p, final Direction d) {
         switch (d) {
             case UP:
                 return new Point(p.x, p.y - 1);
@@ -81,7 +90,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for instances x coordinate
+     * Getter for instances x coordinate.
      * @return x coordinate
      */
     public final int getXPos() {
@@ -89,7 +98,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for instances y coordinate
+     * Getter for instances y coordinate.
      * @return y coordinate
      */
     public final int getYPos() {
@@ -97,7 +106,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for enemy save file character
+     * Getter for enemy save file character.
      * @return map character
      */
     public final char getMapChar() {
@@ -105,7 +114,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for any additional information on save file
+     * Getter for any additional information on save file.
      * @return additional information
      */
     public String getAdditionalInfo() {
@@ -113,7 +122,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Default draw method for enemy
+     * Default draw method for enemy.
      * @param gc drawable feature of canvas
      * @param x x coordinate of tile
      * @param y y coordinate of tile
@@ -140,7 +149,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Moves instance of enemy one tile to the left
+     * Moves instance of enemy one tile to the left.
      */
     public void moveLeft() {
         xPos -= 1;
@@ -149,7 +158,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Moves an instance of enemy one tile to the right
+     * Moves an instance of enemy one tile to the right.
      */
     public void moveRight() {
         xPos += 1;
@@ -158,7 +167,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Moves an instance of enemy one tile upwards
+     * Moves an instance of enemy one tile upwards.
      */
     public void moveUp() {
         yPos -= 1;
@@ -166,7 +175,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Moves an instance of enemy one tile downwards
+     * Moves an instance of enemy one tile downwards.
      */
     public void moveDown() {
         yPos += 1;
@@ -174,7 +183,7 @@ public abstract class Enemy {
     }
 
     /**
-     *
+     * Moves enemy in the direction it is facing.
      */
     public void moveInCurrentDirection() {
         switch (direction) {
@@ -196,7 +205,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for y coordinate change when moving upwards
+     * Getter for y coordinate change when moving upwards.
      * @return y coordinate change
      */
     public int getUpY() {
@@ -204,7 +213,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for x coordinate change when moving to the right
+     * Getter for x coordinate change when moving to the right.
      * @return x coordinate change
      */
     public int getRightX() {
@@ -212,7 +221,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for y coordinate change when moving downwards
+     * Getter for y coordinate change when moving downwards.
      * @return y coordinate change
      */
     public int getDownY() {
@@ -220,7 +229,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Getter for x coordinate change when moving to the left
+     * Getter for x coordinate change when moving to the left.
      * @return x coordinate change
      */
     public int getLeftX() {
@@ -228,7 +237,7 @@ public abstract class Enemy {
     }
 
     /**
-     * Generic toString override
+     * Generic toString override.
      * @return wanted toString output
      */
     @Override

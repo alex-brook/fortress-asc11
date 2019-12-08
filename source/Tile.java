@@ -5,10 +5,10 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 /**
- * Contains the inherited behaviors of various types of tile
- * Javadoc comments added by Stephen
+ * Contains the inherited behaviors of various types of tile.
  *
  * @author Alex
+ * @author Stephen
  */
 public abstract class Tile {
     protected static final String GROUND_IMG = "ground.png";
@@ -23,112 +23,117 @@ public abstract class Tile {
     private Tile leftNeighbour;
     private Tile rightNeighbour;
 
+    /**
+     * Tile constructor.
+     * @param mapc character in save file
+     * @param img image for game scene
+     */
     public Tile(final char mapc, final Map<String, Image> img) {
         mapChar = mapc;
         images = img;
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * Dictates if the tile passable by the player.
+     * @param p instance of player
+     * @return true if player can walk on the tile
      */
     public boolean isPassable(final Player p) {
         return true;
     }
 
     /**
-     *
-     * @param e
-     * @return
+     * Dictates if the tile passable by an enemy.
+     * @param e instance of enemy
+     * @return true if enemy can walk on the tile
      */
     public boolean isPassable(final Enemy e) {
         return false;
     }
 
     /**
-     *
-     * @param p
+     * When player comes into contact with the tile...
+     * @param p instance of player
      */
     public void playerContact(final Player p) {
         return;
     }
 
     /**
-     *
-     * @param t
+     * Setter for adjacent tile above current tile.
+     * @param t current tile
      */
     public void setUpNeighbour(final Tile t) {
         upNeighbour = t;
     }
 
     /**
-     *
-     * @param t
+     * Setter for adjacent tile below current tile.
+     * @param t current tile
      */
     public void setDownNeighbour(final Tile t) {
         downNeighbour = t;
     }
 
     /**
-     *
-     * @param t
+     * Setter for adjacent tile to the left of current tile.
+     * @param t current tile
      */
     public void setLeftNeighbour(final Tile t) {
         leftNeighbour = t;
     }
 
     /**
-     *
-     * @param t
+     * Setter for adjacent tile to the right of current tile.
+     * @param t current tile
      */
     public void setRightNeighbour(final Tile t) {
         rightNeighbour = t;
     }
 
     /**
-     *
-     * @return
+     * Getter for adjacent tile above current tile.
+     * @return tile above current tile
      */
     public Tile getUpNeighbour() {
         return upNeighbour;
     }
 
     /**
-     *
-     * @return
+     * Getter for adjacent tile below current tile.
+     * @return tile below current tile
      */
     public Tile getDownNeighbour() {
         return downNeighbour;
     }
 
     /**
-     *
-     * @return
+     * Getter for adjacent tile to the left of current tile.
+     * @return tile to the left of current tile
      */
     public Tile getLeftNeighbour() {
         return leftNeighbour;
     }
 
     /**
-     *
-     * @return
+     * Getter for adjacent tile to the right of current tile.
+     * @return tile to the right of current tile
      */
     public Tile getRightNeighbour() {
         return rightNeighbour;
     }
 
     /**
-     *
-     * @param snd
+     * Setter for sound effect.
+     * @param snd name of sound file
      */
-    protected void setSound(String snd) {
+    protected void setSound(final String snd) {
         sound = snd;
     }
 
     /**
-     *
-     * @return
+     * Returns current sound file name sets it to null so no repeats.
+     * @return name of sound file
      */
     public String consumeSound() {
         String snd = sound;
@@ -137,35 +142,35 @@ public abstract class Tile {
     }
 
     /**
-     *
-     * @return
+     * Getter for character in save file for tile.
+     * @return Character in save file
      */
     public final char getMapChar() {
         return mapChar;
     }
 
     /**
-     *
-     * @param mapc
+     * Setter for character in save file.
+     * @param mapc character in save file
      */
     protected final void setMapChar(final char mapc) {
         mapChar = mapc;
     }
 
     /**
-     *
-     * @return
+     * Getter for additional information from save file.
+     * @return additional information
      */
     public String getAdditionalInfo() {
         return null;
     }
 
     /**
-     *
-     * @param gc
-     * @param x
-     * @param y
-     * @param animationTick
+     * Draws the graphics for a tile in the scene.
+     * @param gc drawable feature of canvas
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param animationTick runtime of animation
      */
     public void draw(final GraphicsContext gc, final double x, final double y,
                      final int animationTick) {
@@ -173,25 +178,25 @@ public abstract class Tile {
     }
 
     /**
-     *
-     * @param name
-     * @return
+     * Getter for the image of the tile when drawn.
+     * @param name image file name
+     * @return image to be drawn
      */
     protected Image getImage(final String name) {
         return images.get(name);
     }
 
     /**
-     *
-     * @return
+     * Getter for the colour of the graphic for the tile on the minimap.
+     * @return colour of tile in the minimap
      */
     public Color getMinimapColor() {
         return Color.DARKSLATEGREY;
     }
 
     /**
-     *
-     * @return
+     * Generic toString override.
+     * @return corrected toString
      */
     @Override
     public final String toString() {
