@@ -431,6 +431,23 @@ public class Leaderboard {
             System.out.println(e.getMessage());
         }
     }
+    public void deleteUserProfile(String name) {
+        String sql = "DELETE FROM " + USER_PROFILE_TABLE + " WHERE name = ?";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // set the value
+            pstmt.setString(1, name);
+            // delete the username
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("nope");
+        }
+    }
 }
 
 

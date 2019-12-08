@@ -75,6 +75,8 @@ public class MenuController {
     private Button loginButton;
     @FXML
     private Button createProfileButton;
+    @FXML
+    private Button deleteUserButton;
 
 
     private String currentMap;
@@ -114,6 +116,7 @@ public class MenuController {
     private ObservableList<UserScoreRecord> getUserScoreData() {
         return FXCollections.observableList(Arrays.asList(ld.selectMapScores(currentMap)));
     }
+
 
     /**
      * Getter for username's of profiles
@@ -175,6 +178,14 @@ public class MenuController {
             loginStatus.setText("This account does not exist, please create a new account");
         }
     }
+    @FXML
+    private void handleDeleteProfileAction() {
+        Main.getLb().deleteUserProfile(Main.getUsername());
+        handleLogout();
+        ObservableList<String> profileNames = getUsernamesData();
+        profilesTable.setItems(profileNames);
+        loginStatus.setText("User Deleted");
+    }
 
     /**
      *
@@ -192,6 +203,8 @@ public class MenuController {
         continueButton.setVisible(state);
         logoutButton.setVisible(state);
         logoutButton.setDisable(!state);
+        deleteUserButton.setVisible(state);
+        deleteUserButton.setDisable(!state);
     }
 
     /**
